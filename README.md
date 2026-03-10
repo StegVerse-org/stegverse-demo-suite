@@ -1,11 +1,11 @@
 # StegVerse Demo Suite
 
-A compact research prototype demonstrating a **governed artifact workflow** in which
-**execution receipts** advance system state and unlock controlled artifacts.
+A compact research prototype demonstrating a governed artifact workflow in which
+execution receipts advance system state and unlock controlled artifacts.
 
 The suite illustrates a simple but extensible governance model:
 
-**execution -> receipt -> admissible state transition -> artifact unlock**
+execution -> receipt -> admissible state transition -> artifact unlock
 
 Each demo step produces a receipt that validates progression to the next admissible
 state. Until the required execution step completes, downstream artifacts remain inaccessible.
@@ -15,7 +15,7 @@ state. Until the required execution step completes, downstream artifacts remain 
 ## Core Idea
 
 This repository shows how receipts generated during computation can function as
-**governance primitives**.
+governance primitives.
 
 Rather than treating execution as an isolated event, the system uses execution evidence
 to determine:
@@ -24,7 +24,48 @@ to determine:
 - whether the next artifact may be revealed
 - whether the resulting state is admissible
 
-This makes the demo a compact illustration of **execution-governed artifact access**.
+This makes the demo a compact illustration of execution-governed artifact access.
+
+---
+
+## StegVerse Runtime Interface
+
+This version adds a root command wrapper so the demo can be operated as a StegVerse-first
+runtime rather than as a raw Python script.
+
+Preferred commands from the repository root:
+
+```bash
+./stegverse status
+./stegverse list
+./stegverse run demo1
+./stegverse receipts
+./stegverse bulk
+./stegverse reset
+./stegverse demo
+```
+
+The legacy Python entrypoints still work:
+
+```bash
+python engine/run_demo.py
+python engine/stegverse_cli.py status
+```
+
+Conceptually:
+
+```text
+StegVerse command
+        |
+        v
+CLI interpreter
+        |
+        v
+receipt-backed workflow engine
+        |
+        v
+governed artifacts
+```
 
 ---
 
@@ -33,6 +74,7 @@ This makes the demo a compact illustration of **execution-governed artifact acce
 ```text
 stegverse-demo-suite/
 |-- README.md
+|-- stegverse
 |-- docs/
 |   |-- RUN_DEMO_INSTRUCTIONS.md
 |   |-- doc1_demo1.md
@@ -57,25 +99,8 @@ Runtime components responsible for execution, receipt generation, and governance
 ### workflow/
 Workflow definitions and state progression metadata.
 
----
-
-## Architecture Overview
-
-```text
-workflow execution
-        |
-        v
-receipt generation
-        |
-        v
-state validation
-        |
-        v
-artifact unlock
-```
-
-A successful execution step produces a receipt. That receipt validates the next
-admissible transition, which in turn unlocks the next governed artifact.
+### stegverse
+Root command wrapper that makes the demo feel like a StegVerse runtime interface.
 
 ---
 
@@ -87,7 +112,13 @@ See:
 docs/RUN_DEMO_INSTRUCTIONS.md
 ```
 
-Or run directly from the repository root:
+Preferred command from the repository root:
+
+```bash
+./stegverse demo
+```
+
+Direct Python fallback:
 
 ```bash
 python engine/run_demo.py
@@ -98,12 +129,14 @@ python engine/run_demo.py
 ## CLI Examples
 
 ```bash
-python engine/stegverse_cli.py status
-python engine/stegverse_cli.py list
-python engine/stegverse_cli.py bulk
-python engine/stegverse_cli.py run demo1
-python engine/stegverse_cli.py receipts
-python engine/stegverse_cli.py reset
+./stegverse status
+./stegverse list
+./stegverse run demo1
+./stegverse get doc2_demo2.md
+./stegverse receipts
+./stegverse bulk
+./stegverse reset
+./stegverse demo
 ```
 
 ---
@@ -116,17 +149,3 @@ Running the demo should show that:
 - governed artifacts unlock only after valid execution
 - the workflow progresses through admissible state transitions
 - the final system summary remains accessible after completion
-
----
-
-## Why This Matters
-
-Although intentionally small, the demo models a pattern that can be extended to:
-
-- governed workflow orchestration
-- controlled document or data release
-- verifiable execution pipelines
-- decentralized compute and policy-bound runtime systems
-
-In that sense, the repository is not just a document demo. It is a compact
-illustration of how execution evidence can be used to govern system state.
