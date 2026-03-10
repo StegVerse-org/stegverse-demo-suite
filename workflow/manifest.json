@@ -1,7 +1,7 @@
 {
   "name": "stegverse-demo-suite",
-  "version": "1.0.0",
-  "description": "Receipt-backed governed artifact workflow demo",
+  "version": "1.1.0",
+  "description": "Receipt-backed governed artifact workflow demo with StegVerse runtime wrapper",
   "initial_state": "state0",
   "states": [
     "state0",
