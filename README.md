@@ -1,39 +1,65 @@
 # StegVerse Demo Suite
 
-This repository demonstrates a **governed artifact workflow** where execution receipts advance system state and unlock controlled artifacts.
+A minimal research prototype demonstrating a **governed artifact workflow** in which
+**execution receipts** advance system state and unlock controlled artifacts.
 
-The demo illustrates how a system can enforce **admissible state transitions** using execution receipts as governance primitives.
+The suite illustrates a simple but extensible governance model:
 
-Each demo step produces a receipt that validates the transition to the next state. Documents remain inaccessible until the required execution step completes.
+**execution → receipt → admissible state transition → artifact unlock**
 
-The system demonstrates a simple governance model:
-
-execution → receipt → admissible state transition → artifact unlock
+Each demo step produces a receipt that validates progression to the next admissible
+state. Until the required execution step completes, downstream artifacts remain inaccessible.
 
 ---
 
-# Repository Structure
+## Core Idea
 
+This repository shows how **receipts generated during computation** can function as **governance primitives**.
+
+Rather than treating execution as an isolated event, the system uses execution evidence to determine:
+
+- whether the workflow may advance
+- whether the next artifact may be revealed
+- whether the resulting state is admissible
+
+This makes the demo a compact illustration of **execution-governed artifact access**.
+
+---
+
+## Repository Structure
+
+```text
 stegverse-demo-suite/
-├─ README.md
-├─ docs/
-│  ├─ RUN_DEMO_INSTRUCTIONS.md
-│  ├─ doc1_demo1.md
-│  ├─ doc2_demo2.md
-│  ├─ doc3_demo3.md
-│  ├─ doc4_demo4.md
-│  └─ doc5_system_summary.md
-├─ engine/
-│  ├─ doc_gate.py
-│  ├─ run_demo.py
-│  └─ stegverse_cli.py
-└─ workflow/
-   └─ manifest.json
+├── README.md
+├── docs/
+│   ├── RUN_DEMO_INSTRUCTIONS.md
+│   ├── doc1_demo1.md
+│   ├── doc2_demo2.md
+│   ├── doc3_demo3.md
+│   ├── doc4_demo4.md
+│   └── doc5_system_summary.md
+├── engine/
+│   ├── doc_gate.py
+│   ├── run_demo.py
+│   └── stegverse_cli.py
+└── workflow/
+    └── manifest.json
+```
+
+### `docs/`
+Governed artifacts and walkthrough materials that unlock progressively as the workflow advances.
+
+### `engine/`
+Runtime components responsible for execution, receipt generation, and governance enforcement.
+
+### `workflow/`
+Workflow definitions and state progression metadata.
 
 ---
 
-# Architecture Overview
+## Architecture Overview
 
+```text
 workflow execution
         ↓
 receipt generation
@@ -41,26 +67,32 @@ receipt generation
 state validation
         ↓
 artifact unlock
+```
 
-Each step produces a receipt that validates the system's progression to the next admissible state.
+A successful execution step produces a receipt. That receipt validates the next
+admissible transition, which in turn unlocks the next governed artifact.
 
 ---
 
-# Running the Demo
+## Running the Demo
 
-Follow the instructions in:
+See:
 
+```text
 docs/RUN_DEMO_INSTRUCTIONS.md
+```
 
 Or run directly from the repository root:
 
+```bash
 python engine/run_demo.py
+```
 
 ---
 
-# Expected Behavior
+## Expected Behavior
 
-Running the demo demonstrates that:
+Running the demo should show that:
 
 - execution receipts are generated for each workflow step
 - governed artifacts unlock only after valid execution
@@ -69,8 +101,13 @@ Running the demo demonstrates that:
 
 ---
 
-# Purpose
+## Why This Matters
 
-This repository is a minimal demonstration of **execution-governed artifact access**.
+Although intentionally small, the demo models a pattern that can be extended to:
 
-It shows how receipts generated during computation can act as governance primitives that control system state and artifact availability.
+- governed workflow orchestration
+- controlled document or data release
+- verifiable execution pipelines
+- decentralized compute and policy-bound runtime systems
+
+In that sense, the repository is not just a document demo. It is a compact illustration of how **execution evidence can be used to govern system state**.
