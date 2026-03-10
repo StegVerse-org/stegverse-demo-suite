@@ -1,0 +1,11 @@
+StegVerse Runtime Wrapper Bundle
+
+Use the root wrapper so the user operates the demo through StegVerse commands.
+
+Examples:
+./stegverse status
+./stegverse run demo1
+./stegverse demo
+
+If needed, mark the wrapper executable after upload:
+chmod +x stegverse

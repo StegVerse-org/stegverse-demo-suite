@@ -1,0 +1,12 @@
+{
+  "status": {
+    "returncode": 0,
+    "stdout_head": "{'current_state': 'state0',\n 'completed_steps': [],\n 'unlocked_documents': ['doc1_demo1.md'],\n 'total_receipts': 0}",
+    "stderr_head": ""
+  },
+  "demo": {
+    "returncode": 0,
+    "stdout_head": "\n========================================================================\nRESETTING RUNTIME\n========================================================================\nRuntime reset complete.\n\n========================================================================\nINITIAL STATUS\n========================================================================\n{'current_state': 'state0',\n 'completed_steps': [],\n 'unlocked_documents': ['doc1_demo1.md'],\n 'total_receipts': 0}\n\n========================================================================\nINITIAL BULK RETRIEVAL CHECK\n========================================================================\nExpected denial: Bulk retrieval denied: not all governed artifacts are unlocked.\n\n========================================================================",
+    "stderr_head": ""
+  }
+}
