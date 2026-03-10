@@ -1,66 +1,17 @@
-# Demo 4 — Multi-Agent Governance
+# Demo 4 - Final Unlock Transition
 
-## Purpose
+This document corresponds to the final governed execution step before the system summary
+becomes available.
 
-This demo shows the most important escalation in the StegVerse demo suite:
+## Role in the Workflow
 
-**multiple agents coordinate through governed receipts and dependency-aware execution.**
+Demo 4 validates the last required transition in the governed chain.
 
-This is where StegVerse begins to resemble a real control plane.
+## Unlock Effect
 
----
+Successful completion of Demo 4 unlocks Document 5, the final system summary.
 
-## What This Demo Proves
+## Governance Meaning
 
-- multiple agents can participate in the same workflow
-- execution can require quorum or dependency satisfaction
-- receipts can encode causality across agents
-- governed workflows are not limited to single actions
-
----
-
-## Expected Flow
-
-Example pattern:
-
-```text
-Planner → proposes
-Executor → attempts action
-Finance → approves
-Guardian → approves
-Executor → retries
-Action admitted
-```
-
-Each step produces a receipt.
-
----
-
-## What To Run
-
-```bash
-python stegverse_cli.py run demo4
-```
-
----
-
-## Success Condition
-
-The demo succeeds when:
-
-- multiple receipts are generated
-- dependencies are visible
-- the workflow reaches completion
-- **Doc 5** becomes permanently accessible
-
----
-
-## Next Step
-
-Retrieve the final system summary:
-
-```bash
-python stegverse_cli.py retrieve doc5
-```
-
-This final document summarizes the whole governed workflow.
+This step shows that controlled artifact access can remain gated until all required
+execution conditions have been satisfied.
