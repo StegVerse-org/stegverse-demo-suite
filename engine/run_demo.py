@@ -1,7 +1,3 @@
-"""
-End-to-end demo runner for the StegVerse Demo Suite.
-"""
-
 from __future__ import annotations
 
 from pathlib import Path
@@ -30,7 +26,7 @@ def main() -> None:
     divider("INITIAL BULK RETRIEVAL CHECK")
     try:
         gate.bulk_retrieval()
-        print("Unexpected success: bulk retrieval should not be available yet.")
+        print("Unexpected success.")
     except PermissionError as exc:
         print(f"Expected denial: {exc}")
 
@@ -46,14 +42,10 @@ def main() -> None:
                     "receipt_id": result["receipt"]["receipt_id"],
                     "sequence": result["receipt"]["sequence"],
                     "previous_receipt_id": result["receipt"]["previous_receipt_id"],
-                    "receipt_hash": result["receipt"]["receipt_hash"],
                 },
                 sort_dicts=False,
             )
         )
-        print("\nRetrieved document preview:")
-        content = gate.retrieve_document(result["unlocked_document"])
-        print(content.splitlines()[0])
 
     divider("FINAL STATUS")
     print(pformat(gate.status(), sort_dicts=False))
@@ -62,16 +54,12 @@ def main() -> None:
     for receipt in gate.receipt_chain():
         print(
             f"{receipt['sequence']}. {receipt['step_id']} | "
-            f"{receipt['receipt_id']} | prev={receipt['previous_receipt_id']} | "
-            f"state={receipt['state_before']}->{receipt['state_after']}"
+            f"{receipt['receipt_id']} | prev={receipt['previous_receipt_id']}"
         )
 
     divider("FINAL BULK RETRIEVAL CHECK")
     artifacts = gate.bulk_retrieval()
     print(f"Bulk retrieval allowed. Retrieved {len(artifacts)} governed artifacts.")
-    print("Artifacts:")
-    for name in sorted(artifacts.keys()):
-        print(f"- {name}")
 
     divider("DEMO COMPLETE")
     print("StegVerse governed workflow executed successfully.")
