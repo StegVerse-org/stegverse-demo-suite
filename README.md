@@ -1,122 +1,124 @@
 # StegVerse Demo Suite
 
-Runnable demonstrations of **governed AI agents, policy‑enforced execution, and receipt‑based workflow control** in the StegVerse system.
+Runnable demonstrations of a **governed distributed operating system for AI agents**.
 
-This repository provides a minimal prototype showing how autonomous agents and workflows can operate under **policy enforcement and verifiable execution receipts**.
-
----
-
-# Concept
-
-Instead of allowing systems to execute actions directly, StegVerse introduces a governed execution model:
-
-agent intent → policy evaluation → decision → execution → receipt → next state
-
-Each step generates a **receipt** that authorizes the next admissible operation.
+StegVerse introduces a runtime where autonomous agents, services, and workflows execute through **policy enforcement and verifiable execution receipts**.
 
 ---
 
-# Demo Workflow
+## Quick Start
 
-Demo 1 → Governance Gate  
-Demo 2 → Payment / Receipt Flow  
-Demo 3 → StegTalk Communication  
-Demo 4 → Multi‑Agent Coordination  
-Demo 5 → System Summary Document  
+Clone the repository and run the full governed workflow:
 
-Each completed step produces a **receipt** that unlocks the next stage of the workflow.
-
----
-
-# Running the Demo
-
-Clone the repository:
-
-git clone https://github.com/StegVerse-org/stegverse-demo-suite
-cd stegverse-demo-suite
-
-Run the demo:
-
+```bash
 python run_demo.py
+```
 
-Example output:
+The entire demo runs locally and requires no external services.
 
-Running Demo 1
-Receipt generated: r-demo1
-Unlocked document: doc2_demo2.md
+This will execute a sequence of governed steps:
 
-Running Demo 2
-Receipt generated: r-demo2
-Unlocked document: doc3_demo3.md
+```
+Demo 1 → Governance Gate
+Demo 2 → Payment / Receipt Flow
+Demo 3 → StegTalk Communication
+Demo 4 → Multi-Agent Coordination
+Demo 5 → System Summary
+```
 
-Running Demo 3
-Receipt generated: r-demo3
-Unlocked document: doc4_demo4.md
-
-Running Demo 4
-Receipt generated: r-demo4
-Unlocked document: doc5_system_summary.md
+Each step produces a **receipt** that authorizes the next admissible operation.
 
 ---
 
-# Repository Structure
+## Architecture
 
-stegverse-demo-suite/
-
-README.md
-run_demo.py
-
-docs/
-    doc1_demo1.md
-    doc2_demo2.md
-    doc3_demo3.md
-    doc4_demo4.md
-    doc5_system_summary.md
-
-engine/
-    policy_engine.py
-    receipt_engine.py
-    doc_gate.py
-
-demos/
-    demo1_governance_gate.py
-    demo2_payment_flow.py
-    demo3_stegtalk_transport.py
-    demo4_multi_agent.py
-
-receipts/
-    (generated during runs)
+```
+Agent / Human / Service
+        │
+        ▼
+      Intent
+        │
+        ▼
+  StegVerse Admission Layer
+   (policy + governance)
+        │
+   allow | deny | defer
+        │
+        ▼
+      Execution
+        │
+        ▼
+       Receipt
+        │
+        ▼
+ Next Admissible State
+ (document / action)
+```
 
 ---
 
-# What This Demonstrates
+## What This Demonstrates
 
-- governed execution of agent actions
-- policy‑based admission control
-- receipt generation and chaining
-- state‑aware workflow progression
-- controlled access to information artifacts
+The demo illustrates several core StegVerse primitives:
 
----
-
-# Why This Matters
-
-StegVerse explores a model where autonomous systems operate under a **governance layer** that ensures:
-
-- actions are authorized
-- decisions are traceable
-- workflows remain policy‑compliant
-- execution history is verifiable
+• governed execution of agent actions  
+• policy-based admission control  
+• receipt-based workflow progression  
+• dependency-aware multi-agent coordination  
+• controlled access to information artifacts  
 
 ---
 
-# Related Repositories
+## Why This Matters
+
+Autonomous AI systems increasingly interact with real infrastructure.
+
+StegVerse explores a model where those systems operate under a **governance runtime** that ensures:
+
+• actions are authorized before execution  
+• workflows remain policy-compliant  
+• execution history is verifiable  
+• multi-agent coordination remains controlled  
+
+---
+
+## Running Individual Components
+
+You can run demos individually:
+
+```bash
+python stegverse_cli.py run demo1
+python stegverse_cli.py run demo2
+python stegverse_cli.py run demo3
+python stegverse_cli.py run demo4
+```
+
+Check system state:
+
+```bash
+python stegverse_cli.py status
+python stegverse_cli.py receipts
+```
+
+Retrieve governed documents:
+
+```bash
+python stegverse_cli.py retrieve doc1
+python stegverse_cli.py retrieve doc2
+python stegverse_cli.py retrieve doc3
+python stegverse_cli.py retrieve doc4
+python stegverse_cli.py retrieve doc5
+```
+
+---
+
+## Related Repositories
 
 StegVerse SDK  
 https://github.com/StegVerse-org/stegverse-sdk
 
 ---
 
-# License
+## License
 
 Prototype demonstration environment.
