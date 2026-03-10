@@ -1,124 +1,76 @@
 # StegVerse Demo Suite
 
-Runnable demonstrations of a **governed distributed operating system for AI agents**.
+This repository demonstrates a **governed artifact workflow** where execution receipts advance system state and unlock controlled artifacts.
 
-StegVerse introduces a runtime where autonomous agents, services, and workflows execute through **policy enforcement and verifiable execution receipts**.
+The demo illustrates how a system can enforce **admissible state transitions** using execution receipts as governance primitives.
 
----
+Each demo step produces a receipt that validates the transition to the next state. Documents remain inaccessible until the required execution step completes.
 
-## Quick Start
+The system demonstrates a simple governance model:
 
-Clone the repository and run the full governed workflow:
-
-```bash
-python run_demo.py
-```
-
-The entire demo runs locally and requires no external services.
-
-This will execute a sequence of governed steps:
-
-```
-Demo 1 → Governance Gate
-Demo 2 → Payment / Receipt Flow
-Demo 3 → StegTalk Communication
-Demo 4 → Multi-Agent Coordination
-Demo 5 → System Summary
-```
-
-Each step produces a **receipt** that authorizes the next admissible operation.
+execution → receipt → admissible state transition → artifact unlock
 
 ---
 
-## Architecture
+# Repository Structure
 
-```
-Agent / Human / Service
-        │
-        ▼
-      Intent
-        │
-        ▼
-  StegVerse Admission Layer
-   (policy + governance)
-        │
-   allow | deny | defer
-        │
-        ▼
-      Execution
-        │
-        ▼
-       Receipt
-        │
-        ▼
- Next Admissible State
- (document / action)
-```
+stegverse-demo-suite/
+├─ README.md
+├─ docs/
+│  ├─ RUN_DEMO_INSTRUCTIONS.md
+│  ├─ doc1_demo1.md
+│  ├─ doc2_demo2.md
+│  ├─ doc3_demo3.md
+│  ├─ doc4_demo4.md
+│  └─ doc5_system_summary.md
+├─ engine/
+│  ├─ doc_gate.py
+│  ├─ run_demo.py
+│  └─ stegverse_cli.py
+└─ workflow/
+   └─ manifest.json
 
 ---
 
-## What This Demonstrates
+# Architecture Overview
 
-The demo illustrates several core StegVerse primitives:
+workflow execution
+        ↓
+receipt generation
+        ↓
+state validation
+        ↓
+artifact unlock
 
-• governed execution of agent actions  
-• policy-based admission control  
-• receipt-based workflow progression  
-• dependency-aware multi-agent coordination  
-• controlled access to information artifacts  
-
----
-
-## Why This Matters
-
-Autonomous AI systems increasingly interact with real infrastructure.
-
-StegVerse explores a model where those systems operate under a **governance runtime** that ensures:
-
-• actions are authorized before execution  
-• workflows remain policy-compliant  
-• execution history is verifiable  
-• multi-agent coordination remains controlled  
+Each step produces a receipt that validates the system's progression to the next admissible state.
 
 ---
 
-## Running Individual Components
+# Running the Demo
 
-You can run demos individually:
+Follow the instructions in:
 
-```bash
-python stegverse_cli.py run demo1
-python stegverse_cli.py run demo2
-python stegverse_cli.py run demo3
-python stegverse_cli.py run demo4
-```
+docs/RUN_DEMO_INSTRUCTIONS.md
 
-Check system state:
+Or run directly from the repository root:
 
-```bash
-python stegverse_cli.py status
-python stegverse_cli.py receipts
-```
-
-Retrieve governed documents:
-
-```bash
-python stegverse_cli.py retrieve doc1
-python stegverse_cli.py retrieve doc2
-python stegverse_cli.py retrieve doc3
-python stegverse_cli.py retrieve doc4
-python stegverse_cli.py retrieve doc5
-```
+python engine/run_demo.py
 
 ---
 
-## Related Repositories
+# Expected Behavior
 
-StegVerse SDK  
-https://github.com/StegVerse-org/stegverse-sdk
+Running the demo demonstrates that:
+
+- execution receipts are generated for each workflow step
+- governed artifacts unlock only after valid execution
+- the workflow progresses through admissible state transitions
+- the final system summary remains accessible after completion
 
 ---
 
-## License
+# Purpose
 
-Prototype demonstration environment.
+This repository is a minimal demonstration of **execution-governed artifact access**.
+
+It shows how receipts generated during computation can act as governance primitives that control system state and artifact availability.
