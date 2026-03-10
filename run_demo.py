@@ -1,33 +1,56 @@
-import os
-import time
-from engine.policy_engine import check_access
-from engine.receipt_engine import generate_receipt
-from engine.doc_gate import retrieve_document
+from __future__ import annotations
 
-def run_demo():
-    print("\nStegVerse Demo Suite\n")
+import subprocess
+import sys
+from pathlib import Path
 
-    demos = ["demo1", "demo2", "demo3", "demo4"]
+BASE_DIR = Path(__file__).resolve().parent
+CLI = BASE_DIR / "stegverse_cli.py"
 
-    for demo in demos:
-        print(f"\nRunning {demo}")
+DEMO_SEQUENCE = ["demo1", "demo2", "demo3", "demo4"]
+DOC_SEQUENCE = ["doc2", "doc3", "doc4", "doc5"]
 
-        allowed, reason = check_access(demo)
 
-        if not allowed:
-            print(f"Access denied: {reason}")
-            return
+def run_cli(*args: str) -> int:
+    cmd = [sys.executable, str(CLI), *args]
+    result = subprocess.run(cmd, cwd=BASE_DIR)
+    return result.returncode
 
-        receipt = generate_receipt(demo)
-        print(f"Receipt generated: {receipt}")
 
-        next_doc = retrieve_document(demo)
-        print(f"Unlocked document: {next_doc}")
+def main() -> None:
+    print("\nStegVerse Demo Suite — Full Workflow Run\n")
 
-        time.sleep(1)
+    if not CLI.exists():
+        print("Missing stegverse_cli.py in repo root.")
+        print("Place this file next to run_demo.py and try again.")
+        sys.exit(1)
 
-    print("\nAll demos complete.")
-    print("Final document unlocked: doc5_system_summary.md")
+    print("Initial status:\n")
+    run_cli("status")
+    print("\nAttempting bulk retrieval before demos:\n")
+    run_cli("retrieve-all")
+
+    for demo, next_doc in zip(DEMO_SEQUENCE, DOC_SEQUENCE):
+        print(f"\n=== Running {demo} ===\n")
+        code = run_cli("run", demo)
+        if code != 0:
+            print(f"{demo} failed with exit code {code}")
+            sys.exit(code)
+
+        print(f"\n=== Retrieving {next_doc} ===\n")
+        run_cli("retrieve", next_doc)
+
+    print("\n=== Final Status ===\n")
+    run_cli("status")
+
+    print("\n=== Receipt Chain ===\n")
+    run_cli("receipts")
+
+    print("\n=== Final Bulk Retrieval Check ===\n")
+    run_cli("retrieve-all")
+
+    print("\nStegVerse full workflow run complete.\n")
+
 
 if __name__ == "__main__":
-    run_demo()
+    main()
