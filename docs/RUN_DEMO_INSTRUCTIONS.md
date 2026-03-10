@@ -46,6 +46,22 @@ From the repository root:
 ./stegverse explain
 ```
 
+## Unix-like shells
+```bash
+./stegverse help
+./stegverse explain
+./stegverse tree
+./stegverse demo
+```
+
+## Windows
+```powershell
+stegverse.cmd help
+stegverse.cmd explain
+stegverse.cmd tree
+stegverse.cmd demo
+```
+
 ## What `./stegverse demo` Does
 
 The wrapper automatically performs the following sequence:
