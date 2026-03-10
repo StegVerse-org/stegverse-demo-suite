@@ -1,11 +1,11 @@
 # StegVerse Demo Suite
 
-A minimal research prototype demonstrating a **governed artifact workflow** in which
-**execution receipts** advance system state and unlock controlled artifacts.
+A minimal research prototype demonstrating a governed artifact workflow in which
+execution receipts advance system state and unlock controlled artifacts.
 
 The suite illustrates a simple but extensible governance model:
 
-**execution → receipt → admissible state transition → artifact unlock**
+execution -> receipt -> admissible state transition -> artifact unlock
 
 Each demo step produces a receipt that validates progression to the next admissible
 state. Until the required execution step completes, downstream artifacts remain inaccessible.
@@ -14,15 +14,17 @@ state. Until the required execution step completes, downstream artifacts remain 
 
 ## Core Idea
 
-This repository shows how **receipts generated during computation** can function as **governance primitives**.
+This repository shows how receipts generated during computation can function as
+governance primitives.
 
-Rather than treating execution as an isolated event, the system uses execution evidence to determine:
+Rather than treating execution as an isolated event, the system uses execution evidence
+to determine:
 
 - whether the workflow may advance
 - whether the next artifact may be revealed
 - whether the resulting state is admissible
 
-This makes the demo a compact illustration of **execution-governed artifact access**.
+This makes the demo a compact illustration of execution-governed artifact access.
 
 ---
 
@@ -30,29 +32,29 @@ This makes the demo a compact illustration of **execution-governed artifact acce
 
 ```text
 stegverse-demo-suite/
-├── README.md
-├── docs/
-│   ├── RUN_DEMO_INSTRUCTIONS.md
-│   ├── doc1_demo1.md
-│   ├── doc2_demo2.md
-│   ├── doc3_demo3.md
-│   ├── doc4_demo4.md
-│   └── doc5_system_summary.md
-├── engine/
-│   ├── doc_gate.py
-│   ├── run_demo.py
-│   └── stegverse_cli.py
-└── workflow/
-    └── manifest.json
+|-- README.md
+|-- docs/
+|   |-- RUN_DEMO_INSTRUCTIONS.md
+|   |-- doc1_demo1.md
+|   |-- doc2_demo2.md
+|   |-- doc3_demo3.md
+|   |-- doc4_demo4.md
+|   `-- doc5_system_summary.md
+|-- engine/
+|   |-- doc_gate.py
+|   |-- run_demo.py
+|   `-- stegverse_cli.py
+`-- workflow/
+    `-- manifest.json
 ```
 
-### `docs/`
+### docs/
 Governed artifacts and walkthrough materials that unlock progressively as the workflow advances.
 
-### `engine/`
+### engine/
 Runtime components responsible for execution, receipt generation, and governance enforcement.
 
-### `workflow/`
+### workflow/
 Workflow definitions and state progression metadata.
 
 ---
@@ -61,11 +63,14 @@ Workflow definitions and state progression metadata.
 
 ```text
 workflow execution
-        ↓
+        |
+        v
 receipt generation
-        ↓
+        |
+        v
 state validation
-        ↓
+        |
+        v
 artifact unlock
 ```
 
@@ -110,4 +115,5 @@ Although intentionally small, the demo models a pattern that can be extended to:
 - verifiable execution pipelines
 - decentralized compute and policy-bound runtime systems
 
-In that sense, the repository is not just a document demo. It is a compact illustration of how **execution evidence can be used to govern system state**.
+In that sense, the repository is not just a document demo. It is a compact
+illustration of how execution evidence can be used to govern system state.
