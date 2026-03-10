@@ -1,6 +1,10 @@
 # run_demo.py Wrapper
 
-Place `run_demo.py` in the engine folder located at `stegverse-demo-suite/engine/`.
+Place `run_demo.py` in the `engine/` folder of the `stegverse-demo-suite` repository.
+
+Expected location:
+
+stegverse-demo-suite/engine/run_demo.py
 
 ## What it does
 
@@ -20,13 +24,3 @@ This wrapper runs the full governed demo workflow automatically:
 
 ```bash
 python engine/run_demo.py
-```
-
-## Expected Result
-
-The script demonstrates that:
-
-- receipts are generated for each step
-- documents unlock as governed artifacts
-- the full workflow progresses through admissible state transitions
-- the final system summary remains accessible after completion
