@@ -1,7 +1,7 @@
 # run_demo.py Wrapper
 
-Place `run_demo.py` in the docs 
-folder located at `docs/stegverse-demo-suite/`.
+Place `run_demo.py` in the endine 
+folder located at `engine/stegverse-demo-suite/`.
 
 ## What it does
 
@@ -20,7 +20,7 @@ This wrapper runs the full governed demo workflow automatically:
 ## Command
 
 ```bash
-python run_demo.py
+python engine/run_demo.py
 ```
 
 ## Expected Result
