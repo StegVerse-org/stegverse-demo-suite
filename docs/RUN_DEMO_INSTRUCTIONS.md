@@ -1,6 +1,7 @@
 # run_demo.py Wrapper
 
-Place `run_demo.py` in the root of `stegverse-demo-suite/` next to `stegverse_cli.py`.
+Place `run_demo.py` in the docs 
+folder located at `docs/stegverse-demo-suite/`.
 
 ## What it does
 
