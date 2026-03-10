@@ -70,6 +70,35 @@ receipt-backed workflow engine
         v
 governed artifacts
 ```
+---
+
+This version adds **cross-platform launchers** so StegVerse can be run directly on:
+
+- Linux / macOS / Git Bash: `./stegverse`
+- Windows Command Prompt / PowerShell: `stegverse.cmd`
+
+## Quick start
+
+### Unix-like shells
+```bash
+chmod +x stegverse
+./stegverse help
+./stegverse explain
+./stegverse demo
+```
+
+### Windows
+```powershell
+stegverse.cmd help
+stegverse.cmd explain
+stegverse.cmd demo
+```
+
+### Python fallback
+```bash
+python engine/run_demo.py
+python engine/stegverse_cli.py status
+```
 
 ---
 
