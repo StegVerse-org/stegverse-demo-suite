@@ -1,0 +1,29 @@
+{
+  "documents": [
+    {
+      "id": "doc1",
+      "file": "doc1_demo1.md",
+      "requires": []
+    },
+    {
+      "id": "doc2",
+      "file": "doc2_demo2.md",
+      "requires": ["demo1"]
+    },
+    {
+      "id": "doc3",
+      "file": "doc3_demo3.md",
+      "requires": ["demo2"]
+    },
+    {
+      "id": "doc4",
+      "file": "doc4_demo4.md",
+      "requires": ["demo3"]
+    },
+    {
+      "id": "doc5",
+      "file": "doc5_system_summary.md",
+      "requires": ["demo1", "demo2", "demo3", "demo4"]
+    }
+  ]
+}
