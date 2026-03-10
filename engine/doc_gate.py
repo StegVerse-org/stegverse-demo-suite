@@ -43,11 +43,15 @@ class StegVerseGate:
         self.state_path = self.runtime_dir / "state.json"
         self.receipts_path = self.runtime_dir / "receipts.json"
         self.runtime_dir.mkdir(parents=True, exist_ok=True)
+
         with self.workflow_path.open("r", encoding="utf-8") as fh:
             self.workflow = json.load(fh)
+
         self.initial_state = self.workflow["initial_state"]
+        self.states = self.workflow["states"]
         self.steps = self.workflow["steps"]
         self.doc_rules = self.workflow["documents"]
+
         if not self.state_path.exists():
             self.reset()
 
@@ -78,10 +82,10 @@ class StegVerseGate:
 
     def _compute_unlocked_documents(self, completed_steps: List[str]) -> List[str]:
         unlocked = []
-        completed_set = set(completed_steps)
+        completed = set(completed_steps)
         for doc_name, rule in self.doc_rules.items():
             required = set(rule.get("required_steps", []))
-            if required.issubset(completed_set):
+            if required.issubset(completed):
                 unlocked.append(doc_name)
         return sorted(unlocked)
 
@@ -94,16 +98,44 @@ class StegVerseGate:
             "total_receipts": len(self._load_receipts()),
         }
 
-    def list_documents(self) -> List[Dict[str, object]]:
+    def next_admissible_steps(self) -> List[str]:
         state = self._load_state()
-        unlocked = set(state["unlocked_documents"])
+        current_state = state["current_state"]
+        completed = set(state["completed_steps"])
+        available = []
+        for step_id, step in self.steps.items():
+            if step_id in completed:
+                continue
+            if step["from_state"] == current_state:
+                available.append(step_id)
+        return sorted(available)
+
+    def describe_runtime(self) -> Dict[str, object]:
+        state = self.status()
+        return {
+            "current_state": state["current_state"],
+            "completed_steps": state["completed_steps"],
+            "total_receipts": state["total_receipts"],
+            "next_admissible_steps": self.next_admissible_steps(),
+            "unlocked_documents": state["unlocked_documents"],
+            "locked_documents": [
+                name for name in sorted(self.doc_rules.keys())
+                if name not in set(state["unlocked_documents"])
+            ],
+        }
+
+    def list_documents(self) -> List[Dict[str, object]]:
+        unlocked = set(self._load_state()["unlocked_documents"])
         return [
             {"document": doc_name, "path": f"docs/{doc_name}", "unlocked": doc_name in unlocked}
             for doc_name in sorted(self.doc_rules.keys())
         ]
 
+    def bulk_retrieval_allowed(self) -> bool:
+        return set(self._load_state()["unlocked_documents"]) == set(self.doc_rules.keys())
+
     def bulk_retrieval(self) -> Dict[str, str]:
-        if set(self._load_state()["unlocked_documents"]) != set(self.doc_rules.keys()):
+        if not self.bulk_retrieval_allowed():
             raise PermissionError("Bulk retrieval denied: not all governed artifacts are unlocked.")
         return {
             item["document"]: (self.docs_dir / item["document"]).read_text(encoding="utf-8")
@@ -119,19 +151,26 @@ class StegVerseGate:
     def run_step(self, step_id: str) -> Dict[str, object]:
         if step_id not in self.steps:
             raise KeyError(f"Unknown workflow step: {step_id}")
+
         state = self._load_state()
         receipts = self._load_receipts()
         step = self.steps[step_id]
         current_state = state["current_state"]
         required_state = step["from_state"]
+
         if current_state != required_state:
-            raise ValueError(f"Step {step_id} is not admissible from state {current_state}. Expected {required_state}.")
+            raise ValueError(
+                f"Step {step_id} is not admissible from state {current_state}. Expected {required_state}."
+            )
+
         completed_steps = list(state["completed_steps"])
         if step_id in completed_steps:
             raise ValueError(f"Step {step_id} has already been completed.")
+
         completed_steps.append(step_id)
         next_state = step["to_state"]
         unlocked_documents = self._compute_unlocked_documents(completed_steps)
+
         previous_receipt_id = receipts[-1]["receipt_id"] if receipts else "GENESIS"
         timestamp_utc = datetime.now(timezone.utc).isoformat()
         material = json.dumps(
@@ -146,8 +185,10 @@ class StegVerseGate:
             },
             sort_keys=True,
         ).encode("utf-8")
+
         receipt_hash = hashlib.sha256(material).hexdigest()
         receipt_id = receipt_hash[:16].upper()
+
         receipt = Receipt(
             receipt_id=receipt_id,
             step_id=step_id,
@@ -159,12 +200,15 @@ class StegVerseGate:
             timestamp_utc=timestamp_utc,
             receipt_hash=receipt_hash,
         )
+
         state["current_state"] = next_state
         state["completed_steps"] = completed_steps
         state["unlocked_documents"] = unlocked_documents
         receipts.append(receipt.to_dict())
+
         self._save_state(state)
         self._save_receipts(receipts)
+
         return {
             "step_id": step_id,
             "state_before": current_state,
