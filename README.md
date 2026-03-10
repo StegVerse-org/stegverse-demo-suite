@@ -1,11 +1,11 @@
 # StegVerse Demo Suite
 
-A minimal research prototype demonstrating a governed artifact workflow in which
-execution receipts advance system state and unlock controlled artifacts.
+A compact research prototype demonstrating a **governed artifact workflow** in which
+**execution receipts** advance system state and unlock controlled artifacts.
 
 The suite illustrates a simple but extensible governance model:
 
-execution -> receipt -> admissible state transition -> artifact unlock
+**execution -> receipt -> admissible state transition -> artifact unlock**
 
 Each demo step produces a receipt that validates progression to the next admissible
 state. Until the required execution step completes, downstream artifacts remain inaccessible.
@@ -15,7 +15,7 @@ state. Until the required execution step completes, downstream artifacts remain 
 ## Core Idea
 
 This repository shows how receipts generated during computation can function as
-governance primitives.
+**governance primitives**.
 
 Rather than treating execution as an isolated event, the system uses execution evidence
 to determine:
@@ -24,7 +24,7 @@ to determine:
 - whether the next artifact may be revealed
 - whether the resulting state is admissible
 
-This makes the demo a compact illustration of execution-governed artifact access.
+This makes the demo a compact illustration of **execution-governed artifact access**.
 
 ---
 
@@ -91,6 +91,19 @@ Or run directly from the repository root:
 
 ```bash
 python engine/run_demo.py
+```
+
+---
+
+## CLI Examples
+
+```bash
+python engine/stegverse_cli.py status
+python engine/stegverse_cli.py list
+python engine/stegverse_cli.py bulk
+python engine/stegverse_cli.py run demo1
+python engine/stegverse_cli.py receipts
+python engine/stegverse_cli.py reset
 ```
 
 ---
