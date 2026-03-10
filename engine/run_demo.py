@@ -1,55 +1,80 @@
+"""
+End-to-end demo runner for the StegVerse Demo Suite.
+"""
+
 from __future__ import annotations
 
-import subprocess
-import sys
 from pathlib import Path
+from pprint import pformat
 
-BASE_DIR = Path(__file__).resolve().parent
-CLI = BASE_DIR / "stegverse_cli.py"
-
-DEMO_SEQUENCE = ["demo1", "demo2", "demo3", "demo4"]
-DOC_SEQUENCE = ["doc2", "doc3", "doc4", "doc5"]
+from doc_gate import StegVerseGate
 
 
-def run_cli(*args: str) -> int:
-    cmd = [sys.executable, str(CLI), *args]
-    result = subprocess.run(cmd, cwd=BASE_DIR)
-    return result.returncode
+def divider(title: str) -> None:
+    print("\n" + "=" * 72)
+    print(title)
+    print("=" * 72)
 
 
 def main() -> None:
-    print("\nStegVerse Demo Suite — Full Workflow Run\n")
+    repo_root = Path(__file__).resolve().parents[1]
+    gate = StegVerseGate(repo_root)
 
-    if not CLI.exists():
-        print("Missing stegverse_cli.py in repo root.")
-        print("Place this file next to run_demo.py and try again.")
-        sys.exit(1)
+    divider("RESETTING RUNTIME")
+    gate.reset()
+    print("Runtime reset complete.")
 
-    print("Initial status:\n")
-    run_cli("status")
-    print("\nAttempting bulk retrieval before demos:\n")
-    run_cli("retrieve-all")
+    divider("INITIAL STATUS")
+    print(pformat(gate.status(), sort_dicts=False))
 
-    for demo, next_doc in zip(DEMO_SEQUENCE, DOC_SEQUENCE):
-        print(f"\n=== Running {demo} ===\n")
-        code = run_cli("run", demo)
-        if code != 0:
-            print(f"{demo} failed with exit code {code}")
-            sys.exit(code)
+    divider("INITIAL BULK RETRIEVAL CHECK")
+    try:
+        gate.bulk_retrieval()
+        print("Unexpected success: bulk retrieval should not be available yet.")
+    except PermissionError as exc:
+        print(f"Expected denial: {exc}")
 
-        print(f"\n=== Retrieving {next_doc} ===\n")
-        run_cli("retrieve", next_doc)
+    for step_id in ("demo1", "demo2", "demo3", "demo4"):
+        divider(f"RUNNING {step_id.upper()}")
+        result = gate.run_step(step_id)
+        print(f"State transition: {result['state_before']} -> {result['state_after']}")
+        print(f"Unlocked document: {result['unlocked_document']}")
+        print("Receipt summary:")
+        print(
+            pformat(
+                {
+                    "receipt_id": result["receipt"]["receipt_id"],
+                    "sequence": result["receipt"]["sequence"],
+                    "previous_receipt_id": result["receipt"]["previous_receipt_id"],
+                    "receipt_hash": result["receipt"]["receipt_hash"],
+                },
+                sort_dicts=False,
+            )
+        )
+        print("\nRetrieved document preview:")
+        content = gate.retrieve_document(result["unlocked_document"])
+        print(content.splitlines()[0])
 
-    print("\n=== Final Status ===\n")
-    run_cli("status")
+    divider("FINAL STATUS")
+    print(pformat(gate.status(), sort_dicts=False))
 
-    print("\n=== Receipt Chain ===\n")
-    run_cli("receipts")
+    divider("RECEIPT CHAIN")
+    for receipt in gate.receipt_chain():
+        print(
+            f"{receipt['sequence']}. {receipt['step_id']} | "
+            f"{receipt['receipt_id']} | prev={receipt['previous_receipt_id']} | "
+            f"state={receipt['state_before']}->{receipt['state_after']}"
+        )
 
-    print("\n=== Final Bulk Retrieval Check ===\n")
-    run_cli("retrieve-all")
+    divider("FINAL BULK RETRIEVAL CHECK")
+    artifacts = gate.bulk_retrieval()
+    print(f"Bulk retrieval allowed. Retrieved {len(artifacts)} governed artifacts.")
+    print("Artifacts:")
+    for name in sorted(artifacts.keys()):
+        print(f"- {name}")
 
-    print("\nStegVerse full workflow run complete.\n")
+    divider("DEMO COMPLETE")
+    print("StegVerse governed workflow executed successfully.")
 
 
 if __name__ == "__main__":
