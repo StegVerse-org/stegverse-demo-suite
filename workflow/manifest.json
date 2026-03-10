@@ -1,29 +1,66 @@
 {
-  "documents": [
-    {
-      "id": "doc1",
-      "file": "doc1_demo1.md",
-      "requires": []
+  "name": "stegverse-demo-suite",
+  "version": "1.0.0",
+  "description": "Receipt-backed governed artifact workflow demo",
+  "initial_state": "state0",
+  "states": [
+    "state0",
+    "state1",
+    "state2",
+    "state3",
+    "state4"
+  ],
+  "steps": {
+    "demo1": {
+      "from_state": "state0",
+      "to_state": "state1",
+      "unlocks_document": "doc2_demo2.md"
     },
-    {
-      "id": "doc2",
-      "file": "doc2_demo2.md",
-      "requires": ["demo1"]
+    "demo2": {
+      "from_state": "state1",
+      "to_state": "state2",
+      "unlocks_document": "doc3_demo3.md"
     },
-    {
-      "id": "doc3",
-      "file": "doc3_demo3.md",
-      "requires": ["demo2"]
+    "demo3": {
+      "from_state": "state2",
+      "to_state": "state3",
+      "unlocks_document": "doc4_demo4.md"
     },
-    {
-      "id": "doc4",
-      "file": "doc4_demo4.md",
-      "requires": ["demo3"]
-    },
-    {
-      "id": "doc5",
-      "file": "doc5_system_summary.md",
-      "requires": ["demo1", "demo2", "demo3", "demo4"]
+    "demo4": {
+      "from_state": "state3",
+      "to_state": "state4",
+      "unlocks_document": "doc5_system_summary.md"
     }
-  ]
+  },
+  "documents": {
+    "doc1_demo1.md": {
+      "required_steps": []
+    },
+    "doc2_demo2.md": {
+      "required_steps": [
+        "demo1"
+      ]
+    },
+    "doc3_demo3.md": {
+      "required_steps": [
+        "demo1",
+        "demo2"
+      ]
+    },
+    "doc4_demo4.md": {
+      "required_steps": [
+        "demo1",
+        "demo2",
+        "demo3"
+      ]
+    },
+    "doc5_system_summary.md": {
+      "required_steps": [
+        "demo1",
+        "demo2",
+        "demo3",
+        "demo4"
+      ]
+    }
+  }
 }
