@@ -1,7 +1,6 @@
 # run_demo.py Wrapper
 
-Place `run_demo.py` in the endine 
-folder located at `engine/stegverse-demo-suite/`.
+Place `run_demo.py` in the engine folder located at `stegverse-demo-suite/engine/`.
 
 ## What it does
 
