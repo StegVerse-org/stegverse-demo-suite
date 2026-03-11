@@ -6,22 +6,16 @@ and eventually authorize simulated actions.
 
 The suite illustrates a simple but extensible governance model:
 
-**execution -> receipt -> admissible state transition -> artifact unlock**
-**admissible state -> action request -> action receipt -> action allowed / denied**
+- execution -> receipt -> admissible state transition -> artifact unlock
+- admissible state -> action request -> action receipt -> action allowed or denied
 
-Each workflow step produces a receipt that validates progression to the next
-admissible state. Until the required execution step completes, downstream
-artifacts remain inaccessible and governed actions remain denied.
+This version adds **receipt-governed action execution**.
 
-## New in this version
-
-This build adds **receipt-governed action execution**.
-
-Preferred commands:
+## Quick test
 
 ```bash
+chmod +x stegverse
 ./stegverse reset
-./stegverse explain
 ./stegverse action deploy_change
 ./stegverse demo
 ./stegverse action deploy_change
