@@ -1,4 +1,4 @@
-StegVerse Action Governance Bundle
+StegVerse Action Governance Bundle (fixed imports)
 
 New commands:
 ./stegverse actions
