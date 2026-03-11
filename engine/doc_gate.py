@@ -58,14 +58,7 @@ class StegVerseGate:
 
     def describe_runtime(self):
         st = self.status()
-        return {
-            "current_state": st["current_state"],
-            "completed_steps": st["completed_steps"],
-            "total_receipts": st["total_receipts"],
-            "next_admissible_steps": self.next_admissible_steps(),
-            "unlocked_documents": st["unlocked_documents"],
-            "locked_documents": [d for d in sorted(self.doc_rules) if d not in set(st["unlocked_documents"])],
-        }
+        return {"current_state": st["current_state"], "completed_steps": st["completed_steps"], "total_receipts": st["total_receipts"], "next_admissible_steps": self.next_admissible_steps(), "unlocked_documents": st["unlocked_documents"], "locked_documents": [d for d in sorted(self.doc_rules) if d not in set(st["unlocked_documents"])]}
 
     def list_documents(self):
         unlocked = set(self._load_state()["unlocked_documents"])
@@ -83,8 +76,7 @@ class StegVerseGate:
 
     def run_step(self, step_id: str):
         if step_id not in self.steps: raise KeyError(f"Unknown workflow step: {step_id}")
-        state = self._load_state(); receipts = self._load_receipts(); step = self.steps[step_id]
-        current = state["current_state"]
+        state = self._load_state(); receipts = self._load_receipts(); step = self.steps[step_id]; current = state["current_state"]
         if current != step["from_state"]:
             raise ValueError(f"Step {step_id} is not admissible from state {current}. Expected {step['from_state']}.")
         completed = list(state["completed_steps"])
