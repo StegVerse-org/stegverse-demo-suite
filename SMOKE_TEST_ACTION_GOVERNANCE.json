@@ -1,0 +1,22 @@
+{
+  "help": {
+    "returncode": 1,
+    "stdout_head": "",
+    "stderr_head": "Traceback (most recent call last):\n  File \u001b[35m\"/mnt/data/stegverse_action_governance_bundle/engine/stegverse_cli.py\"\u001b[0m, line \u001b[35m6\u001b[0m, in \u001b[35m<module>\u001b[0m\n    from actions.action_gate import ActionGate\n  File \u001b[35m\"/mnt/data/stegverse_action_governance_bundle/engine/actions/action_gate.py\"\u001b[0m, line \u001b[35m7\u001b[0m, in \u001b[35m<module>\u001b[0m\n    from engine.doc_gate import StegVerseGate\n\u001b[1;35mModuleNotFoundError\u001b[0m: \u001b[35mNo module named 'engine'\u001b[0m"
+  },
+  "pre_action_denied": {
+    "returncode": 1,
+    "stdout_head": "",
+    "stderr_head": "Traceback (most recent call last):\n  File \u001b[35m\"/mnt/data/stegverse_action_governance_bundle/engine/stegverse_cli.py\"\u001b[0m, line \u001b[35m6\u001b[0m, in \u001b[35m<module>\u001b[0m\n    from actions.action_gate import ActionGate\n  File \u001b[35m\"/mnt/data/stegverse_action_governance_bundle/engine/actions/action_gate.py\"\u001b[0m, line \u001b[35m7\u001b[0m, in \u001b[35m<module>\u001b[0m\n    from engine.doc_gate import StegVerseGate\n\u001b[1;35mModuleNotFoundError\u001b[0m: \u001b[35mNo module named 'engine'\u001b[0m"
+  },
+  "demo": {
+    "returncode": 1,
+    "stdout_head": "",
+    "stderr_head": "Traceback (most recent call last):\n  File \u001b[35m\"/mnt/data/stegverse_action_governance_bundle/engine/run_demo.py\"\u001b[0m, line \u001b[35m5\u001b[0m, in \u001b[35m<module>\u001b[0m\n    from actions.action_gate import ActionGate\n  File \u001b[35m\"/mnt/data/stegverse_action_governance_bundle/engine/actions/action_gate.py\"\u001b[0m, line \u001b[35m7\u001b[0m, in \u001b[35m<module>\u001b[0m\n    from engine.doc_gate import StegVerseGate\n\u001b[1;35mModuleNotFoundError\u001b[0m: \u001b[35mNo module named 'engine'\u001b[0m"
+  },
+  "post_action_allowed": {
+    "returncode": 1,
+    "stdout_head": "",
+    "stderr_head": "Traceback (most recent call last):\n  File \u001b[35m\"/mnt/data/stegverse_action_governance_bundle/engine/stegverse_cli.py\"\u001b[0m, line \u001b[35m6\u001b[0m, in \u001b[35m<module>\u001b[0m\n    from actions.action_gate import ActionGate\n  File \u001b[35m\"/mnt/data/stegverse_action_governance_bundle/engine/actions/action_gate.py\"\u001b[0m, line \u001b[35m7\u001b[0m, in \u001b[35m<module>\u001b[0m\n    from engine.doc_gate import StegVerseGate\n\u001b[1;35mModuleNotFoundError\u001b[0m: \u001b[35mNo module named 'engine'\u001b[0m"
+  }
+}

@@ -1,0 +1,12 @@
+StegVerse Action Governance Bundle
+
+New commands:
+./stegverse actions
+./stegverse action <action_name>
+./stegverse action-receipts
+
+Example:
+./stegverse reset
+./stegverse action deploy_change
+./stegverse demo
+./stegverse action deploy_change
