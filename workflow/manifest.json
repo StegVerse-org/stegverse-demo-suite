@@ -1,7 +1,7 @@
 {
   "name": "stegverse-demo-suite",
-  "version": "2.0.1",
-  "description": "Receipt-backed governed artifact workflow demo with action gating",
+  "version": "2.1.0",
+  "description": "Receipt-backed governed artifact workflow demo with action gating and verification",
   "initial_state": "state0",
   "states": [
     "state0",
