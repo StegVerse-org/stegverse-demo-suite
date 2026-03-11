@@ -1,0 +1,24 @@
+[
+  {
+    "action_receipt_id": "F95E17182E4DBBCE",
+    "action_name": "deploy_change",
+    "sequence": 1,
+    "previous_action_receipt_id": "GENESIS",
+    "current_state": "state0",
+    "required_state": "state4",
+    "decision": "denied",
+    "timestamp_utc": "2026-03-11T13:31:26.311412+00:00",
+    "action_receipt_hash": "f95e17182e4dbbce13c16d7dd52ba9db363e7903108f00d3349387b33a9f574c"
+  },
+  {
+    "action_receipt_id": "A56FEC3169269EE1",
+    "action_name": "deploy_change",
+    "sequence": 2,
+    "previous_action_receipt_id": "F95E17182E4DBBCE",
+    "current_state": "state4",
+    "required_state": "state4",
+    "decision": "allowed",
+    "timestamp_utc": "2026-03-11T13:31:26.385751+00:00",
+    "action_receipt_hash": "a56fec3169269ee177a0ece00895df95ed769ad3fbe47ce04c4b1e795b226223"
+  }
+]

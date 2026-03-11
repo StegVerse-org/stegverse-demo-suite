@@ -1,0 +1,16 @@
+{
+  "current_state": "state4",
+  "completed_steps": [
+    "demo1",
+    "demo2",
+    "demo3",
+    "demo4"
+  ],
+  "unlocked_documents": [
+    "doc1_demo1.md",
+    "doc2_demo2.md",
+    "doc3_demo3.md",
+    "doc4_demo4.md",
+    "doc5_system_summary.md"
+  ]
+}

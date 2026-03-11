@@ -1,0 +1,46 @@
+[
+  {
+    "receipt_id": "7734F825BBF43E44",
+    "step_id": "demo1",
+    "sequence": 1,
+    "previous_receipt_id": "GENESIS",
+    "state_before": "state0",
+    "state_after": "state1",
+    "unlocked_document": "doc2_demo2.md",
+    "timestamp_utc": "2026-03-11T13:31:26.314652+00:00",
+    "receipt_hash": "7734f825bbf43e447fc9f1a6ed7d81f789f9a4e41381c5ba72961d52119054bf"
+  },
+  {
+    "receipt_id": "D545E496B2704958",
+    "step_id": "demo2",
+    "sequence": 2,
+    "previous_receipt_id": "7734F825BBF43E44",
+    "state_before": "state1",
+    "state_after": "state2",
+    "unlocked_document": "doc3_demo3.md",
+    "timestamp_utc": "2026-03-11T13:31:26.326780+00:00",
+    "receipt_hash": "d545e496b2704958cd0e53e2a480d8626c230d5f76e5a3dc46e572cc45184460"
+  },
+  {
+    "receipt_id": "6D6A777B8176A7AF",
+    "step_id": "demo3",
+    "sequence": 3,
+    "previous_receipt_id": "D545E496B2704958",
+    "state_before": "state2",
+    "state_after": "state3",
+    "unlocked_document": "doc4_demo4.md",
+    "timestamp_utc": "2026-03-11T13:31:26.344536+00:00",
+    "receipt_hash": "6d6a777b8176a7af60933e74e963325d8dac328d10c7299a0eeae88088faa75c"
+  },
+  {
+    "receipt_id": "15D88BCCE98F860F",
+    "step_id": "demo4",
+    "sequence": 4,
+    "previous_receipt_id": "6D6A777B8176A7AF",
+    "state_before": "state3",
+    "state_after": "state4",
+    "unlocked_document": "doc5_system_summary.md",
+    "timestamp_utc": "2026-03-11T13:31:26.355468+00:00",
+    "receipt_hash": "15d88bcce98f860f6ecd1899f1c9c147b33cf08c8bc427f48e4ea4e402e85f87"
+  }
+]
