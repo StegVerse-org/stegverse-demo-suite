@@ -62,6 +62,13 @@ stegverse.cmd tree
 stegverse.cmd demo
 ```
 
+## Execution Transcript
+
+A reproducible runtime transcript demonstrating the governed
+execution workflow is available here:
+
+docs/StegVerse_Governed_Execution_Runtime_Transcript_v1_1.pdf
+
 ## What `./stegverse demo` Does
 
 The wrapper automatically performs the following sequence:
