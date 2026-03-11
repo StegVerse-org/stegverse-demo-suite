@@ -1,17 +1,59 @@
-# Demo 3 - Receipt-Backed Progression
+# Demo 3 — StegTalk Communication
 
-This artifact is revealed only after the workflow has advanced through the required
-earlier governed steps.
+## Purpose
 
-## Role in the Workflow
+This demo shows how StegVerse primitives support a communication workflow.
 
-Demo 3 continues the governed progression by validating another admissible transition.
+The message path is simplified for demonstration, but the key architectural idea is preserved:
 
-## Unlock Effect
+**communication can be treated as a governed state transition with a receipt.**
 
-Successful completion of Demo 3 unlocks Document 4.
+---
 
-## Governance Meaning
+## What This Demo Proves
 
-By this stage, the workflow demonstrates that receipts are functioning as persistent
-governance primitives, not temporary logs.
+- messaging events can be receipt-backed
+- communication steps can be integrated into governed workflows
+- information movement can be recorded as a valid state transition
+
+---
+
+## Expected Flow
+
+```text
+message intent
+→ policy evaluation
+→ admitted communication action
+→ receipt
+→ next workflow artifact unlocked
+```
+
+---
+
+## What To Run
+
+```bash
+python stegverse_cli.py run demo3
+```
+
+---
+
+## Success Condition
+
+The demo succeeds when:
+
+- a communication receipt is generated
+- the receipt chain now includes messaging
+- **Doc 4** becomes retrievable if the time window is still valid
+
+---
+
+## Next Step
+
+Retrieve the next governed artifact:
+
+```bash
+python stegverse_cli.py retrieve doc4
+```
+
+If the unlock window expired, rerun the prior step and try again.

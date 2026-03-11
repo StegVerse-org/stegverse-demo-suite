@@ -1,12 +1,15 @@
-# StegVerse Runtime Commands
+# Receipt-Governed Action Demo
 
-## Quick Start
+Before workflow completion:
 
-### Unix-like shells
 ```bash
-chmod +x stegverse
 ./stegverse reset
-./stegverse explain
+./stegverse action deploy_change
+```
+
+Then:
+
+```bash
 ./stegverse demo
 ./stegverse verify
 ./stegverse action deploy_change
