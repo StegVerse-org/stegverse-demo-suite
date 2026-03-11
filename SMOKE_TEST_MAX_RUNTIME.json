@@ -1,0 +1,17 @@
+{
+  "pre_action_denied": {
+    "returncode": 0,
+    "stdout_head": "Action denied: current state state0 does not satisfy required state state4.\n{'receipt_id': 'D10CF01A43CFE5DE', 'decision': 'denied'}",
+    "stderr_head": ""
+  },
+  "demo": {
+    "returncode": 0,
+    "stdout_head": "\n========================================================================\nRESETTING RUNTIME\n========================================================================\nRuntime reset complete.\n\n========================================================================\nINITIAL STATUS\n========================================================================\n{'current_state': 'state0',\n 'completed_steps': [],\n 'unlocked_documents': ['doc1_demo1.md'],\n 'total_receipts': 0}\n\n========================================================================\nPRE-WORKFLOW ACTION CHECK\n========================================================================\nAction denied: current state state0 does not satisfy required state state4.\n\n========================================================================\nINITIAL BULK RETRIEVAL CHECK\n========================================================================\nExpected denial: Bulk retrieval denied: not all governed artifacts are unlocked.\n\n========================================================================",
+    "stderr_head": ""
+  },
+  "verify": {
+    "returncode": 0,
+    "stdout_head": "Verifying StegVerse runtime...\nWorkflow receipt chain verified.\nAction receipt chain verified.\nState and artifact consistency verified.\nRuntime verification PASSED.\nWorkflow receipts: 4\nAction receipts: 2",
+    "stderr_head": ""
+  }
+}

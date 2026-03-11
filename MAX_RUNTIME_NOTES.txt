@@ -1,0 +1,14 @@
+StegVerse Max Runtime Bundle
+
+Added:
+- governed action execution
+- action receipt chain
+- verify command
+- runtime verification
+
+Best test:
+./stegverse reset
+./stegverse action deploy_change
+./stegverse demo
+./stegverse verify
+./stegverse action-receipts

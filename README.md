@@ -2,22 +2,21 @@
 
 A compact research prototype demonstrating governed execution in which
 execution receipts advance system state, unlock controlled artifacts,
-and eventually authorize simulated actions.
+authorize simulated actions, and can be independently verified.
 
-The suite illustrates a simple but extensible governance model:
+## Core pattern
 
 - execution -> receipt -> admissible state transition -> artifact unlock
 - admissible state -> action request -> action receipt -> action allowed or denied
+- verification -> chain integrity -> auditable runtime evidence
 
-This version adds **receipt-governed action execution**.
-
-## Quick test
+## Best quick test
 
 ```bash
 chmod +x stegverse
 ./stegverse reset
 ./stegverse action deploy_change
 ./stegverse demo
-./stegverse action deploy_change
+./stegverse verify
 ./stegverse action-receipts
 ```
