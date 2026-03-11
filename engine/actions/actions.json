@@ -1,7 +1,16 @@
 {
-  "allowed_actions": [
-    "write_config",
-    "release_secret",
-    "deploy_change"
-  ]
+  "policy_name": "stegverse_action_policy",
+  "version": "1.0.0",
+  "admissible_runtime_state": "state4",
+  "allowed_actions": {
+    "write_config": {
+      "description": "Simulated configuration write"
+    },
+    "release_secret": {
+      "description": "Simulated secret release"
+    },
+    "deploy_change": {
+      "description": "Simulated deployment mutation"
+    }
+  }
 }
