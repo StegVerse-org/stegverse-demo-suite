@@ -193,6 +193,15 @@ Running the demo should show that:
 
 ---
 
+## Execution Transcript
+
+A reproducible runtime transcript demonstrating the governed
+execution workflow is available here:
+
+docs/StegVerse_Governed_Execution_Runtime_Transcript_v1_1.pdf
+
+---
+
 ## Why This Matters
 
 Although intentionally small, the demo models a pattern that can be extended to:
