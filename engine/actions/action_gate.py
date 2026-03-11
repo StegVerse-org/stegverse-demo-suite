@@ -4,7 +4,7 @@ from datetime import datetime, timezone
 from pathlib import Path
 import hashlib, json
 from typing import Dict, List
-from engine.doc_gate import StegVerseGate
+from engine/doc_gate import StegVerseGate
 
 @dataclass
 class ActionReceipt:
