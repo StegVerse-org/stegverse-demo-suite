@@ -1,7 +1,7 @@
 {
   "name": "stegverse-demo-suite",
-  "version": "1.3.0",
-  "description": "Receipt-backed governed artifact workflow demo with cross-platform StegVerse launchers",
+  "version": "2.0.0",
+  "description": "Receipt-backed governed artifact workflow demo with action gating",
   "initial_state": "state0",
   "states": [
     "state0",
