@@ -1,0 +1,7 @@
+{
+  "allowed_actions": [
+    "write_config",
+    "release_secret",
+    "deploy_change"
+  ]
+}
