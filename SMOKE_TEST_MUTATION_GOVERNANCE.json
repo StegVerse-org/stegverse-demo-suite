@@ -1,0 +1,27 @@
+{
+  "runtime-info": {
+    "returncode": 0,
+    "stdout_head": "StegVerse Runtime\nversion: demo-suite v3\n----------------------------------------\nruntime: StegVerse Runtime\nversion: demo-suite v3\nworkflow states: 5\ndocuments governed: 5\nactions governed: 3\nmutations governed: 3",
+    "stderr_head": ""
+  },
+  "pre_action_denied": {
+    "returncode": 0,
+    "stdout_head": "Action denied: current state state0 does not satisfy required state state4.\nCausal release withheld: system history has not yet reached an admissible state.\n{'receipt_id': '9C6C96C5AA20833E', 'decision': 'denied'}",
+    "stderr_head": ""
+  },
+  "pre_mutation_denied": {
+    "returncode": 0,
+    "stdout_head": "Mutation denied: current state state0 does not satisfy required state state4.\nCausal release withheld: system history has not yet reached an admissible mutation state.\n{'receipt_id': '9B5806BCCF41061E', 'decision': 'denied'}",
+    "stderr_head": ""
+  },
+  "demo": {
+    "returncode": 0,
+    "stdout_head": "\n========================================================================\nRESETTING RUNTIME\n========================================================================\nRuntime reset complete.\n\n========================================================================\nINITIAL STATUS\n========================================================================\n{'current_state': 'state0',\n 'completed_steps': [],\n 'unlocked_documents': ['doc1_demo1.md'],\n 'total_receipts': 0}\n\n========================================================================\nPRE-WORKFLOW ACTION CHECK\n========================================================================\nAction denied: current state state0 does not satisfy required state state4.\nCausal release withheld: system history has not yet reached an admissible state.\n\n========================================================================\nPRE-WORKFLOW MUTATION CHECK\n========================================================================\nMutation denied: current state state0 does not satisfy required state state4.\nCausal release withheld: system history has not yet reached an admissible mutation state.",
+    "stderr_head": ""
+  },
+  "verify": {
+    "returncode": 0,
+    "stdout_head": "StegVerse Runtime\nversion: demo-suite v3\n----------------------------------------\nVerifying StegVerse runtime...\nWorkflow receipt chain verified.\nAction receipt chain verified.\nMutation receipt chain verified.\nState and artifact consistency verified.\nRuntime verification PASSED.\nreceipts verified: 4 workflow / 2 action / 2 mutation\nCausal integrity verified: the runtime history remains admissible for governed effect.",
+    "stderr_head": ""
+  }
+}
