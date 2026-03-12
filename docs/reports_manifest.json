@@ -1,0 +1,21 @@
+{
+  "reports": {
+    "report_1": {
+      "title": "Governed Execution Runtime Transcript",
+      "status": "available",
+      "path": "docs/StegVerse_Governed_Execution_Runtime_Transcript_v1_1.pdf"
+    },
+    "report_2": {
+      "title": "Mutation Governance Runtime Transcript",
+      "status": "reserved",
+      "path": "docs/report_2_placeholder.md",
+      "note": "testing ongoing"
+    },
+    "report_3": {
+      "title": "Capability Release Runtime Transcript",
+      "status": "unavailable",
+      "path": "docs/report_3_placeholder.md",
+      "note": "requires future demo capabilities"
+    }
+  }
+}

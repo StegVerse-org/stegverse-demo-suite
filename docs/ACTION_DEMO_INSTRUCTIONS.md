@@ -1,15 +1,8 @@
-# Receipt-Governed Action Demo
-
-Before workflow completion:
+# Action Demo
 
 ```bash
 ./stegverse reset
 ./stegverse action deploy_change
-```
-
-Then:
-
-```bash
 ./stegverse demo
 ./stegverse verify
 ./stegverse action deploy_change

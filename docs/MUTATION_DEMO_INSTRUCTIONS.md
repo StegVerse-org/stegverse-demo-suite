@@ -1,11 +1,8 @@
-# StegVerse Runtime Commands
-
-## Quick Start
+# Mutation Demo
 
 ```bash
-chmod +x stegverse
 ./stegverse reset
-./stegverse explain
+./stegverse mutate deploy
 ./stegverse demo
 ./stegverse verify
 ./stegverse mutate deploy
