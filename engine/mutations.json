@@ -1,0 +1,16 @@
+{
+  "mutations": {
+    "deploy": {
+      "required_state": "state4",
+      "description": "Simulated infrastructure deployment."
+    },
+    "write-config": {
+      "required_state": "state4",
+      "description": "Simulated governed configuration mutation."
+    },
+    "release-secret": {
+      "required_state": "state4",
+      "description": "Simulated governed secret release."
+    }
+  }
+}

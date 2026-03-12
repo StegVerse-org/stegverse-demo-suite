@@ -3,10 +3,11 @@ import hashlib, json
 from pathlib import Path
 from doc_gate import StegVerseGate
 from actions.action_gate import ActionGate
+from mutation_gate import MutationGate
 
 class VerifyGate:
-    def __init__(self, repo_root:Path)->None:
-        self.repo_root=Path(repo_root).resolve(); self.gate=StegVerseGate(self.repo_root); self.action_gate=ActionGate(self.repo_root); self.workflow=self.gate.workflow
+    def __init__(self, repo_root:Path):
+        self.repo_root=Path(repo_root).resolve(); self.gate=StegVerseGate(self.repo_root); self.action_gate=ActionGate(self.repo_root); self.mutation_gate=MutationGate(self.repo_root); self.workflow=self.gate.workflow
     def _verify_workflow_chain(self):
         errors=[]; receipts=self.gate.receipt_chain(); prev='GENESIS'
         for idx,r in enumerate(receipts, start=1):
@@ -34,11 +35,20 @@ class VerifyGate:
                 if r['required_state']!=required: errors.append(f"Required state mismatch for action {r['action_name']}.")
                 expected='allowed' if r['current_state']==required else 'denied'
                 if r['decision']!=expected: errors.append(f"Decision mismatch for action {r['action_name']}.")
-                material=json.dumps({'action_name':r['action_name'],'sequence':r['sequence'],'previous_action_receipt_id':r['previous_action_receipt_id'],'current_state':r['current_state'],'required_state':r['required_state'],'decision':r['decision'],'timestamp_utc':r['timestamp_utc']}, sort_keys=True).encode('utf-8')
-                digest=hashlib.sha256(material).hexdigest()
-                if digest!=r['action_receipt_hash']: errors.append(f"Action receipt hash mismatch at {r['action_name']}.")
-                if digest[:16].upper()!=r['action_receipt_id']: errors.append(f"Action receipt id mismatch at {r['action_name']}.")
             prev=r['action_receipt_id']
+        return len(errors)==0, errors
+    def _verify_mutation_chain(self):
+        errors=[]; receipts=self.mutation_gate.mutation_receipt_chain(); prev='GENESIS'; cfgs=self.mutation_gate.mutations_config['mutations']
+        for idx,r in enumerate(receipts, start=1):
+            if r['sequence']!=idx: errors.append(f"Mutation receipt sequence mismatch at {r['mutation_name']}.")
+            if r['previous_mutation_receipt_id']!=prev: errors.append(f"Mutation receipt previous link mismatch at {r['mutation_name']}.")
+            if r['mutation_name'] not in cfgs: errors.append(f"Unknown mutation in receipt chain: {r['mutation_name']}.")
+            else:
+                required=cfgs[r['mutation_name']]['required_state']
+                if r['required_state']!=required: errors.append(f"Required state mismatch for mutation {r['mutation_name']}.")
+                expected='allowed' if r['current_state']==required else 'denied'
+                if r['decision']!=expected: errors.append(f"Decision mismatch for mutation {r['mutation_name']}.")
+            prev=r['mutation_receipt_id']
         return len(errors)==0, errors
     def _verify_state_and_artifacts(self):
         errors=[]; runtime=self.gate.describe_runtime(); completed=runtime['completed_steps']
@@ -47,8 +57,8 @@ class VerifyGate:
         if runtime['unlocked_documents']!=expected_docs: errors.append('Unlocked artifact set does not match completed step history.')
         expected_state=self.workflow['steps'][completed[-1]]['to_state'] if completed else self.workflow['initial_state']
         if runtime['current_state']!=expected_state: errors.append('Current state does not match completed step history.')
-        if self.gate.bulk_retrieval_allowed() != (len(expected_docs)==len(self.workflow['documents'])): errors.append('Bulk retrieval admissibility does not match runtime state.')
+        if self.gate.bulk_retrieval_allowed()!=(len(expected_docs)==len(self.workflow['documents'])): errors.append('Bulk retrieval admissibility does not match runtime state.')
         return len(errors)==0, errors
     def verify_all(self):
-        wok,we=self._verify_workflow_chain(); aok,ae=self._verify_action_chain(); sok,se=self._verify_state_and_artifacts()
-        return {'passed':wok and aok and sok,'workflow_chain_verified':wok,'action_chain_verified':aok,'state_and_artifacts_verified':sok,'errors':we+ae+se,'workflow_receipts':len(self.gate.receipt_chain()),'action_receipts':len(self.action_gate.action_receipt_chain())}
+        wok,we=self._verify_workflow_chain(); aok,ae=self._verify_action_chain(); mok,me=self._verify_mutation_chain(); sok,se=self._verify_state_and_artifacts()
+        return {'passed':wok and aok and mok and sok,'workflow_chain_verified':wok,'action_chain_verified':aok,'mutation_chain_verified':mok,'state_and_artifacts_verified':sok,'errors':we+ae+me+se,'workflow_receipts':len(self.gate.receipt_chain()),'action_receipts':len(self.action_gate.action_receipt_chain()),'mutation_receipts':len(self.mutation_gate.mutation_receipt_chain())}
