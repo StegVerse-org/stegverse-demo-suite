@@ -1,0 +1,97 @@
+{
+  "$schema": "https://stegverse.org/schemas/architecture_manifest.schema.json",
+  "schema_version": "1.0.0",
+  "repo_id": "stegverse-demo-suite",
+  "repo_type": "demo",
+  "description": "StegVerse Demo Suite \u2014 runnable demonstrations of governed AI agents, policy-enforced execution, and receipt-based workflow control.",
+  "inherits_from": null,
+  "enforcement": "warn",
+  "expected_structure": {
+    "docs/architecture/ARCHITECTURE.md": {
+      "required": true,
+      "purpose": "Canonical architecture documentation"
+    },
+    "docs/architecture/decisions/": {
+      "required": true,
+      "purpose": "Architecture Decision Records"
+    },
+    "README.md": {
+      "required": true,
+      "purpose": "Project overview"
+    },
+    "LICENSE": {
+      "required": true,
+      "purpose": "Software license"
+    },
+    ".github/workflows/": {
+      "required": true,
+      "purpose": "CI/CD workflows"
+    },
+    "requirements.txt": {
+      "required": true,
+      "purpose": "Runtime dependencies"
+    },
+    "pyproject.toml": {
+      "required": false,
+      "purpose": "Modern Python packaging"
+    },
+    "tests/": {
+      "required": true,
+      "purpose": "Test suite"
+    },
+    "engine/": {
+      "required": true,
+      "purpose": "Execution engine"
+    },
+    "workflow/": {
+      "required": true,
+      "purpose": "Workflow definitions"
+    },
+    "docs/": {
+      "required": true,
+      "purpose": "Demo documentation"
+    },
+    "stegverse": {
+      "required": true,
+      "purpose": "CLI entry point"
+    },
+    ".stegverse_runtime/": {
+      "required": false,
+      "purpose": "Runtime state"
+    }
+  },
+  "file_rules": {
+    "naming_conventions": {
+      "python_modules": "snake_case",
+      "classes": "PascalCase",
+      "functions": "snake_case",
+      "test_files": "test_*.py"
+    },
+    "forbidden_patterns": [
+      ".*secret.*",
+      ".*password.*",
+      "\\.env$",
+      "\\.pyc$",
+      "__pycache__",
+      ".*\\.tmp$",
+      ".*~$"
+    ]
+  },
+  "migration_rules": {
+    "review_needed_path": "review_needed/",
+    "legacy_path": "legacy/",
+    "wiring_path": "wiring/",
+    "auto_migrate": false,
+    "require_approval": true
+  },
+  "validation_hooks": {
+    "pre_commit": false,
+    "ci_pull_request": true,
+    "ci_push_main": true,
+    "scheduled_audit": "weekly"
+  },
+  "integration_points": {
+    "sdk": "github.com/StegVerse-org/StegVerse-SDK",
+    "runner": "github.com/StegVerse-org/demo-suite-runner"
+  }
+}
