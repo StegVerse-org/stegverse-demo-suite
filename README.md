@@ -7,6 +7,29 @@ Release: v1.0.0
 
 The user-facing validation layer for StegVerse governance. Provides reproducible test scenarios that prove the safety stack works correctly under controlled conditions.
 
+## Formal Testing Route
+
+This repository is the public demo validation route. It should consume formal testing datasets only after they have been ingested through `StegVerse-org/StegVerse-SDK` and bound to a manifest and intake receipt.
+
+```text
+Dataset / fixture / governance artifact
+→ StegVerse-org/StegVerse-SDK ingestion
+→ manifest binding
+→ receipt binding
+→ public demo validation route
+→ deterministic demo result receipt
+```
+
+Route role:
+
+```text
+SDK ingests.
+Demo-suite demonstrates.
+Receipts bind every transition.
+```
+
+This route is for reproducible, public, explainable validation scenarios. More adversarial or standing-specific cases should be routed to `StegGhost/entity-sandbox-runner` or `StegVerse-Labs/Standing-Proof-Engine` after SDK intake.
+
 ## Features
 
 | Feature | Description |
@@ -61,8 +84,12 @@ stegverse reports
 
 | System | Role |
 |--------|------|
-| StegVerse-SDK | Core governance primitives |
+| StegVerse-SDK | Governed ingestion point for manifest-bound, receipt-bound demo datasets |
 | demo_ingest_engine | Orchestrated bundle ingestion |
+| demo-suite-runner | Formal runner route for GCAT/BCAT probes |
+| StegGhost/entity-sandbox-runner | Rigorous sandbox route for adversarial/entity tests |
+| StegVerse-Labs/Standing-Proof-Engine | Standing proof route for stale-state and authority-rebinding cases |
+| StegVerse-Labs/Boundary-Test | Boundary / GLM case route for neutral declaration and composability fixtures |
 | StegDB | Execution state monitoring |
 | AaCT-E | Audit trail archival |
 
