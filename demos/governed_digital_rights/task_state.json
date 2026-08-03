@@ -2,24 +2,34 @@
   "task_id": "GDRC-DEMO-001",
   "originating_goal": "Demonstrate governed ownership continuity and royalty allocation for digital media using the smallest clear presentation model.",
   "repository": "StegVerse-org/stegverse-demo-suite",
-  "branch": "feat/governed-digital-rights-demo",
-  "state": "CLAIMED",
-  "claimant": "chatgpt-session-2026-08-03-gdrc",
-  "role": "implementation_and_local_validation",
-  "claim_created_at": "2026-08-03T23:19:00Z",
-  "claim_expires_at": "2026-08-04T23:19:00Z",
-  "release_condition": "Release when the implementation PR is merged, explicitly transferred, or no evidence-bearing commit exists before expiration.",
-  "collision_boundary": [
-    "demos/governed_digital_rights/**",
-    "schemas/governed_digital_rights_demo.schema.json",
-    ".github/workflows/governed-digital-rights-demo.yml",
-    "docs/GOVERNED_DIGITAL_RIGHTS_MIRROR_HANDOFF.md"
-  ],
-  "next_task_after_release": "GDRC-PROP-001",
+  "branch": "main",
+  "state": "COMPLETE",
+  "claimant": "StegVerse-org/stegverse-demo-suite",
+  "role": "canonical_implementation_owner",
+  "claim_created_at": "2026-08-03T23:31:00Z",
+  "claim_expires_at": "2026-08-04T23:31:00Z",
+  "release_condition": "SATISFIED: hosted workflow run 30862530846, job 91847393877, and artifact 8874865343 were inspected; final handoff merge completes the evidence transfer.",
+  "claim_released_at": "2026-08-03T23:33:00Z",
+  "collision_boundary": [],
+  "implementation_merge_commit": "83ec7dc8007c00d43d202f7bc2c1a7bd17c6c612",
+  "hosted_validation": {
+    "workflow_run_id": 30862530846,
+    "job_id": 91847393877,
+    "conclusion": "success",
+    "tests_passed": 9,
+    "artifact_id": 8874865343,
+    "artifact_name": "governed-digital-rights-demo-receipt",
+    "artifact_zip_sha256": "e8b5e1723f027da6db1594a3a29ad41ede842ee58a82c0b181392bb3787c9cbe",
+    "inspected_receipt_sha256": "c6ca8bf19e165937c50db83ef8cc0de3e37fb47a119154e231363a04b17ba37f",
+    "source_case_sha256": "08f2e68f1c8b657d1630953d3a90aca6e1b0762785a48f10a995dc1350e1903e",
+    "artifact_expires_at": "2026-11-01T23:31:08Z"
+  },
+  "next_task_after_release": "NONE_FOR_BOUNDED_DEMO",
   "expected_evidence": [
-    "committed fixture",
-    "deterministic validator receipt",
-    "passing conformance tests",
-    "inspected GitHub Actions run"
+    "implementation merged",
+    "hosted tests passed",
+    "receipt hash verified",
+    "artifact directly inspected",
+    "propagation disposition recorded"
   ]
 }

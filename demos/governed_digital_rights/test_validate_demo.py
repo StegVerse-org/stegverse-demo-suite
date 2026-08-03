@@ -69,11 +69,24 @@ class GovernedDigitalRightsDemoTests(unittest.TestCase):
             validate_demo.evaluate_case(changed)
 
     def test_stale_claim_is_machine_observable(self) -> None:
+        stale_claim = copy.deepcopy(self.task_state)
+        stale_claim["state"] = "CLAIMED"
+        stale_claim["claimant"] = "expired-validation-lane"
+        stale_claim["claim_created_at"] = "2026-08-03T23:31:00Z"
+        stale_claim["claim_expires_at"] = "2026-08-04T23:31:00Z"
+        observed = validate_demo.validate_claim_state(
+            stale_claim,
+            now=datetime(2026, 8, 5, tzinfo=timezone.utc),
+        )
+        self.assertTrue(observed["stale"])
+
+    def test_completed_task_is_not_reported_as_stale(self) -> None:
         observed = validate_demo.validate_claim_state(
             copy.deepcopy(self.task_state),
             now=datetime(2026, 8, 5, tzinfo=timezone.utc),
         )
-        self.assertTrue(observed["stale"])
+        self.assertEqual(observed["state"], "COMPLETE")
+        self.assertFalse(observed["stale"])
 
     def test_cli_writes_receipt(self) -> None:
         with tempfile.TemporaryDirectory() as temporary_directory:
