@@ -1,0 +1,158 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://stegverse.org/schemas/governed-digital-rights-demo.schema.json",
+  "title": "StegVerse Governed Digital Rights Demo Case",
+  "description": "Bounded public demo contract for asset identity, rights continuity, authority transitions, usage, and royalty allocation.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema_version",
+    "goal_id",
+    "asset",
+    "participants",
+    "initial_rights",
+    "royalty_policy",
+    "transitions",
+    "usage_periods"
+  ],
+  "properties": {
+    "schema_version": {"const": "1.0.0"},
+    "goal_id": {"const": "GDRC-DEMO-001"},
+    "asset": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["asset_id", "title", "asset_type", "components"],
+      "properties": {
+        "asset_id": {"type": "string", "minLength": 1},
+        "title": {"type": "string", "minLength": 1},
+        "asset_type": {"const": "music_track"},
+        "components": {
+          "type": "array",
+          "minItems": 1,
+          "items": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": ["component_id", "component_type", "sha256"],
+            "properties": {
+              "component_id": {"type": "string", "minLength": 1},
+              "component_type": {"enum": ["composition", "master_recording", "lyrics", "artwork", "sample", "performance"]},
+              "sha256": {"type": "string", "pattern": "^[0-9a-f]{64}$"}
+            }
+          }
+        }
+      }
+    },
+    "participants": {
+      "type": "array",
+      "minItems": 2,
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["participant_id", "display_name", "roles", "can_sign_split_change"],
+        "properties": {
+          "participant_id": {"type": "string", "minLength": 1},
+          "display_name": {"type": "string", "minLength": 1},
+          "roles": {"type": "array", "minItems": 1, "items": {"type": "string", "minLength": 1}},
+          "can_sign_split_change": {"const": true}
+        }
+      }
+    },
+    "initial_rights": {
+      "$ref": "#/$defs/rightsState"
+    },
+    "royalty_policy": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["policy_id", "currency", "rounding", "calculation"],
+      "properties": {
+        "policy_id": {"type": "string", "minLength": 1},
+        "currency": {"const": "USD"},
+        "rounding": {"const": "largest_remainder"},
+        "calculation": {"type": "string", "minLength": 1}
+      }
+    },
+    "transitions": {
+      "type": "array",
+      "minItems": 2,
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "transition_id",
+          "submitted_at",
+          "effective_at",
+          "proposed_shares_basis_points",
+          "signatures",
+          "expected_decision",
+          "expected_reason"
+        ],
+        "properties": {
+          "transition_id": {"type": "string", "minLength": 1},
+          "submitted_at": {"type": "string", "format": "date-time"},
+          "effective_at": {"type": "string", "format": "date-time"},
+          "proposed_shares_basis_points": {"$ref": "#/$defs/shareMap"},
+          "signatures": {"type": "array", "uniqueItems": true, "items": {"type": "string", "minLength": 1}},
+          "expected_decision": {"enum": ["ALLOW", "DENY"]},
+          "expected_reason": {"enum": ["MISSING_REQUIRED_SIGNATURES", "RETROACTIVE_CHANGE_PROHIBITED", "AUTHORIZED_NON_RETROACTIVE_AMENDMENT"]}
+        }
+      }
+    },
+    "usage_periods": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "usage_id",
+          "occurred_at",
+          "platform",
+          "territory",
+          "streams",
+          "distributable_amount_cents",
+          "expected_shares_basis_points",
+          "expected_allocation_cents"
+        ],
+        "properties": {
+          "usage_id": {"type": "string", "minLength": 1},
+          "occurred_at": {"type": "string", "format": "date-time"},
+          "platform": {"type": "string", "minLength": 1},
+          "territory": {"type": "string", "minLength": 2},
+          "streams": {"type": "integer", "minimum": 0},
+          "distributable_amount_cents": {"type": "integer", "minimum": 0},
+          "expected_shares_basis_points": {"$ref": "#/$defs/shareMap"},
+          "expected_allocation_cents": {
+            "type": "object",
+            "minProperties": 2,
+            "additionalProperties": {"type": "integer", "minimum": 0}
+          }
+        }
+      }
+    }
+  },
+  "$defs": {
+    "shareMap": {
+      "type": "object",
+      "minProperties": 2,
+      "additionalProperties": {"type": "integer", "minimum": 0, "maximum": 10000}
+    },
+    "rightsState": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["effective_at", "change_policy", "shares_basis_points"],
+      "properties": {
+        "effective_at": {"type": "string", "format": "date-time"},
+        "change_policy": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["required_signers", "retroactive_changes_allowed"],
+          "properties": {
+            "required_signers": {"const": "all_participants"},
+            "retroactive_changes_allowed": {"const": false}
+          }
+        },
+        "shares_basis_points": {"$ref": "#/$defs/shareMap"}
+      }
+    }
+  }
+}
