@@ -2,23 +2,26 @@
 
 ## Canonical identity
 - Active goal ID: `GDRC-DEMO-001`
-- Active goal: Install and validate the smallest public demonstration of governed digital-rights continuity for royalty-bearing media.
+- Active goal: Install, validate, and durably transfer the smallest public demonstration of governed digital-rights continuity for royalty-bearing media.
 - Originating session goal: Demonstrate how governed AI can track ownership, authority transitions, usage, royalty allocation, and historical reconstruction for songs, albums, movies, and related digital products.
-- Repository: `StegVerse-org/stegverse-demo-suite`
-- Branch: `feat/governed-digital-rights-demo`
-- Pull request: `StegVerse-org/stegverse-demo-suite#1`
+- Canonical repository: `StegVerse-org/stegverse-demo-suite`
+- Default branch: `main`
+- Implementation pull request: `StegVerse-org/stegverse-demo-suite#1`
+- Implementation merge commit: `83ec7dc8007c00d43d202f7bc2c1a7bd17c6c612`
+- Hosted-evidence branch: `chore/gdrc-hosted-validation`
 - Canonical handoff: `docs/GOVERNED_DIGITAL_RIGHTS_MIRROR_HANDOFF.md`
-- Canonical task owner: `StegVerse-org/stegverse-demo-suite`
 
-## Active claims
-| Task ID | Claim state | Role | Claimant | Exact surfaces | Created | Expiration / release condition | Expected evidence |
-|---|---|---|---|---|---|---|---|
-| GDRC-DEMO-001 | CLAIMED_FOR_INTEGRATION | hosted validation + merge | `chatgpt-session-2026-08-03-gdrc` | PR #1 and the eight canonical files listed below | 2026-08-03T18:19:00-05:00 | Release on merged PR, explicit transfer, or 2026-08-04T18:19:00-05:00 if no new evidence-bearing commit or run appears | inspected workflow jobs, receipt artifact, merge commit |
-| GDRC-PROP-001 | CLAIMED_FOR_INTEGRATION | propagation assessment | `chatgpt-session-2026-08-03-gdrc` | Site, Publisher, admissibility-wiki, stegguardian-wiki, master-records handoffs/contracts | 2026-08-03T18:19:00-05:00 | Release after the canonical demo is merged and each destination is classified as required, not required, or blocked with an exact durable owner | destination commit, issue, or explicit no-propagation decision |
+## Current role and claims
+| Task ID | State | Owner / lane | Exact surfaces | Claim release condition |
+|---|---|---|---|---|
+| GDRC-DEMO-001 | CLAIMED_FOR_VALIDATION | `chatgpt-session-2026-08-03-gdrc` | `demos/governed_digital_rights/task_state.json`, this handoff, hosted evidence PR | directly inspect a passing pull-request workflow job and receipt artifact, then merge the evidence handoff; otherwise classify BLOCKED with GitHub Actions as owner and a machine-observable run condition |
+| GDRC-PROP-001 | MERGED_INTO_CANONICAL_WORKSTREAM | existing Site → Publisher → admissibility → Guardian chain; Master-Records only for formal custody | propagation disposition table below | no direct cross-repository mutation is authorized for the bounded fixture; a later product adoption must enter each repository through its current orchestrator and handoff |
 
-Collision boundary: no open issue, pull request, branch search result, or repository task containing `royalty`, `rights`, `ownership`, `song`, or `digital` was found before claim creation. This claim does not authorize changes to SDK intake, kernel authority, payout execution, external collecting-society systems, or production payment rails.
+The original implementation claim was released by merge commit `83ec7dc8007c00d43d202f7bc2c1a7bd17c6c612`. The hosted-validation claim was created at `2026-08-03T23:31:00Z` and expires at `2026-08-04T23:31:00Z` unless renewed by evidence or converted to COMPLETE/BLOCKED.
 
-## Authoritative files
+Collision boundary: no open issue, pull request, or repository search result for this capability was found before implementation. The evidence lane may change only the task-state and canonical handoff unless a hosted failure proves a bounded implementation repair is required.
+
+## Authoritative implementation files
 1. `docs/GOVERNED_DIGITAL_RIGHTS_MIRROR_HANDOFF.md`
 2. `demos/governed_digital_rights/README.md`
 3. `demos/governed_digital_rights/demo_case.json`
@@ -28,95 +31,106 @@ Collision boundary: no open issue, pull request, branch search result, or reposi
 7. `schemas/governed_digital_rights_demo.schema.json`
 8. `.github/workflows/governed-digital-rights-demo.yml`
 
-Repository boundary source: `README.md` defines this repository as the public reproducible demonstration layer after SDK ingestion, manifest binding, and receipt binding. The demo does not bypass that route.
+`README.md` remains the repository authority boundary: this repository demonstrates receipt-bound governed scenarios and does not become an authority-bearing kernel, payment rail, legal registry, collecting society, or production intake bypass.
 
-## Session goal inventory
-| Task ID | Originating goal | Exact destination | Owner | Claim state | Completion | Validation | Integration | Archival dependency | Evidence | Next executable action |
-|---|---|---|---|---|---|---|---|---|---|---|
-| GDRC-DEMO-001 | One fictional song, three participants, two usage periods | eight canonical files in PR #1 | demo-suite | CLAIMED_FOR_INTEGRATION | implemented | local pass; hosted pending | PR open | yes | commits `2722f39` through `ef75cb3`; local receipt hash below | inspect hosted run for latest PR head |
-| GDRC-AUTH-001 | Deny unilateral label increase | fixture + evaluator + tests | demo-suite | COMPLETE | complete | deterministic `DENY`; test pass | included in PR #1 | no after merge | `MISSING_REQUIRED_SIGNATURES` | none unless hosted run fails |
-| GDRC-TIME-001 | Apply unanimous amendment prospectively | fixture + evaluator + tests | demo-suite | COMPLETE | complete | old/new period assertions pass | included in PR #1 | no after merge | `AUTHORIZED_NON_RETROACTIVE_AMENDMENT` | none unless hosted run fails |
-| GDRC-RECON-001 | Reconstruct historical rights and allocation | evaluator receipt | demo-suite workflow | MACHINE_OWNED | locally complete | receipt hash verified locally | artifact pending | yes | `e2172b505ec9978513d5143858b55abf0cfbd935a6adb8b852cdd6cf8d6fa784` | inspect uploaded workflow artifact |
-| GDRC-AUTO-001 | Automate tests, receipt, and stale-claim visibility | workflow + task state | GitHub Actions | MACHINE_OWNED | installed | workflow run pending | PR trigger installed | yes | `.github/workflows/governed-digital-rights-demo.yml` | observe PR synchronization run |
-| GDRC-PROP-001 | Determine Site/Publisher/wiki/master-records propagation | destination handoffs or issues | current integration claimant | CLAIMED_FOR_INTEGRATION | not started | pending | pending | yes | this handoff | inspect destination handoffs after hosted evidence exists |
-| GDRC-STANDARD-001 | Preserve expansion path for albums, films, publishing, images, games, datasets, AI-training permissions | this handoff | canonical workstream | MERGED_INTO_CANONICAL_WORKSTREAM | requirements transferred, not activated | not applicable | bounded roadmap only | no | design decisions below | activate only through a separately claimed extension |
+## Complete session execution inventory
+| Task ID | Goal | Destination | Owner | State | Validation | Integration | Evidence | Next executable action |
+|---|---|---|---|---|---|---|---|---|
+| GDRC-DEMO-001 | one song, three participants, two royalty periods | eight files above | demo-suite | implemented and merged | local PASS; hosted pending | main | PR #1; merge `83ec7dc8` | create and inspect hosted evidence PR |
+| GDRC-AUTH-001 | deny unilateral label increase | fixture, evaluator, tests | demo-suite | COMPLETE | deterministic `DENY — MISSING_REQUIRED_SIGNATURES` | merged | local 9-test run | none |
+| GDRC-TIME-001 | accept unanimous prospective amendment | fixture, evaluator, tests | demo-suite | COMPLETE | deterministic `ALLOW — AUTHORIZED_NON_RETROACTIVE_AMENDMENT` | merged | local 9-test run | none |
+| GDRC-RECON-001 | reconstruct old and new rights states and allocations | evaluator receipt | demo-suite workflow | MACHINE_OWNED | local receipt verified; hosted artifact pending | installed | receipt hash below | inspect hosted artifact |
+| GDRC-AUTO-001 | test, hash, artifact, claim-expiry visibility | GitHub Actions workflow | demo-suite / GitHub Actions | installed | hosted observation pending | main | workflow file merged | observe evidence PR run |
+| GDRC-PROP-001 | classify adjacent repository obligations | this handoff and existing destination handoffs | existing canonical owners | MERGED_INTO_CANONICAL_WORKSTREAM | destination handoffs inspected | no direct mutation authorized | propagation table | none for bounded fixture |
+| GDRC-STANDARD-001 | preserve expansion path to albums, films, publishing, images, games, datasets, and AI-training permissions | this handoff | future separately claimed extension | SUPERSEDED_AS_ACTIVE_TASK; requirements preserved | not activated | not part of bounded demo | design decisions below | open only through a new nonconflicting claim |
 
-## Design decisions transferred from the session
-1. The smallest presentation is one fictional song, three rights participants, one unauthorized ownership mutation, and one properly authorized future-effective amendment across two usage periods.
-2. Rights state is not a single owner field. The fixture records asset identity, component hashes, participants, shares, authority, effective time, usage, policy, allocation, attempted mutation, accepted amendment, and reconstruction evidence.
-3. AI may interpret and reconcile records, but signed authority declarations, policy references, and receipts remain the source of truth.
-4. Historical state is immutable: a later amendment cannot retroactively change an earlier allocation.
-5. Invalid transitions remain visible as denied events.
-6. Public demo evidence does not assert legal title, external platform integration, collecting-society recognition, payment settlement, endorsement, or production authority.
-7. Presentation title/question: `Who Gets Paid—and Can the Answer Be Proven?`
-
-## Implemented scenario
+## Implemented scenario and decisions
 - Initial split: artist/songwriter 50%, producer 25%, label/publisher 25%.
-- Period 1: 10,000 streams and USD 100.00 distributable; allocation USD 50.00 / 25.00 / 25.00.
-- Unauthorized label-only increase to 40%: `DENY — MISSING_REQUIRED_SIGNATURES`.
+- Period 1: 10,000 streams and USD 100.00 distributable; USD 50.00 / 25.00 / 25.00.
+- Label-only attempt to increase its share to 40%: `DENY — MISSING_REQUIRED_SIGNATURES`.
 - Unanimous amendment effective after period 1: `ALLOW — AUTHORIZED_NON_RETROACTIVE_AMENDMENT`.
 - New split: artist 40%, producer 35%, label 25%.
 - Period 2: USD 40.00 / 35.00 / 25.00.
+- Later state does not rewrite the earlier royalty period.
+- Denied transitions remain visible.
+- AI interpretation is not the source of rights authority; declared participants, signatures, policies, effective time, and receipts are.
 
 ## Validation evidence
-Local deterministic execution on 2026-08-03:
+Local deterministic validation performed against the committed content:
 
-```bash
-python -m unittest discover -s demos/governed_digital_rights -p 'test_*.py' -v
-# Ran 9 tests: OK
-
-python demos/governed_digital_rights/validate_demo.py \
-  --input demos/governed_digital_rights/demo_case.json \
-  --schema schemas/governed_digital_rights_demo.schema.json \
-  --task-state demos/governed_digital_rights/task_state.json \
-  --output build/governed-digital-rights/receipt.json
-# status COMPLETE
-# receipt_sha256 e2172b505ec9978513d5143858b55abf0cfbd935a6adb8b852cdd6cf8d6fa784
+```text
+unit tests: 9/9 PASS
+receipt status: COMPLETE
+source_case_sha256: 08f2e68f1c8b657d1630953d3a90aca6e1b0762785a48f10a995dc1350e1903e
+receipt_sha256: e2172b505ec9978513d5143858b55abf0cfbd935a6adb8b852cdd6cf8d6fa784
 ```
 
-Validated locally:
-- JSON parsing and committed schema-document binding;
-- exact participant-set equality;
+Validated semantics:
+- required contract and schema-document binding;
+- component digest shape and unique identities;
+- exact participant sets;
 - 10,000-basis-point conservation;
-- chronological rights reconstruction;
+- chronological state application;
 - unanimous signature authority;
 - non-retroactivity;
 - deterministic largest-remainder allocation;
 - royalty conservation;
 - expected-decision matching;
-- receipt hash determinism;
+- deterministic receipt hashing;
 - stale-claim observability.
 
-Hosted state at PR creation: no pull-request workflow run or commit status was yet returned for head `ef75cb33cd1ffd539dd82bc3a0082c51fdc54dc9`. This handoff update is an evidence-bearing synchronization commit intended to trigger the installed pull-request workflow. Release condition: a run associated with the latest PR head becomes inspectable, or the absence is recorded as BLOCKED with GitHub Actions as owner and an exact repository setting/run condition.
+Hosted evidence is not yet claimed. The workflow was introduced by PR #1, so no pull-request-triggered run existed before it reached `main`. The branch `chore/gdrc-hosted-validation` changes the canonical task state and handoff, providing a nonproduction evidence PR that can now trigger the workflow already present on the default branch.
 
 ## Automation contract
 - Owner repository: `StegVerse-org/stegverse-demo-suite`.
 - Trigger: pull request, push, or manual dispatch when canonical files change.
-- Deterministic inputs: fixture, schema, evaluator, tests, task state.
-- Outputs: test result, `COMPLETE` JSON receipt, SHA-256 verification, uploaded artifact.
-- Persistent state: Git history, PR #1, workflow run, artifact, this handoff.
+- Inputs: fixture, schema, evaluator, tests, and persistent task state.
+- Outputs: tests, deterministic JSON receipt, independent hash check, 90-day artifact.
 - Fail closed on missing evidence, malformed shares, unauthorized signatures, retroactivity, expectation mismatch, allocation mismatch, or hash mismatch.
-- States recognized: COMPLETE, BLOCKED, RETRY, REVIEW_REQUIRED, FAILED, CLAIMED, SUPERSEDED, MERGED.
-- Collision control: task ID plus exact path claim.
-- Stale claim: machine-observable after `2026-08-04T23:19:00Z` while state remains CLAIMED.
+- Recognized states: COMPLETE, BLOCKED, RETRY, REVIEW_REQUIRED, FAILED, CLAIMED, SUPERSEDED, MERGED.
+- Duplicate control: task ID and exact claimed paths.
+- Stale claim release: `2026-08-04T23:31:00Z` unless evidence renews or closes it.
 
-## Integration and propagation obligations
-- SDK intake is an architectural prerequisite for formal production input, not a blocker to a bounded committed public fixture.
-- Do not claim Site, Publisher, admissibility-wiki, stegguardian-wiki, or master-records propagation until destination handoffs/contracts are inspected and destination evidence exists.
-- If a destination already has a canonical owner for public demo publication or admissibility evidence, transfer only the missing reference to PR #1 and this handoff; do not duplicate the evaluator.
+## Cross-repository propagation disposition
+| Destination | Authoritative handoff inspected | Disposition for this bounded fixture | Owner and machine-observable release condition |
+|---|---|---|---|
+| `StegVerse-Labs/Site` | `docs/SITE_MIRROR_HANDOFF.md` | DEPENDENCY_BLOCKED / NOT DIRECTLY ADMITTED. Do not duplicate the evaluator or bypass the running Site task sequence and orchestrator. A future StegMusic/public presentation may reference the canonical demo only after Site orchestration admits a nonconflicting workload. | Site orchestrator; release when current task sequence reaches its idle terminal statement and the orchestrator admits an exact GDRC projection task. |
+| `GCAT-BCAT-Engine/Publisher` | `PUBLISHER_MIRROR_HANDOFF.md` | NOT A DIRECT DESTINATION. Publisher consumes hash-bound Site activation/projection state; this demo is not Site `ACTIVATION_COMPLETE` evidence and grants no publication authority. | Existing hourly importer; release only after Site emits an explicit, hash-bound destination packet for a governed GDRC projection. |
+| `StegVerse-Labs/admissibility-wiki` | `ADMISSIBILITY_WIKI_MIRROR_HANDOFF.md` | DEPENDENCY_BLOCKED. Do not create a separate interpretation before canonical Publisher evidence or an orchestrator-admitted goal. | Existing repository validation/task mesh; release after Publisher evidence exists and the wiki admits a bounded interpretation. |
+| `StegVerse-002/stegguardian-wiki` | `STEGGUARDIAN_WIKI_MIRROR_HANDOFF.md` | DEPENDENCY_BLOCKED. Guardian interpretation follows bounded admissibility evidence and does not arise from demo visibility. | Guardian orchestration; release only after the upstream Site → Publisher → admissibility chain is verified. |
+| `master-records/orchestration` | `ORCHESTRATION_MIRROR_HANDOFF.md` | NOT REQUIRED FOR THE COMMITTED FICTIONAL FIXTURE. Formal SDK-ingested or live usage evidence would require authenticated custody and reconstruction here. | Master-Records custody workflow; release only when a future formal/live GDRC event is submitted through an authorized intake and custody route. |
 
-## Completion and archive conditions
-The originating session is archive-safe only after:
-1. PR #1 has an inspected workflow job and receipt artifact;
-2. PR #1 is merged or explicitly transferred to a durable integration owner;
-3. implementation claim is released or converted to COMPLETE/MERGED;
-4. propagation obligations are completed or installed as exact durable destination tasks with machine-observable release conditions;
-5. final evidence and percentages are recorded here.
+No current propagation claim remains against destination files. The unique session requirement—evaluate whether propagation is pertinent—is complete: direct propagation would violate current destination authority and sequencing. Future adoption is a new separately admitted goal, not unfinished implementation of this bounded demo.
+
+## Durable merge records
+```text
+MERGED INTO: StegVerse-org/stegverse-demo-suite/main@83ec7dc8007c00d43d202f7bc2c1a7bd17c6c612
+CANONICAL CONTINUATION: StegVerse-org/stegverse-demo-suite/docs/GOVERNED_DIGITAL_RIGHTS_MIRROR_HANDOFF.md
+ADJACENT ORCHESTRATION: StegVerse-Labs/Site/docs/SITE_MIRROR_HANDOFF.md
+ADJACENT PUBLICATION: GCAT-BCAT-Engine/Publisher/PUBLISHER_MIRROR_HANDOFF.md
+ADJACENT ADMISSIBILITY: StegVerse-Labs/admissibility-wiki/ADMISSIBILITY_WIKI_MIRROR_HANDOFF.md
+ADJACENT GUARDIAN: StegVerse-002/stegguardian-wiki/STEGGUARDIAN_WIKI_MIRROR_HANDOFF.md
+FORMAL/LIVE CUSTODY OWNER: master-records/orchestration/ORCHESTRATION_MIRROR_HANDOFF.md
+```
+
+## Release posture
+No tag or release is authorized by this goal yet. The feature is merged, but hosted workflow and artifact inspection remain incomplete. A repository release must follow repository-wide versioning and release policy rather than treating one bounded scenario as whole-repository completion.
+
+## Archive conditions
+The session becomes archive-safe when:
+1. an evidence PR triggers the installed workflow;
+2. job steps and logs are inspected;
+3. the uploaded receipt artifact is inspected and its hash matches the deterministic local receipt;
+4. the task state is converted from CLAIMED to COMPLETE/MERGED;
+5. the final evidence handoff is merged.
+
+If GitHub Actions produces no inspectable run, the session remains temporarily retained only until the handoff records `BLOCKED`, names GitHub Actions/repository workflow enablement as owner, and gives the exact observable release condition.
 
 ## Current percentages
-- Task completion: 5/7 inventory items complete or durably transferred = 71%.
-- Developed files: 8/8 = 100%; scaffolding/stubs: 0.
-- Validation: 3/5 layers = 60% (static/semantic, unit, local deterministic complete; hosted workflow and artifact inspection pending).
-- Integration: 2/4 = 50% (canonical owner and PR complete; merge and propagation pending).
-- Goal activation: 65%.
-- Session consolidation: 7/7 goals transferred into this handoff; archival remains blocked by hosted evidence, merge/transfer, and propagation disposition.
+- Task completion: 6/7 = 86% (hosted evidence remains).
+- Developed files: 8/8 = 100%; scaffolding/stubs: 0; missing: 0.
+- Validation: 3/5 = 60% (static/semantic, unit, local deterministic complete; hosted job and artifact inspection pending).
+- Integration: 3/4 = 75% (canonical owner, merge, propagation disposition complete; final evidence merge pending).
+- Propagation assessment: 5/5 destinations classified = 100%; actual propagation correctly remains 0 because no destination admits this bounded fixture as activation evidence.
+- Goal activation: 80%.
+- Session consolidation: 7/7 goals durably transferred; archival blocked only by hosted validation evidence and final claim release.
