@@ -1,0 +1,76 @@
+name: Governed Digital Rights Demo
+
+on:
+  workflow_dispatch:
+  push:
+    paths:
+      - 'demos/governed_digital_rights/**'
+      - 'schemas/governed_digital_rights_demo.schema.json'
+      - 'docs/GOVERNED_DIGITAL_RIGHTS_MIRROR_HANDOFF.md'
+      - '.github/workflows/governed-digital-rights-demo.yml'
+  pull_request:
+    paths:
+      - 'demos/governed_digital_rights/**'
+      - 'schemas/governed_digital_rights_demo.schema.json'
+      - 'docs/GOVERNED_DIGITAL_RIGHTS_MIRROR_HANDOFF.md'
+      - '.github/workflows/governed-digital-rights-demo.yml'
+
+permissions:
+  contents: read
+
+concurrency:
+  group: gdrc-demo-${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: false
+
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: Run conformance tests
+        run: |
+          python -m unittest discover \
+            -s demos/governed_digital_rights \
+            -p 'test_*.py' \
+            -v
+
+      - name: Generate deterministic receipt
+        run: |
+          python demos/governed_digital_rights/validate_demo.py \
+            --input demos/governed_digital_rights/demo_case.json \
+            --schema schemas/governed_digital_rights_demo.schema.json \
+            --task-state demos/governed_digital_rights/task_state.json \
+            --output build/governed-digital-rights/receipt.json
+
+      - name: Verify receipt status and hash
+        run: |
+          python - <<'PY'
+          import hashlib
+          import json
+          from pathlib import Path
+
+          path = Path('build/governed-digital-rights/receipt.json')
+          receipt = json.loads(path.read_text(encoding='utf-8'))
+          assert receipt['status'] == 'COMPLETE', receipt
+          recorded_hash = receipt.pop('receipt_sha256')
+          encoded = json.dumps(receipt, sort_keys=True, separators=(',', ':'), ensure_ascii=False).encode('utf-8')
+          calculated_hash = hashlib.sha256(encoded).hexdigest()
+          assert recorded_hash == calculated_hash, (recorded_hash, calculated_hash)
+          print(json.dumps({'status': 'COMPLETE', 'receipt_sha256': recorded_hash}, sort_keys=True))
+          PY
+
+      - name: Upload inspectable receipt
+        uses: actions/upload-artifact@v4
+        with:
+          name: governed-digital-rights-demo-receipt
+          path: build/governed-digital-rights/receipt.json
+          if-no-files-found: error
+          retention-days: 90

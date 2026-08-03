@@ -1,0 +1,25 @@
+{
+  "task_id": "GDRC-DEMO-001",
+  "originating_goal": "Demonstrate governed ownership continuity and royalty allocation for digital media using the smallest clear presentation model.",
+  "repository": "StegVerse-org/stegverse-demo-suite",
+  "branch": "feat/governed-digital-rights-demo",
+  "state": "CLAIMED",
+  "claimant": "chatgpt-session-2026-08-03-gdrc",
+  "role": "implementation_and_local_validation",
+  "claim_created_at": "2026-08-03T23:19:00Z",
+  "claim_expires_at": "2026-08-04T23:19:00Z",
+  "release_condition": "Release when the implementation PR is merged, explicitly transferred, or no evidence-bearing commit exists before expiration.",
+  "collision_boundary": [
+    "demos/governed_digital_rights/**",
+    "schemas/governed_digital_rights_demo.schema.json",
+    ".github/workflows/governed-digital-rights-demo.yml",
+    "docs/GOVERNED_DIGITAL_RIGHTS_MIRROR_HANDOFF.md"
+  ],
+  "next_task_after_release": "GDRC-PROP-001",
+  "expected_evidence": [
+    "committed fixture",
+    "deterministic validator receipt",
+    "passing conformance tests",
+    "inspected GitHub Actions run"
+  ]
+}

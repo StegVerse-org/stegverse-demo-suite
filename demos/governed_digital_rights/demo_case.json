@@ -1,0 +1,125 @@
+{
+  "schema_version": "1.0.0",
+  "goal_id": "GDRC-DEMO-001",
+  "asset": {
+    "asset_id": "sv:gdr:track:who-gets-paid-demo",
+    "title": "Who Gets Paid?",
+    "asset_type": "music_track",
+    "components": [
+      {
+        "component_id": "composition-001",
+        "component_type": "composition",
+        "sha256": "a6b823d7b1549b4f043dbb715f1f0fa24a54503784f45c5df1f5ea7fd5f3d272"
+      },
+      {
+        "component_id": "master-001",
+        "component_type": "master_recording",
+        "sha256": "3395ae8ab83d981b2b82e8e5e947230a15e89a1173a37bd50f0b59d0e6a588d7"
+      }
+    ]
+  },
+  "participants": [
+    {
+      "participant_id": "artist",
+      "display_name": "Avery Artist",
+      "roles": ["artist", "songwriter"],
+      "can_sign_split_change": true
+    },
+    {
+      "participant_id": "producer",
+      "display_name": "Parker Producer",
+      "roles": ["producer"],
+      "can_sign_split_change": true
+    },
+    {
+      "participant_id": "label",
+      "display_name": "Lantern Label",
+      "roles": ["label", "publisher"],
+      "can_sign_split_change": true
+    }
+  ],
+  "initial_rights": {
+    "effective_at": "2026-07-01T00:00:00Z",
+    "change_policy": {
+      "required_signers": "all_participants",
+      "retroactive_changes_allowed": false
+    },
+    "shares_basis_points": {
+      "artist": 5000,
+      "producer": 2500,
+      "label": 2500
+    }
+  },
+  "royalty_policy": {
+    "policy_id": "royalty-policy-flat-distributable-v1",
+    "currency": "USD",
+    "rounding": "largest_remainder",
+    "calculation": "allocate distributable_amount_cents by active rights shares_basis_points"
+  },
+  "transitions": [
+    {
+      "transition_id": "transition-unauthorized-label-increase",
+      "submitted_at": "2026-07-20T12:00:00Z",
+      "effective_at": "2026-07-21T00:00:00Z",
+      "proposed_shares_basis_points": {
+        "artist": 3500,
+        "producer": 2500,
+        "label": 4000
+      },
+      "signatures": ["label"],
+      "expected_decision": "DENY",
+      "expected_reason": "MISSING_REQUIRED_SIGNATURES"
+    },
+    {
+      "transition_id": "transition-authorized-artist-to-producer",
+      "submitted_at": "2026-08-01T12:00:00Z",
+      "effective_at": "2026-08-02T00:00:00Z",
+      "proposed_shares_basis_points": {
+        "artist": 4000,
+        "producer": 3500,
+        "label": 2500
+      },
+      "signatures": ["artist", "producer", "label"],
+      "expected_decision": "ALLOW",
+      "expected_reason": "AUTHORIZED_NON_RETROACTIVE_AMENDMENT"
+    }
+  ],
+  "usage_periods": [
+    {
+      "usage_id": "usage-period-1",
+      "occurred_at": "2026-07-31T23:59:59Z",
+      "platform": "Fictional Stream Service",
+      "territory": "US",
+      "streams": 10000,
+      "distributable_amount_cents": 10000,
+      "expected_shares_basis_points": {
+        "artist": 5000,
+        "producer": 2500,
+        "label": 2500
+      },
+      "expected_allocation_cents": {
+        "artist": 5000,
+        "producer": 2500,
+        "label": 2500
+      }
+    },
+    {
+      "usage_id": "usage-period-2",
+      "occurred_at": "2026-08-31T23:59:59Z",
+      "platform": "Fictional Stream Service",
+      "territory": "US",
+      "streams": 10000,
+      "distributable_amount_cents": 10000,
+      "expected_shares_basis_points": {
+        "artist": 4000,
+        "producer": 3500,
+        "label": 2500
+      },
+      "expected_allocation_cents": {
+        "artist": 4000,
+        "producer": 3500,
+        "label": 2500
+      }
+    }
+  ]
+}
