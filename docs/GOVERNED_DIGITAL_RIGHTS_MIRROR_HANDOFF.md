@@ -3,10 +3,10 @@
 ## Archive state
 
 ```text
-COMPLETE_PENDING_FINAL_EVIDENCE_PR_MERGE
+COMPLETE_PENDING_EVIDENCE_PR_MERGE
 ```
 
-After the evidence PR containing this file is merged, the originating session has no unique implementation, validation, integration, propagation, reconciliation, or observation claim and is archive-ready.
+After PR `StegVerse-org/stegverse-demo-suite#2` is merged, the originating session has no unique implementation, validation, integration, propagation, reconciliation, or observation claim and is archive-ready.
 
 ## Canonical identity
 - Goal ID: `GDRC-DEMO-001`
@@ -17,15 +17,15 @@ After the evidence PR containing this file is merged, the originating session ha
 - Canonical handoff: `docs/GOVERNED_DIGITAL_RIGHTS_MIRROR_HANDOFF.md`
 - Implementation PR: `#1`
 - Implementation merge: `83ec7dc8007c00d43d202f7bc2c1a7bd17c6c612`
-- Evidence PR: `#2`
+- Evidence and lifecycle PR: `#2`
 
 ## Claims
-| Task ID | Final state | Former owner | Released by |
+| Task ID | Final state | Former owner | Release evidence |
 |---|---|---|---|
-| GDRC-DEMO-001 | COMPLETE | `chatgpt-session-2026-08-03-gdrc` implementation and hosted-validation lanes | successful hosted run, direct artifact inspection, and final evidence PR merge |
+| GDRC-DEMO-001 | COMPLETE | `chatgpt-session-2026-08-03-gdrc` implementation and hosted-validation lanes | implementation merge, hosted job/log inspection, direct artifact inspection, completed-state lifecycle test, final evidence merge |
 | GDRC-PROP-001 | MERGED_INTO_CANONICAL_WORKSTREAM | originating session integration lane | destination handoff inspection and explicit bounded propagation disposition |
 
-No active session-owned path claim remains. `demos/governed_digital_rights/task_state.json` is the machine-readable completion record.
+No active session-owned path claim remains. `demos/governed_digital_rights/task_state.json` is the machine-readable completion state. The earlier expiring claim was released and the collision boundary is empty.
 
 ## Authoritative implementation files
 1. `docs/GOVERNED_DIGITAL_RIGHTS_MIRROR_HANDOFF.md`
@@ -43,12 +43,12 @@ No active session-owned path claim remains. `demos/governed_digital_rights/task_
 | Task ID | Deliverable | Exact location | State | Evidence / next action |
 |---|---|---|---|---|
 | GDRC-DEMO-001 | one-song, three-participant, two-period demo | eight files above | COMPLETE | implementation merge `83ec7dc8`; evidence PR #2 |
-| GDRC-AUTH-001 | unilateral label increase denied | fixture, evaluator, tests, receipt | COMPLETE | `DENY — MISSING_REQUIRED_SIGNATURES` |
-| GDRC-TIME-001 | unanimous amendment applied prospectively | fixture, evaluator, tests, receipt | COMPLETE | `ALLOW — AUTHORIZED_NON_RETROACTIVE_AMENDMENT` |
-| GDRC-RECON-001 | old and new states and allocations reconstructed | hosted receipt artifact | COMPLETE | run `30862530846`, artifact `8874865343` |
-| GDRC-AUTO-001 | repository-native tests, receipt, hash verification, artifact | `.github/workflows/governed-digital-rights-demo.yml` | COMPLETE_AND_ACTIVE | pull request, push, and dispatch triggers installed |
+| GDRC-AUTH-001 | unilateral label increase denied | fixture, evaluator, tests, receipts | COMPLETE | `DENY — MISSING_REQUIRED_SIGNATURES` |
+| GDRC-TIME-001 | unanimous amendment applied prospectively | fixture, evaluator, tests, receipts | COMPLETE | `ALLOW — AUTHORIZED_NON_RETROACTIVE_AMENDMENT` |
+| GDRC-RECON-001 | old and new states and allocations reconstructed | hosted receipt artifacts | COMPLETE | final run `30862701521`, artifact `8874925272` |
+| GDRC-AUTO-001 | repository-native tests, receipt, hash verification, artifact | `.github/workflows/governed-digital-rights-demo.yml` | COMPLETE_AND_ACTIVE | pull request, push, and dispatch triggers installed and observed |
 | GDRC-PROP-001 | adjacent repository propagation decision | this handoff plus destination handoffs | COMPLETE | direct propagation rejected as out of sequence; exact owners below |
-| GDRC-STANDARD-001 | broader media-rights expansion requirements preserved | this handoff | SUPERSEDED_AS_ACTIVE_TASK / DURABLY_PRESERVED | requires a new separately admitted extension claim |
+| GDRC-STANDARD-001 | broader media-rights expansion requirements preserved | this handoff | SUPERSEDED_AS_ACTIVE_TASK / DURABLY_PRESERVED | a future extension requires a new separately admitted claim |
 
 ## Implemented demonstration
 - Asset: one fictional music track with composition and master component hashes.
@@ -64,36 +64,65 @@ No active session-owned path claim remains. `demos/governed_digital_rights/task_
 ## Validation evidence
 ### Local deterministic evidence
 ```text
-9/9 unit tests PASS
+initial tests: 9/9 PASS
 status: COMPLETE
 source_case_sha256: 08f2e68f1c8b657d1630953d3a90aca6e1b0762785a48f10a995dc1350e1903e
 pre-transfer receipt_sha256: e2172b505ec9978513d5143858b55abf0cfbd935a6adb8b852cdd6cf8d6fa784
 ```
 
-### Hosted evidence
+### First successful hosted evidence
 ```text
-workflow: Governed Digital Rights Demo
-run_id: 30862530846
-run_number: 8
-run conclusion: success
-job_id: 91847393877
-job conclusion: success
-conformance tests: 9/9 PASS
-receipt generation: success
-receipt hash verification: success
-artifact upload: success
-artifact_id: 8874865343
-artifact_name: governed-digital-rights-demo-receipt
-artifact_size: 1153 bytes
-artifact_zip_sha256: e8b5e1723f027da6db1594a3a29ad41ede842ee58a82c0b181392bb3787c9cbe
-artifact_expires_at: 2026-11-01T23:31:08Z
-inspected hosted receipt_sha256: c6ca8bf19e165937c50db83ef8cc0de3e37fb47a119154e231363a04b17ba37f
+workflow run: 30862530846
+job: 91847393877
+conclusion: success
+initial hosted tests: 9/9 PASS
+artifact: 8874865343
+artifact ZIP digest: sha256:e8b5e1723f027da6db1594a3a29ad41ede842ee58a82c0b181392bb3787c9cbe
+validation-claim receipt_sha256: c6ca8bf19e165937c50db83ef8cc0de3e37fb47a119154e231363a04b17ba37f
+artifact directly inspected: true
 independent receipt rehash: MATCH
 ```
 
-The hosted receipt differs from the pre-transfer local receipt only because the persistent task-state evidence changed from implementation claim to hosted-validation claim. Both receipts bind the same `source_case_sha256`, and the hosted artifact was directly opened and independently rehashed.
+The validation-claim receipt differs from the pre-transfer local receipt because the persistent task-state evidence changed from implementation claim to hosted-validation claim. Both bind the same source case.
 
-The hosted receipt directly confirms:
+### Lifecycle failure retained and repaired
+```text
+failing run: 30862655379
+failing job: 91847777438
+exact failure: test_stale_claim_is_machine_observable expected a completed task to be stale
+cause: the test reused canonical task_state.json after state transitioned from CLAIMED to COMPLETE
+repair commit: 6854adea363fb9fd376812489a0e9524599aa5ad
+repair: construct an explicit expired CLAIMED fixture and separately assert COMPLETE is not stale
+```
+
+The failure was not erased or relabelled as success. It identified a genuine lifecycle-fixture defect and produced a bounded repair.
+
+### Final completed-state hosted evidence
+```text
+workflow: Governed Digital Rights Demo
+run_id: 30862701521
+run_number: 14
+run conclusion: success
+job_id: 91847914251
+job conclusion: success
+conformance tests: 10/10 PASS
+receipt generation: success
+receipt hash verification: success
+artifact upload: success
+artifact_id: 8874925272
+artifact_name: governed-digital-rights-demo-receipt
+artifact_size: 1115 bytes
+artifact_zip_sha256: a47875d17300849583147efe3eff7dc7087ae0211b46e84f5313dc84f0a41791
+artifact_expires_at: 2026-11-01T23:34:05Z
+completed-state receipt_sha256: 66a704389a5ef9832016adfb675812ef20b1328bf02a2473f14657e2e6763a78
+source_case_sha256: 08f2e68f1c8b657d1630953d3a90aca6e1b0762785a48f10a995dc1350e1903e
+artifact directly inspected: true
+independent receipt rehash: MATCH
+task state: COMPLETE
+task stale: false
+```
+
+The final artifact directly confirms:
 ```text
 status = COMPLETE
 shares_conserved = true
@@ -101,16 +130,18 @@ royalties_conserved = true
 unauthorized_transition_denied = true
 authorized_future_amendment_applied = true
 historical_period_preserved = true
+period_1 allocation cents = artist 5000, producer 2500, label 2500
+period_2 allocation cents = artist 4000, producer 3500, label 2500
 ```
 
-Architecture Guard run `30862530800` also completed successfully for the evidence PR head.
+Architecture Guard run `30862701380` also completed successfully for repair head `6854adea363fb9fd376812489a0e9524599aa5ad`.
 
 ## Automation contract
 - Owner: `StegVerse-org/stegverse-demo-suite`.
 - Triggers: pull request, push, workflow dispatch.
 - Deterministic inputs: committed fixture, schema, evaluator, tests, and task state.
 - Outputs: test result, JSON receipt, independent hash check, 90-day artifact.
-- Fail closed: missing evidence, malformed shares, unauthorized signatures, retroactivity, expectation mismatch, allocation mismatch, or hash mismatch.
+- Fail closed: missing evidence, malformed shares, unauthorized signatures, retroactivity, expectation mismatch, allocation mismatch, hash mismatch, or lifecycle-state regression.
 - Coordination states: COMPLETE, BLOCKED, RETRY, REVIEW_REQUIRED, FAILED, CLAIMED, SUPERSEDED, MERGED.
 - Duplicate prevention: exact task ID and path claims; completed state contains no collision boundary.
 
@@ -142,20 +173,20 @@ The goal-specific implementation is complete and validated. No repository-wide t
 
 ## Session consolidation and archival
 - Primary goal: implemented, merged, hosted-validated.
-- Adjacent demonstration requirements: implemented or preserved.
+- Adjacent requirements: implemented, superseded, or durably preserved.
 - Automation: installed and observed.
-- Propagation: evaluated against all pertinent canonical handoffs; no unauthorized copy performed.
+- Propagation: evaluated against every pertinent canonical handoff; no unauthorized copy performed.
 - Claims: released.
-- Unique chat-only requirements: zero after this handoff merges.
+- Unique chat-only requirements: zero after PR #2 merge.
 - Required future work from this session: none.
 
-Archive condition: merge evidence PR #2 after its final head passes the same workflow. Once merged, deleting or archiving the conversation will not impair execution.
+Archive condition: merge PR #2 after this final handoff head passes the same workflow. Once merged, deleting or archiving the conversation will not impair future execution.
 
 ## Final percentages
 - Task completion: 7/7 = 100%.
 - Developed files: 8/8 = 100%; scaffolding/stubs: 0; missing: 0.
-- Validation: 5/5 = 100% (static/semantic, unit, local deterministic, hosted workflow/log, artifact/rehash).
-- Integration: 4/4 = 100% after evidence PR merge (canonical owner, implementation merge, hosted evidence, propagation disposition).
+- Validation: 5/5 = 100% (static/semantic, unit, local deterministic, hosted workflow/log, artifact/independent rehash).
+- Integration: 4/4 = 100% after PR #2 merge (canonical owner, implementation merge, hosted evidence, propagation disposition).
 - Propagation assessment: 5/5 destinations = 100%; actual propagation remains correctly 0 because no destination admits this fixture as activation evidence.
-- Goal activation: 100% for the bounded demo after evidence PR merge.
-- Session consolidation: 7/7 = 100% after evidence PR merge.
+- Goal activation: 100% after PR #2 merge.
+- Session consolidation: 7/7 = 100% after PR #2 merge.
