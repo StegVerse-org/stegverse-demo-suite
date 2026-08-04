@@ -4,15 +4,21 @@
   "repository": "StegVerse-org/stegverse-demo-suite",
   "branch": "main",
   "state": "COMPLETE",
+  "archive_state": "COMPLETE_ARCHIVE_READY",
   "claimant": "StegVerse-org/stegverse-demo-suite",
   "role": "canonical_implementation_owner",
   "claim_created_at": "2026-08-03T23:31:00Z",
-  "claim_expires_at": "2026-08-04T23:31:00Z",
-  "release_condition": "SATISFIED: hosted workflow run 30862530846, job 91847393877, and artifact 8874865343 were inspected; final handoff merge completes the evidence transfer.",
   "claim_released_at": "2026-08-03T23:33:00Z",
+  "claim_status": "RELEASED",
   "collision_boundary": [],
+  "canonical_handoff": "docs/GOVERNED_DIGITAL_RIGHTS_MIRROR_HANDOFF.md",
+  "implementation_pull_request": 1,
   "implementation_merge_commit": "83ec7dc8007c00d43d202f7bc2c1a7bd17c6c612",
-  "hosted_validation": {
+  "evidence_lifecycle_pull_request": 2,
+  "evidence_lifecycle_merge_commit": "c1d6ea82d4cf7f7bf10bbff47482e2a654b706bf",
+  "archive_handoff_commit": "d2afc79525344f6e778334b6c813b3774c6d5c77",
+  "source_case_sha256": "08f2e68f1c8b657d1630953d3a90aca6e1b0762785a48f10a995dc1350e1903e",
+  "initial_hosted_validation": {
     "workflow_run_id": 30862530846,
     "job_id": 91847393877,
     "conclusion": "success",
@@ -21,15 +27,55 @@
     "artifact_name": "governed-digital-rights-demo-receipt",
     "artifact_zip_sha256": "e8b5e1723f027da6db1594a3a29ad41ede842ee58a82c0b181392bb3787c9cbe",
     "inspected_receipt_sha256": "c6ca8bf19e165937c50db83ef8cc0de3e37fb47a119154e231363a04b17ba37f",
-    "source_case_sha256": "08f2e68f1c8b657d1630953d3a90aca6e1b0762785a48f10a995dc1350e1903e",
-    "artifact_expires_at": "2026-11-01T23:31:08Z"
+    "artifact_expires_at": "2026-11-01T23:31:08Z",
+    "artifact_directly_inspected": true,
+    "independent_receipt_rehash": "MATCH"
+  },
+  "final_hosted_validation": {
+    "verified_head_sha": "4e99701c131f1667b91a47edea079c0fc5740521",
+    "workflow_run_id": 30862810164,
+    "architecture_guard_run_id": 30862810225,
+    "job_conclusion": "success",
+    "tests_passed": 10,
+    "artifact_id": 8874965339,
+    "artifact_name": "governed-digital-rights-demo-receipt",
+    "artifact_size_bytes": 1115,
+    "artifact_zip_sha256": "7dcd3de41b96813526b1e7daae8c41c2d75f000d4ceb7462c3529200eb500c55",
+    "inspected_receipt_sha256": "66a704389a5ef9832016adfb675812ef20b1328bf02a2473f14657e2e6763a78",
+    "artifact_expires_at": "2026-11-01T23:35:59Z",
+    "artifact_directly_inspected": true,
+    "independent_receipt_rehash": "MATCH",
+    "task_state": "COMPLETE",
+    "task_stale": false
+  },
+  "evidence_reconciliation": {
+    "task_id": "GDRC-EVIDENCE-STATE-001",
+    "originating_goal": "Synchronize the machine-readable completion record with the final hosted evidence already preserved in the canonical mirror handoff.",
+    "repository": "StegVerse-org/stegverse-demo-suite",
+    "branch": "chore/gdrc-machine-evidence-reconciliation",
+    "state": "CLAIMED_FOR_VALIDATION",
+    "claimant": "chatgpt-session-2026-08-03-gdrc-reconciliation",
+    "role": "machine_state_reconciliation_and_hosted_validation",
+    "claim_created_at": "2026-08-04T03:05:00Z",
+    "claim_expires_at": "2026-08-05T03:05:00Z",
+    "release_condition": "Release after a pull-request workflow validates this evidence record, its receipt artifact is directly inspected, and the completed reconciliation state is merged.",
+    "collision_boundary": [
+      "demos/governed_digital_rights/task_state.json"
+    ],
+    "expected_evidence": [
+      "passing Governed Digital Rights Demo workflow",
+      "passing Architecture Guard workflow",
+      "inspectable receipt artifact",
+      "receipt hash revalidation",
+      "merged completed reconciliation state"
+    ],
+    "next_task_after_release": "NONE_FOR_BOUNDED_DEMO"
   },
   "next_task_after_release": "NONE_FOR_BOUNDED_DEMO",
-  "expected_evidence": [
-    "implementation merged",
-    "hosted tests passed",
-    "receipt hash verified",
-    "artifact directly inspected",
-    "propagation disposition recorded"
-  ]
+  "session_consolidation": {
+    "transferred_or_complete": 7,
+    "total_session_goals": 7,
+    "unique_chat_only_requirements": 0,
+    "unassigned_tasks": 0
+  }
 }
