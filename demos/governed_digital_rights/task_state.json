@@ -8,6 +8,8 @@
   "claimant": "StegVerse-org/stegverse-demo-suite",
   "role": "canonical_implementation_owner",
   "claim_created_at": "2026-08-03T23:31:00Z",
+  "claim_expires_at": "2026-08-04T23:31:00Z",
+  "release_condition": "SATISFIED: the implementation, final hosted validation, direct artifact inspection, propagation disposition, and session-state transfer are complete.",
   "claim_released_at": "2026-08-03T23:33:00Z",
   "claim_status": "RELEASED",
   "collision_boundary": [],
