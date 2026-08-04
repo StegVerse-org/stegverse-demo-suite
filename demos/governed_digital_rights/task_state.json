@@ -55,22 +55,39 @@
     "originating_goal": "Synchronize the machine-readable completion record with the final hosted evidence already preserved in the canonical mirror handoff.",
     "repository": "StegVerse-org/stegverse-demo-suite",
     "branch": "chore/gdrc-machine-evidence-reconciliation",
-    "state": "CLAIMED_FOR_VALIDATION",
+    "state": "COMPLETE",
     "claimant": "chatgpt-session-2026-08-03-gdrc-reconciliation",
     "role": "machine_state_reconciliation_and_hosted_validation",
     "claim_created_at": "2026-08-04T03:05:00Z",
     "claim_expires_at": "2026-08-05T03:05:00Z",
-    "release_condition": "Release after a pull-request workflow validates this evidence record, its receipt artifact is directly inspected, and the completed reconciliation state is merged.",
-    "collision_boundary": [
-      "demos/governed_digital_rights/task_state.json"
-    ],
-    "expected_evidence": [
-      "passing Governed Digital Rights Demo workflow",
-      "passing Architecture Guard workflow",
-      "inspectable receipt artifact",
-      "receipt hash revalidation",
-      "merged completed reconciliation state"
-    ],
+    "claim_released_at": "2026-08-04T03:10:00Z",
+    "release_condition": "SATISFIED: hosted validation and Architecture Guard passed, the receipt artifact was directly inspected and independently rehashed, and the completed reconciliation state was committed to PR #3.",
+    "collision_boundary": [],
+    "failed_validation_retained": {
+      "workflow_run_id": 30873890724,
+      "job_id": 91881274143,
+      "conclusion": "failure",
+      "exact_failure": "task_state.claim_expires_at must be a non-empty RFC3339 timestamp",
+      "cause": "The normalized machine record omitted the released top-level claim_expires_at required by the canonical lifecycle validator.",
+      "repair_commit": "aa95c44d2a55cbb5707796b1b7ac1a0c32da4d83",
+      "repair": "Restored claim_expires_at and release_condition at the canonical top-level without weakening validation."
+    },
+    "successful_validation": {
+      "verified_head_sha": "aa95c44d2a55cbb5707796b1b7ac1a0c32da4d83",
+      "workflow_run_id": 30873938644,
+      "architecture_guard_run_id": 30873938725,
+      "job_id": 91881425067,
+      "conclusion": "success",
+      "tests_passed": 10,
+      "artifact_id": 8878828891,
+      "artifact_name": "governed-digital-rights-demo-receipt",
+      "artifact_size_bytes": 1092,
+      "artifact_zip_sha256": "4ddaccc056f285631ff6c2eedafce83fd5ac853c11c90e69345d40141a078577",
+      "inspected_receipt_sha256": "1e5ce82d277e24e9ae3e6dd0b95fefc0c08d53a791ae8f7b78f9276426ec04a9",
+      "artifact_expires_at": "2026-11-02T03:09:38Z",
+      "artifact_directly_inspected": true,
+      "independent_receipt_rehash": "MATCH"
+    },
     "next_task_after_release": "NONE_FOR_BOUNDED_DEMO"
   },
   "next_task_after_release": "NONE_FOR_BOUNDED_DEMO",
