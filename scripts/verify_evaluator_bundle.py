@@ -27,19 +27,51 @@ def main() -> int:
 
     manifest = json.loads(manifest_path.read_text(encoding="utf-8"))
     profile = json.loads(profile_path.read_text(encoding="utf-8"))
-    if manifest.get("schema") != "stegverse.demo-evaluator-manifest.v1":
+    if manifest.get("schema") != "stegverse.demo-evaluator-manifest.v2":
         raise SystemExit("EVALUATOR_VERIFY_FAIL: manifest schema")
     if manifest.get("profile_id") != profile.get("profile_id"):
         raise SystemExit("EVALUATOR_VERIFY_FAIL: profile mismatch")
+    if manifest.get("recipient_specific") is not False or manifest.get("frozen_state") is not True:
+        raise SystemExit("EVALUATOR_VERIFY_FAIL: package identity/frozen state")
+    if not isinstance(manifest.get("source_revision"), str) or len(manifest["source_revision"]) < 7:
+        raise SystemExit("EVALUATOR_VERIFY_FAIL: source revision")
     if manifest.get("authority_effect") != "NONE":
         raise SystemExit("EVALUATOR_VERIFY_FAIL: authority effect")
     for key in ("network_required_to_build", "network_required_to_verify", "github_actions_required", "render_required"):
         if manifest.get(key) is not False:
             raise SystemExit(f"EVALUATOR_VERIFY_FAIL: {key}")
-    if manifest.get("allowed_external_stegverse_connections") != ["StegGhost/entity-sandbox-runner"]:
-        raise SystemExit("EVALUATOR_VERIFY_FAIL: external connection boundary")
-    if "StegVerse-org/LLM-adapter" not in manifest.get("excluded_repositories", []):
-        raise SystemExit("EVALUATOR_VERIFY_FAIL: LLM-adapter exclusion missing")
+    if manifest.get("terms_acceptance_required_for_connection") is not True:
+        raise SystemExit("EVALUATOR_VERIFY_FAIL: terms gate")
+    if manifest.get("relationship_manager") != "StegVerse-org/StegVerse-SDK":
+        raise SystemExit("EVALUATOR_VERIFY_FAIL: relationship manager")
+    if manifest.get("direct_external_stegverse_connections") != []:
+        raise SystemExit("EVALUATOR_VERIFY_FAIL: direct StegVerse connection")
+    if manifest.get("llm_adapter_direct_access") is not False:
+        raise SystemExit("EVALUATOR_VERIFY_FAIL: direct LLM-adapter access")
+    required_routes = {
+        "StegGhost/entity-sandbox-runner",
+        "StegVerse-org/LLM-adapter:evaluator-entry",
+    }
+    if set(manifest.get("sdk_mediated_routes") or []) != required_routes:
+        raise SystemExit("EVALUATOR_VERIFY_FAIL: SDK-mediated route boundary")
+
+    catalog_rel = manifest.get("capability_catalog")
+    licenses_rel = manifest.get("license_manifest")
+    if not isinstance(catalog_rel, str) or not (root / catalog_rel).is_file():
+        raise SystemExit("EVALUATOR_VERIFY_FAIL: capability catalog")
+    if not isinstance(licenses_rel, str) or not (root / licenses_rel).is_file():
+        raise SystemExit("EVALUATOR_VERIFY_FAIL: license manifest")
+    catalog = json.loads((root / catalog_rel).read_text(encoding="utf-8"))
+    if catalog.get("terms_acceptance_required") is not True or catalog.get("relationship_manager") != "StegVerse-org/StegVerse-SDK":
+        raise SystemExit("EVALUATOR_VERIFY_FAIL: catalog relationship contract")
+    llm = next((c for c in catalog.get("capabilities", []) if c.get("capability_id") == "llm_adapter.evaluator_interaction"), None)
+    if not llm or llm.get("direct_access") is not False or llm.get("relationship_required") is not True:
+        raise SystemExit("EVALUATOR_VERIFY_FAIL: LLM evaluator boundary")
+    licenses = json.loads((root / licenses_rel).read_text(encoding="utf-8"))
+    if licenses.get("license_and_service_relationship_are_separate") is not True:
+        raise SystemExit("EVALUATOR_VERIFY_FAIL: licensing boundary")
+    if not licenses.get("components"):
+        raise SystemExit("EVALUATOR_VERIFY_FAIL: license components")
 
     expected = {item["path"]: item for item in manifest.get("files", [])}
     actual = {}
@@ -67,7 +99,7 @@ def main() -> int:
         if any(fragment in name for fragment in fragments):
             raise SystemExit(f"EVALUATOR_VERIFY_FAIL: prohibited filename included {rel}")
 
-    print(json.dumps({"state": "EVALUATOR_BUNDLE_VERIFIED", "file_count": len(actual), "authority_effect": "NONE"}, sort_keys=True))
+    print(json.dumps({"state": "EVALUATOR_BUNDLE_VERIFIED", "source_revision": manifest["source_revision"], "file_count": len(actual), "authority_effect": "NONE"}, sort_keys=True))
     return 0
 
 
