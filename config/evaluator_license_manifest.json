@@ -1,0 +1,39 @@
+{
+  "schema": "stegverse.demo-evaluator-license-manifest.v1",
+  "manifest_id": "stegverse-general-demo-licenses-v1",
+  "license_and_service_relationship_are_separate": true,
+  "components": [
+    {
+      "component": "StegVerse Demo Suite",
+      "repository": "StegVerse-org/stegverse-demo-suite",
+      "source_ref": "1d56b3f907f45285af26b49eaa371c68e638bc1a",
+      "license_id": "MIT",
+      "license_path": "LICENSE",
+      "license_blob_sha": "b5b623afb77d40e5673d4075cfd4591251b802f0",
+      "license_sha256": "2a727d99b6eac49c1eb0df6a07606d4f24d4f4fbe1211e1ff4cc9fc7c7ab5f45",
+      "service_relationship_controls_live_capabilities": true
+    },
+    {
+      "component": "StegVerse SDK",
+      "repository": "StegVerse-org/StegVerse-SDK",
+      "source_ref": "d13e3d7e20893be08b4eef561ed5e5fc07cb536a",
+      "license_id": "MIT",
+      "license_path": "LICENSE",
+      "license_blob_sha": "b5b623afb77d40e5673d4075cfd4591251b802f0",
+      "license_sha256": "2a727d99b6eac49c1eb0df6a07606d4f24d4f4fbe1211e1ff4cc9fc7c7ab5f45",
+      "service_relationship_controls_live_capabilities": true
+    },
+    {
+      "component": "LLM Adapter",
+      "repository": "StegVerse-org/LLM-adapter",
+      "source_ref": "70fb19c3c0be49e231a7ce68bb304113f06f6f2d",
+      "license_id": "MIT",
+      "license_path": "LICENSE",
+      "license_blob_sha": "b5b623afb77d40e5673d4075cfd4591251b802f0",
+      "license_sha256": "2a727d99b6eac49c1eb0df6a07606d4f24d4f4fbe1211e1ff4cc9fc7c7ab5f45",
+      "service_relationship_controls_live_capabilities": true,
+      "direct_evaluator_access": false
+    }
+  ],
+  "notice": "Software-license rights attach to the applicable software copy. Demo TOS/TOU and SDK relationship receipts govern service access and do not silently revoke rights independently granted by the component license."
+}
