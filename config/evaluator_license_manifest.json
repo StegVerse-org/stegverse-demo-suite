@@ -16,7 +16,7 @@
     {
       "component": "StegVerse SDK",
       "repository": "StegVerse-org/StegVerse-SDK",
-      "source_ref": "d13e3d7e20893be08b4eef561ed5e5fc07cb536a",
+      "source_ref": "41608e5615ad46a353a82444e8606c6a0b2fb457",
       "license_id": "MIT",
       "license_path": "LICENSE",
       "license_blob_sha": "b5b623afb77d40e5673d4075cfd4591251b802f0",
@@ -26,7 +26,7 @@
     {
       "component": "LLM Adapter",
       "repository": "StegVerse-org/LLM-adapter",
-      "source_ref": "70fb19c3c0be49e231a7ce68bb304113f06f6f2d",
+      "source_ref": "4e445bec78a08caf20594c6b8ed4492429890452",
       "license_id": "MIT",
       "license_path": "LICENSE",
       "license_blob_sha": "b5b623afb77d40e5673d4075cfd4591251b802f0",
