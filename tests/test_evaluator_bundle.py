@@ -18,15 +18,45 @@ def load_module(name: str, path: Path):
 
 
 class EvaluatorBoundaryTests(unittest.TestCase):
-    def test_profile_is_non_authorizing_and_stegghost_only(self) -> None:
+    def test_profile_is_identity_neutral_and_sdk_mediated(self) -> None:
         profile = json.loads((ROOT / "config/evaluator_profile.json").read_text(encoding="utf-8"))
         self.assertEqual(profile["authority_effect"], "NONE")
+        self.assertFalse(profile["recipient_specific"])
+        self.assertTrue(profile["frozen_state_required"])
+        self.assertTrue(profile["terms_acceptance_required"])
+        self.assertEqual(profile["relationship_manager"], "StegVerse-org/StegVerse-SDK")
         self.assertFalse(profile["network_required_to_build"])
         self.assertFalse(profile["network_required_to_verify"])
         self.assertFalse(profile["github_actions_required"])
         self.assertFalse(profile["render_required"])
-        self.assertEqual(profile["allowed_external_stegverse_connections"], ["StegGhost/entity-sandbox-runner"])
-        self.assertIn("StegVerse-org/LLM-adapter", profile["excluded_repositories"])
+        self.assertEqual(profile["direct_external_stegverse_connections"], [])
+        self.assertEqual(set(profile["sdk_mediated_routes"]), {
+            "StegGhost/entity-sandbox-runner",
+            "StegVerse-org/LLM-adapter:evaluator-entry",
+        })
+        self.assertFalse(profile["llm_adapter_direct_access"])
+
+    def test_catalog_exposes_llm_only_through_sdk_relationship(self) -> None:
+        catalog = json.loads((ROOT / "config/evaluator_capability_catalog.json").read_text(encoding="utf-8"))
+        self.assertTrue(catalog["frozen_catalog"])
+        self.assertTrue(catalog["terms_acceptance_required"])
+        self.assertEqual(catalog["relationship_manager"], "StegVerse-org/StegVerse-SDK")
+        llm = next(c for c in catalog["capabilities"] if c["capability_id"] == "llm_adapter.evaluator_interaction")
+        self.assertFalse(llm["direct_access"])
+        self.assertTrue(llm["relationship_required"])
+        self.assertTrue(llm["terms_acceptance_required"])
+        self.assertFalse(llm["provider_credentials_exposed"])
+        self.assertFalse(llm["sovereign_adapter_authority_exposed"])
+
+    def test_license_manifest_separates_license_from_service_relationship(self) -> None:
+        licenses = json.loads((ROOT / "config/evaluator_license_manifest.json").read_text(encoding="utf-8"))
+        self.assertTrue(licenses["license_and_service_relationship_are_separate"])
+        self.assertEqual({c["repository"] for c in licenses["components"]}, {
+            "StegVerse-org/stegverse-demo-suite",
+            "StegVerse-org/StegVerse-SDK",
+            "StegVerse-org/LLM-adapter",
+        })
+        self.assertTrue(all(c["license_id"] == "MIT" for c in licenses["components"]))
 
     def test_profile_excludes_control_and_secret_surfaces(self) -> None:
         profile = json.loads((ROOT / "config/evaluator_profile.json").read_text(encoding="utf-8"))
