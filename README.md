@@ -11,29 +11,35 @@ It demonstrates controlled, explainable test cases after data has already been i
 
 ---
 
-## Portable evaluator profile
+## General portable evaluator/developer surface
 
-This repository also owns a bounded evaluator-distribution profile for sharing a self-contained product evaluation package without requiring GitHub Actions, Render, or any hosted StegVerse runtime.
+This repository owns an identity-neutral, frozen evaluator/distribution profile for anyone who wants to evaluate, inspect, develop against, or prepare a proposal for StegVerse without requiring GitHub Actions, Render, or a hosted StegVerse runtime.
 
-The evaluator boundary is intentionally narrow:
+The portable bundle itself has no direct StegVerse service connection:
 
 ```text
-portable evaluator package
-→ deterministic local inspection and tests
-→ optional read-only demo-suite exploration
-→ optional StegGhost/entity-sandbox-runner for adversarial/entity-specific demo cases
+frozen portable bundle
+→ local inspection / deterministic verification
+→ Demo TOS + TOU affirmative acceptance
+→ StegVerse SDK evaluation relationship
+→ evaluator states what they care to evaluate
+→ SDK admits only the intersection of requested scope + package catalog + StegVerse policy
+→ optional SDK-mediated StegGhost sandbox
+→ optional SDK-mediated LLM-adapter evaluator entry
 ```
 
-`StegVerse-org/LLM-adapter` is explicitly excluded from the evaluator package and evaluator runtime boundary. The package grants no production activation, heartbeat, governance, wallet signing, transaction broadcast, custody, provider-credential, TV/TVC capability-material, or private-repository authority.
+Direct access to `StegGhost/entity-sandbox-runner` or `StegVerse-org/LLM-adapter` is not granted by possessing the bundle. Both interactive routes require an admitted SDK relationship; direct LLM-adapter access is prohibited. The package grants no production activation, heartbeat, governance, wallet signing, transaction broadcast, custody, provider-credential, TV/TVC capability-material, private-repository, or sovereign-runtime authority.
 
 Build and verify locally with only the Python standard library:
 
 ```bash
-python scripts/build_evaluator_bundle.py --output dist/mansoor-evaluation
-python scripts/verify_evaluator_bundle.py dist/mansoor-evaluation
+python scripts/build_evaluator_bundle.py --output dist/evaluation --source-revision <immutable-source-revision>
+python scripts/verify_evaluator_bundle.py dist/evaluation
 ```
 
-An optional local `evaluation_payload/` directory may contain immutable copied evaluation artifacts from another StegVerse product. The resulting `EVALUATOR_MANIFEST.json` hashes every bundled file. A copied artifact does not grant access to its source repository or runtime.
+An optional local `frozen_payload/` directory may contain immutable copied evaluation artifacts from another StegVerse product. The resulting `EVALUATOR_MANIFEST.json` hashes every bundled file and records the represented source revision. A copied artifact does not grant access to its source repository or runtime.
+
+The evaluator capability catalog is `config/evaluator_capability_catalog.json`. Per-component software licensing and provenance are declared in `config/evaluator_license_manifest.json`. Software-license rights and Demo service/SDK relationship access are separate boundaries.
 
 See `docs/DEMO_EVALUATOR_MIRROR_HANDOFF.md` and `config/evaluator_profile.json`.
 
@@ -74,7 +80,7 @@ More adversarial, entity-specific, or standing-specific cases should be routed t
 | GCAT/BCAT evaluation | Demonstrates admissibility checks at controlled commit points. |
 | Deterministic output | Repeatable results for public inspection. |
 | Smoke tests | Automated validation of demonstration paths. |
-| Portable evaluator bundle | Local deterministic packaging and verification without hosted runtime dependencies. |
+| Portable evaluator bundle | Identity-neutral frozen packaging and local verification without hosted runtime dependencies. |
 
 ---
 
@@ -110,13 +116,13 @@ print(result["decision"])
 
 | System | Role |
 |---|---|
-| `StegVerse-org/StegVerse-SDK` | Governed ingestion point for manifest-bound, receipt-bound demo datasets. |
+| `StegVerse-org/StegVerse-SDK` | Governs evaluator relationship intake and manifest-bound, receipt-bound demo datasets. |
 | `StegVerse-org/demo_ingest_engine` | Org-side orchestration and result-return boundary. |
 | `StegVerse-org/demo-suite-runner` | Formal runner route for GCAT/BCAT probes. |
-| `StegGhost/entity-sandbox-runner` | Rigorous sandbox route for adversarial/entity tests and the only permitted external StegVerse execution surface for the portable evaluator profile. |
+| `StegGhost/entity-sandbox-runner` | Optional evaluator sandbox capability, reachable only through an admitted SDK relationship. |
+| `StegVerse-org/LLM-adapter` | Optional evaluator LLM capability, reachable only through the restricted SDK evaluator entry; direct adapter access is not part of the Demo surface. |
 | `StegVerse-Labs/Standing-Proof-Engine` | Standing proof route for stale-state and authority-rebinding cases outside the evaluator package. |
 | `StegVerse-Labs/Boundary-Test` | Boundary / GLM case route for neutral declaration and composability fixtures outside the evaluator package. |
-| `StegVerse-org/LLM-adapter` | Explicitly excluded from the portable evaluator profile. |
 
 ---
 
@@ -124,7 +130,7 @@ print(result["decision"])
 
 Public demonstration does not imply general deployment authority, external endorsement, compatibility recognition, provenance recognition, collaboration, or validation by a reviewer. Demonstrations are bounded, receipt-oriented, and reproducible.
 
-The portable evaluator profile is a distribution boundary, not a privilege bridge. Access to the package or public demo suite does not imply access to private repositories, production services, active governance state, credentials, wallets, TV/TVC capability material, LLM-adapter, or sovereign runtime control.
+The portable evaluator profile is a distribution boundary, not a privilege bridge. Access to the package or public demo suite does not imply access to private repositories, production services, active governance state, credentials, wallets, TV/TVC capability material, the full LLM-adapter surface, or sovereign runtime control.
 
 ---
 
