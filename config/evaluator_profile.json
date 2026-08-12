@@ -1,18 +1,22 @@
 {
-  "schema": "stegverse.demo-evaluator-profile.v1",
-  "profile_id": "stegverse-public-evaluator-v1",
-  "purpose": "portable bounded evaluation plus optional public demo-suite exploration",
+  "schema": "stegverse.demo-evaluator-profile.v2",
+  "profile_id": "stegverse-general-evaluator-v2",
+  "purpose": "identity-neutral frozen evaluation and development surface governed by the StegVerse SDK relationship",
+  "recipient_specific": false,
   "authority_effect": "NONE",
+  "frozen_state_required": true,
+  "terms_acceptance_required": true,
+  "relationship_manager": "StegVerse-org/StegVerse-SDK",
   "network_required_to_build": false,
   "network_required_to_verify": false,
   "github_actions_required": false,
   "render_required": false,
-  "allowed_external_stegverse_connections": [
-    "StegGhost/entity-sandbox-runner"
+  "direct_external_stegverse_connections": [],
+  "sdk_mediated_routes": [
+    "StegGhost/entity-sandbox-runner",
+    "StegVerse-org/LLM-adapter:evaluator-entry"
   ],
-  "excluded_repositories": [
-    "StegVerse-org/LLM-adapter"
-  ],
+  "llm_adapter_direct_access": false,
   "prohibited_authority": [
     "production_activation",
     "heartbeat_control",
@@ -32,6 +36,8 @@
     "stegverse",
     "tests",
     "scripts/discover.py",
+    "config/evaluator_capability_catalog.json",
+    "config/evaluator_license_manifest.json",
     "ACTION_GOVERNANCE_NOTES.txt",
     "MAX_RUNTIME_NOTES.txt",
     "MUTATION_GOVERNANCE_NOTES.txt",
@@ -41,7 +47,7 @@
     "SMOKE_TEST_MUTATION_GOVERNANCE.json",
     "SMOKE_TEST_RUNTIME_WRAPPER.json"
   ],
-  "optional_evaluation_payload_root": "evaluation_payload",
+  "optional_frozen_payload_root": "frozen_payload",
   "excluded_path_names": [
     ".git",
     ".github",
@@ -65,11 +71,12 @@
     "api_key",
     "apikey",
     "credential",
-    "token",
     "password"
   ],
   "bundle_manifest": "EVALUATOR_MANIFEST.json",
   "bundle_readme": "EVALUATOR_README.md",
+  "capability_catalog": "config/evaluator_capability_catalog.json",
+  "license_manifest": "config/evaluator_license_manifest.json",
   "explorer_mode": "READ_ONLY_PUBLIC_DEMOS",
-  "evaluation_payload_authority": "IMMUTABLE_COPIED_ARTIFACTS_ONLY"
+  "frozen_payload_authority": "IMMUTABLE_COPIED_ARTIFACTS_ONLY"
 }
