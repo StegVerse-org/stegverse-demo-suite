@@ -1,0 +1,13 @@
+{
+  "schema": "stegverse.demo-evaluator-capability-catalog.v1",
+  "catalog_id": "stegverse-general-demo-catalog-v1",
+  "frozen_catalog": true,
+  "terms_acceptance_required": true,
+  "relationship_manager": "StegVerse-org/StegVerse-SDK",
+  "capabilities": [
+    {"capability_id":"demo.read_frozen_materials","title":"Read frozen evaluation materials","interaction":"read_only","evaluator_visible":true,"route":"bundle://","tags":["documentation","schemas","receipts","architecture","source","license"]},
+    {"capability_id":"demo.run_deterministic_suite","title":"Run deterministic demo and verification suite","interaction":"deterministic_demo","evaluator_visible":true,"route":"bundle://demos","tags":["demo","deterministic","replay","verification","tests","portability"]},
+    {"capability_id":"stegghost.evaluator_sandbox","title":"StegGhost evaluator sandbox","interaction":"sandbox","evaluator_visible":true,"route":"sdk://StegGhost/entity-sandbox-runner","direct_access":false,"relationship_required":true,"tags":["sandbox","adversarial","entity","StegGhost","experimentation"]},
+    {"capability_id":"llm_adapter.evaluator_interaction","title":"SDK-scoped LLM evaluation interaction","interaction":"sandbox","evaluator_visible":true,"route":"sdk://StegVerse-org/LLM-adapter/evaluator-entry","direct_access":false,"relationship_required":true,"terms_acceptance_required":true,"provider_credentials_exposed":false,"sovereign_adapter_authority_exposed":false,"tags":["LLM","model","provider","comparison","governance","adapter"]}
+  ]
+}
