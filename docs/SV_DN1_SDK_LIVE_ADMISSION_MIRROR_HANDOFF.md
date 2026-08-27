@@ -167,10 +167,37 @@ parent SV-DN-1 source: MERGED
 sovereign resident observer source/registration: MERGED
 resident observer runtime receipt: NOT OBSERVED
 SDK 0B canonical path: INSTALLED BY SDK OWNER
-SV-DN-1 SDK manifest bridge: IMPLEMENTATION STARTED
+SV-DN-1 SDK manifest bridge: IMPLEMENTED_ON_FEATURE_BRANCH
+SDK ingress candidate schema: IMPLEMENTED_ON_FEATURE_BRANCH
+SDK-compatible source validator: IMPLEMENTED_ON_FEATURE_BRANCH
+deterministic bridge tests: IMPLEMENTED_ON_FEATURE_BRANCH
+validation workflow integration: IMPLEMENTED_ON_FEATURE_BRANCH
+source validation: PENDING_WORKFLOW_RESULT
+merge: NOT MERGED
 SDK governed execution: NOT OBSERVED
 SDK live admission: NOT OBSERVED
 ```
+
+## Implemented source surfaces
+
+```text
+schemas/sv-dn1-sdk-ingress-candidate.schema.json
+scripts/build_sv_dn1_sdk_ingress_manifest.py
+scripts/validate_sv_dn1_sdk_ingress_candidate.py
+tests/test_sv_dn1_sdk_live_admission.py
+.github/workflows/validate-sv-dn1.yml
+```
+
+The builder enforces the authentic resident receipt boundary before it can create an SDK 0B candidate. The local validator checks current SDK manifest/profile/hash/route semantics but explicitly does not claim that the SDK itself validated or admitted the packet.
+
+The generated governance request preserves the still-missing runtime inputs:
+
+```text
+route_specific_intr_runtime_receipt
+sdk_live_admission_receipt
+```
+
+and therefore does not manufacture a completed live path.
 
 ## Archive readiness
 
