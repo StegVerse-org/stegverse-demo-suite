@@ -8,7 +8,7 @@ on:
       - "scripts/sv_dn1_*.py"
       - "scripts/render_sv_dn1_*.py"
       - "fixtures/sv_dn1/**"
-      - "tests/test_sv_dn1_double_interlock.py"
+      - "tests/test_sv_dn1*.py"
       - "public/sv-dn1/**"
       - "docs/SV_DN1_DOUBLE_INTERLOCK_MIRROR_HANDOFF.md"
       - ".github/workflows/validate-sv-dn1.yml"
@@ -32,7 +32,7 @@ jobs:
           python-version: "3.11"
 
       - name: Run deterministic double-Interlock tests
-        run: python -m unittest tests.test_sv_dn1_double_interlock
+        run: python -m unittest tests.test_sv_dn1_double_interlock tests.test_sv_dn1_public_observer
 
       - name: Run fixture-only end-to-end pipeline
         run: |
