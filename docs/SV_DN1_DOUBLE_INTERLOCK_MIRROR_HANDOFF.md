@@ -367,6 +367,32 @@ This goal is not release-ready until at minimum:
 - public report can be regenerated from receipts;
 - no false adoption/endorsement wording exists.
 
+## Public dashboard posture
+
+A public-facing dashboard is part of this goal because it makes the evaluation process observable over time rather than presenting only occasional narrative reports.
+
+The dashboard MUST be receipt-derived and static-viewable. Target observation cadence:
+
+```text
+TWICE_DAILY_WHEN_RESIDENT_OBSERVER_AVAILABLE
+PLUS_MATERIAL_DELTA
+target_refresh_hours: 12
+```
+
+Benefits and constraints:
+
+- exposes current observation time, artifact/revision, admission state, dimension results, semantic-mapping identity, lossy/unmapped counts, and receipt chain;
+- makes changes over time visible without rewriting prior results;
+- lets third parties distinguish a stale observation from a current one;
+- gives Hugging Face or any outside reviewer the exact receipt/hash basis to challenge;
+- preserves UNKNOWN rather than filling gaps for presentation;
+- provides a public evidence surface even when no preference/bias is detected;
+- must never turn GitHub Actions into production observation/runtime/control-plane authority;
+- fixture dashboards must never be labeled live;
+- a material delta may trigger a new publication before the next scheduled observation.
+
+Current implementation adds a static HTML renderer and reserves `public/sv-dn1/` for receipt-derived output. No live public result is published yet.
+
 ## Current completion
 
 ```text
@@ -374,16 +400,25 @@ goal definition: COMPLETE
 issue/task surface: COMPLETE
 dedicated mirror handoff: IMPLEMENTED_ON_FEATURE_BRANCH
 architecture: DEFINED
-HF-side semantic adapter: NOT BUILT
-StegVerse-side adapter: NOT BUILT
-exchange schema: NOT BUILT
-mapping profile: NOT BUILT
-evaluator: NOT BUILT
-fixtures/tests: NOT BUILT
+SV-DN-1 profile: IMPLEMENTED_ON_FEATURE_BRANCH
+HF mapping profile: IMPLEMENTED_ON_FEATURE_BRANCH
+exchange schema: IMPLEMENTED_ON_FEATURE_BRANCH
+result receipt schema: IMPLEMENTED_ON_FEATURE_BRANCH
+HF-side semantic adapter: IMPLEMENTED_ON_FEATURE_BRANCH
+StegVerse-side adapter: IMPLEMENTED_ON_FEATURE_BRANCH
+evaluator: IMPLEMENTED_ON_FEATURE_BRANCH
+fixture: IMPLEMENTED_ON_FEATURE_BRANCH
+negative/deterministic tests: IMPLEMENTED_ON_FEATURE_BRANCH
+receipt-derived markdown report renderer: IMPLEMENTED_ON_FEATURE_BRANCH
+receipt-derived public dashboard renderer: IMPLEMENTED_ON_FEATURE_BRANCH
+fixture pipeline runner: IMPLEMENTED_ON_FEATURE_BRANCH
+Architecture Guard run 33125004467: QUEUED at last observation
+source validation: PENDING_WORKFLOW_RESULT
+merge: NOT MERGED
 live Hugging Face observation: NOT OBSERVED
 live double-Interlock traversal: NOT OBSERVED
-SDK admission: NOT OBSERVED
-public result: NOT PUBLISHED
+SDK live admission: NOT OBSERVED
+public live result: NOT PUBLISHED
 governance mapping: NOT PERFORMED
 release: NOT READY
 ```
