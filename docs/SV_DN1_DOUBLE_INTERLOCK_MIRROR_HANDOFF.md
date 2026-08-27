@@ -427,12 +427,15 @@ live double-Interlock traversal: NOT OBSERVED
 SDK live admission: NOT OBSERVED
 public live result: NOT PUBLISHED
 governance mapping: NOT PERFORMED
+observer/history source: MERGED
+observer/history validation: PASS
+live observer runtime activation: NOT OBSERVED
 release: NOT READY
 ```
 
 ## Live observer / dashboard-history source slice
 
-A second source slice now exists on `feature/sv-dn1-live-observer` to make the twice-daily dashboard posture implementable without granting GitHub Actions production observation authority.
+A second source slice is merged on main to make the twice-daily dashboard posture implementable without granting GitHub Actions production observation authority.
 
 Added source surfaces:
 
@@ -465,11 +468,21 @@ Dashboard-history boundary:
 
 The scheduled refresh target remains 12 hours plus material-delta publication. The source observer is suitable for a future admitted resident runtime; GitHub Actions only validates the source and fixture behavior.
 
+Observer/history merge evidence:
+
+```text
+PR #7: MERGED
+merge_commit: e08e0ef4ea6c2233716896ff337981615199dd38
+validated_head: 97a3587178df5163a99ea93ff82b292a48ec6012
+Validate SV-DN-1 run 33125278638 / job 98701823408: PASS
+Architecture Guard run 33125278598 / job 98701823045: PASS
+```
+
 ## Next executable goal
 
 The source implementation is merged. The next goal is a real public observation lane without changing the authority model:
 
-1. validate and merge the implemented resident/public-source observer that captures exact Hugging Face response bytes, content type, retrieval time, source URL, and digest;
+1. execute the merged resident/public-source observer against an admitted real Hugging Face public endpoint and preserve the exact source-capture receipt;
 2. feed that capture into the merged HF-facing semantic Interlock;
 3. obtain route-specific InTr/Interlock evidence rather than fixture-only lineage;
 4. bind the resulting exchange through the canonical SDK intake path;
