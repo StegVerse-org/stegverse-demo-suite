@@ -1,0 +1,76 @@
+{
+  "schema": "stegverse.sv-dn1.hf-mapping/v1",
+  "profile_id": "SV-DN-1-HF/v1",
+  "source_system": "huggingface",
+  "rules": [
+    {
+      "rule_id": "HF-ID-001",
+      "source": [
+        "modelId"
+      ],
+      "target": "artifact.identity",
+      "operation": "copy",
+      "lossless": true
+    },
+    {
+      "rule_id": "HF-REV-001",
+      "source": [
+        "sha"
+      ],
+      "target": "artifact.revision",
+      "operation": "copy",
+      "lossless": true
+    },
+    {
+      "rule_id": "HF-LICENSE-001",
+      "source": [
+        "cardData.license"
+      ],
+      "target": "artifact.license",
+      "operation": "copy_if_present",
+      "lossless": true
+    },
+    {
+      "rule_id": "HF-PIPELINE-001",
+      "source": [
+        "pipeline_tag"
+      ],
+      "target": "artifact.pipeline",
+      "operation": "copy_if_present",
+      "lossless": true
+    },
+    {
+      "rule_id": "HF-LIB-001",
+      "source": [
+        "library_name"
+      ],
+      "target": "artifact.library",
+      "operation": "copy_if_present",
+      "lossless": true
+    },
+    {
+      "rule_id": "HF-TAGS-001",
+      "source": [
+        "tags"
+      ],
+      "target": "artifact.tags",
+      "operation": "copy_sorted",
+      "lossless": true
+    },
+    {
+      "rule_id": "HF-FILES-001",
+      "source": [
+        "siblings"
+      ],
+      "target": "artifact.files",
+      "operation": "copy_filename_projection",
+      "lossless": false,
+      "loss_note": "Only filenames are normalized; all native sibling entries remain preserved in raw evidence."
+    }
+  ],
+  "unknown_field_policy": "PRESERVE_IN_RAW_EVIDENCE",
+  "unmapped_field_policy": "EXPOSE",
+  "lossy_transform_policy": "DECLARE_AND_PRESERVE_NATIVE",
+  "inference_policy": "NONE_IN_SOURCE_ADAPTER",
+  "authority_effect": "NONE"
+}
