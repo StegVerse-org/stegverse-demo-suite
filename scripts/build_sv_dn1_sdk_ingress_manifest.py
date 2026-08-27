@@ -2,6 +2,7 @@
 from __future__ import annotations
 
 import argparse
+from copy import deepcopy
 import hashlib
 import json
 from pathlib import Path
@@ -108,7 +109,7 @@ def build_governance_request(
         "sdk_live_admission_receipt",
     ]
     return {
-        "candidate": candidate,
+        "candidate": deepcopy(candidate),
         "judgment": {
             "refusal_available": True,
             "operator_recoverability": "available",
