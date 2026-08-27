@@ -429,6 +429,8 @@ public live result: NOT PUBLISHED
 governance mapping: NOT PERFORMED
 observer/history source: MERGED
 observer/history validation: PASS
+real public Hugging Face web preflight: OBSERVED_NONADMISSIBLE_PARSED_JSON
+resident task binding: IMPLEMENTED_ON_FEATURE_BRANCH
 live observer runtime activation: NOT OBSERVED
 release: NOT READY
 ```
@@ -478,11 +480,64 @@ Validate SV-DN-1 run 33125278638 / job 98701823408: PASS
 Architecture Guard run 33125278598 / job 98701823045: PASS
 ```
 
+## Real public web preflight and resident task binding
+
+A real public Hugging Face API surface was observed through the web retrieval layer on 2026-08-27:
+
+```text
+source: https://huggingface.co/api/models/Qwen/Qwen3-8B
+content_type: application/json
+modelId: Qwen/Qwen3-8B
+sha: b968826d9c46dd6066d109eabc6255188de91218
+gated: false
+private: false
+license: apache-2.0
+```
+
+This observation is preserved as:
+
+`evidence/sv-dn1/preflight/2026-08-27-qwen3-8b-web-observation.json`
+
+It is intentionally classified `PUBLIC_WEB_PARSED_JSON`, not `LIVE_SOURCE_CAPTURE`, because the web retrieval layer did not expose an independently preserved exact raw byte stream for the merged resident observer to hash before semantic normalization.
+
+Therefore:
+
+```text
+real public external surface reachable: OBSERVED
+exact raw-byte source capture: NOT OBSERVED
+live Interlock/InTr traversal: NOT OBSERVED
+SDK live admission: NOT OBSERVED
+live dashboard: NOT PUBLISHED
+```
+
+The first machine-executable live task is now bound at:
+
+`tasks/SV-DN1-RESIDENT-OBSERVER-001.json`
+
+Task state:
+
+`HANDOFF_READY_MACHINE_EXECUTION_PENDING`
+
+The task owns exactly this progression:
+
+```text
+resident public-source capture
+-> exact raw-byte digest
+-> HF-facing Interlock
+-> route-specific InTr evidence
+-> StegVerse Interlock
+-> SDK_ADMITTED
+-> live SV-DN-1 receipt
+-> receipt-derived dashboard/history
+```
+
+It preserves TV/TVC credential authority, prohibits GitHub Actions as the production observer, prohibits repository writeback/runtime authority, and records the remaining runtime blockers explicitly.
+
 ## Next executable goal
 
 The source implementation is merged. The next goal is a real public observation lane without changing the authority model:
 
-1. execute the merged resident/public-source observer against an admitted real Hugging Face public endpoint and preserve the exact source-capture receipt;
+1. allow the machine-owned `SV-DN1-RESIDENT-OBSERVER-001` task to execute on an admitted resident observer and preserve the exact source-capture receipt;
 2. feed that capture into the merged HF-facing semantic Interlock;
 3. obtain route-specific InTr/Interlock evidence rather than fixture-only lineage;
 4. bind the resulting exchange through the canonical SDK intake path;
