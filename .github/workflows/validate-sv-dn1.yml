@@ -32,7 +32,7 @@ jobs:
           python-version: "3.11"
 
       - name: Run deterministic double-Interlock tests
-        run: python -m unittest tests.test_sv_dn1_double_interlock tests.test_sv_dn1_public_observer
+        run: python -m unittest tests.test_sv_dn1_double_interlock tests.test_sv_dn1_public_observer tests.test_sv_dn1_live_preflight_task
 
       - name: Run fixture-only end-to-end pipeline
         run: |
