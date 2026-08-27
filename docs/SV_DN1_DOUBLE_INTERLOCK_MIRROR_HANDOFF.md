@@ -589,9 +589,28 @@ worker claim/fence: NOT YET OBSERVED
 exact resident raw-byte capture: NOT YET OBSERVED
 HF-side live semantic exchange: NOT YET OBSERVED
 route-specific InTr traversal: NOT YET OBSERVED
+SDK 0B bridge source: MERGED
 SDK live admission: NOT YET OBSERVED
 live dashboard publication: NOT YET OBSERVED
 ```
+
+## SDK 0B live-admission bridge — merged
+
+The source-side SDK bridge is now merged:
+
+```text
+handoff: docs/SV_DN1_SDK_LIVE_ADMISSION_MIRROR_HANDOFF.md
+schema: schemas/sv-dn1-sdk-ingress-candidate.schema.json
+builder: scripts/build_sv_dn1_sdk_ingress_manifest.py
+validator: scripts/validate_sv_dn1_sdk_ingress_candidate.py
+tests: tests/test_sv_dn1_sdk_live_admission.py
+PR #9: MERGED
+merge_commit: 443f228873e34b9ed67c309dc71622703e4b51bf
+Validate SV-DN-1 run 33127829478 / job 98710081154: PASS
+Architecture Guard run 33127829492 / job 98710081238: PASS
+```
+
+The bridge accepts only an authentic completed resident observation receipt and produces a candidate for the canonical SDK 0B route. It explicitly preserves `route_specific_intr_runtime_receipt` and `sdk_live_admission_receipt` as missing until observed. It cannot claim SDK admission, StegGate ALLOW, Master Records custody, or live dashboard publication.
 
 ## Archive readiness
 
