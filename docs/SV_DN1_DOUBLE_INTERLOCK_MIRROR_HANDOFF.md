@@ -412,8 +412,13 @@ negative/deterministic tests: IMPLEMENTED_ON_FEATURE_BRANCH
 receipt-derived markdown report renderer: IMPLEMENTED_ON_FEATURE_BRANCH
 receipt-derived public dashboard renderer: IMPLEMENTED_ON_FEATURE_BRANCH
 fixture pipeline runner: IMPLEMENTED_ON_FEATURE_BRANCH
-Architecture Guard run 33125004467: QUEUED at last observation
-source validation: PENDING_WORKFLOW_RESULT
+Validate SV-DN-1 run 33125069650 / job 98701107515: PASS
+Architecture Guard run 33125069598 / job 98701107458: PASS
+deterministic double-Interlock tests: PASS
+fixture-only end-to-end pipeline: PASS
+fixture/live separation: PASS
+no-hosted-authority regression: PASS
+source validation: PASS_AT_b2166acf19eccee95d2548be4d5e64ff1616d8e3
 merge: NOT MERGED
 live Hugging Face observation: NOT OBSERVED
 live double-Interlock traversal: NOT OBSERVED
