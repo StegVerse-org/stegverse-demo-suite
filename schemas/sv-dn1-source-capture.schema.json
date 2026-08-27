@@ -1,0 +1,90 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://stegverse.org/schemas/sv-dn1-source-capture.schema.json",
+  "title": "SV-DN-1 Public Source Capture",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema_version",
+    "capture_id",
+    "source_system",
+    "requested_url",
+    "final_url",
+    "observed_at",
+    "http_status",
+    "content_type",
+    "raw_sha256",
+    "raw_size",
+    "parsed_json",
+    "claims",
+    "authority_effect"
+  ],
+  "properties": {
+    "schema_version": {
+      "const": "stegverse.sv-dn1.source-capture/v1"
+    },
+    "capture_id": {
+      "type": "string",
+      "pattern": "^sha256:[0-9a-f]{64}$"
+    },
+    "source_system": {
+      "const": "huggingface"
+    },
+    "requested_url": {
+      "type": "string",
+      "pattern": "^https://"
+    },
+    "final_url": {
+      "type": "string",
+      "pattern": "^https://"
+    },
+    "observed_at": {
+      "type": "string",
+      "minLength": 1
+    },
+    "http_status": {
+      "type": "integer",
+      "minimum": 100,
+      "maximum": 599
+    },
+    "content_type": {
+      "type": "string"
+    },
+    "raw_sha256": {
+      "type": "string",
+      "pattern": "^sha256:[0-9a-f]{64}$"
+    },
+    "raw_size": {
+      "type": "integer",
+      "minimum": 0
+    },
+    "parsed_json": {},
+    "claims": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "public_source_only",
+        "credential_used",
+        "hugging_face_endorsement_claimed",
+        "live_interlock_traversal_claimed"
+      ],
+      "properties": {
+        "public_source_only": {
+          "const": true
+        },
+        "credential_used": {
+          "const": false
+        },
+        "hugging_face_endorsement_claimed": {
+          "const": false
+        },
+        "live_interlock_traversal_claimed": {
+          "const": false
+        }
+      }
+    },
+    "authority_effect": {
+      "const": "NONE"
+    }
+  }
+}
