@@ -1,0 +1,43 @@
+{
+  "schema": "stegverse.sv-dn1.profile/v1",
+  "profile_id": "SV-DN-1",
+  "purpose": "Public reproducible model-distribution neutrality and portability evaluation",
+  "source_systems": [
+    "huggingface"
+  ],
+  "exchange_contract": "stegverse.sv-dn1.interlock-exchange/v1",
+  "mapping_profile": "SV-DN-1-HF/v1",
+  "result_contract": "stegverse.sv-dn1.result-receipt/v1",
+  "public_dashboard": {
+    "enabled": true,
+    "target_refresh_hours": 12,
+    "update_policy": "TWICE_DAILY_WHEN_RESIDENT_OBSERVER_AVAILABLE_PLUS_MATERIAL_DELTA",
+    "static_receipt_derived": true,
+    "network_required_to_view": false,
+    "javascript_required": false
+  },
+  "principles": {
+    "architectural_concentration": "INCREASES_INDEPENDENT_EVIDENCE_BURDEN_NOT_AUTOMATIC_DISPOSITION",
+    "unknown_is_not_failure": true,
+    "no_silent_loss": true,
+    "evaluation_is_not_enforcement": true
+  },
+  "dimensions": [
+    "artifact_identity",
+    "license_and_gating",
+    "exportability",
+    "local_offline_execution",
+    "cpu_portability",
+    "amd_rocm_portability",
+    "nvidia_cuda_portability",
+    "other_accelerator_portability",
+    "vendor_specific_dependency",
+    "observable_default_or_recommendation_bias",
+    "benchmark_method_consistency",
+    "migration_exit_path",
+    "deterministic_reconstruction"
+  ],
+  "authority_effect": "NONE",
+  "credential_authority": "TV/TVC",
+  "external_endorsement_claimed": false
+}

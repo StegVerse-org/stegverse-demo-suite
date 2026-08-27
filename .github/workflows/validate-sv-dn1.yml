@@ -1,0 +1,79 @@
+name: Validate SV-DN-1
+
+on:
+  pull_request:
+    paths:
+      - "config/sv_dn1_*.json"
+      - "schemas/sv-dn1-*.json"
+      - "scripts/sv_dn1_*.py"
+      - "scripts/render_sv_dn1_*.py"
+      - "fixtures/sv_dn1/**"
+      - "tests/test_sv_dn1_double_interlock.py"
+      - "public/sv-dn1/**"
+      - "docs/SV_DN1_DOUBLE_INTERLOCK_MIRROR_HANDOFF.md"
+      - ".github/workflows/validate-sv-dn1.yml"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout without persisted credentials
+        uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+
+      - name: Run deterministic double-Interlock tests
+        run: python -m unittest tests.test_sv_dn1_double_interlock
+
+      - name: Run fixture-only end-to-end pipeline
+        run: |
+          rm -rf /tmp/sv-dn1-proof
+          python scripts/run_sv_dn1.py \
+            --input fixtures/sv_dn1/hf_model_baseline.json \
+            --native-ref https://huggingface.co/stegverse-fixture/example-open-model \
+            --observed-at 2026-08-27T12:00:00Z \
+            --output-dir /tmp/sv-dn1-proof
+
+      - name: Enforce fixture/live separation
+        run: |
+          python - <<'PY'
+          import json
+          from pathlib import Path
+          p = Path("/tmp/sv-dn1-proof")
+          receipt = json.loads((p / "result-receipt.json").read_text())
+          html = (p / "index.html").read_text()
+          assert receipt["sdk_intake"]["binding_state"] == "FIXTURE_BOUND"
+          assert receipt["claims"]["live_double_interlock_traversal_claimed"] is False
+          assert receipt["claims"]["certification_claimed"] is False
+          assert "FIXTURE / NOT LIVE-ADMITTED" in html
+          assert "<script" not in html.lower()
+          print("SV_DN1_VALIDATION_PASS")
+          PY
+
+      - name: Prove no hosted authority claim
+        run: |
+          python - <<'PY'
+          from pathlib import Path
+          forbidden = ("GITHUB_TOKEN", "github.token", "secrets.", "contents: write", "actions: write")
+          paths = [
+              Path("scripts/sv_dn1_hf_interlock.py"),
+              Path("scripts/sv_dn1_stegverse_interlock.py"),
+              Path("scripts/sv_dn1_evaluator.py"),
+              Path("scripts/run_sv_dn1.py"),
+              Path("scripts/render_sv_dn1_dashboard.py"),
+          ]
+          for path in paths:
+              text = path.read_text()
+              for token in forbidden:
+                  assert token not in text, (path, token)
+          print("SV_DN1_NO_HOSTED_AUTHORITY_PASS")
+          PY

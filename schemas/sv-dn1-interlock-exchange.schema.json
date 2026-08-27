@@ -1,0 +1,168 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://stegverse.org/schemas/sv-dn1-interlock-exchange.schema.json",
+  "title": "SV-DN-1 Interlock Exchange",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema_version",
+    "exchange_id",
+    "source_system",
+    "source_object",
+    "raw_evidence",
+    "semantic_mapping",
+    "semantic",
+    "far_side_receipt",
+    "intr"
+  ],
+  "properties": {
+    "schema_version": {
+      "const": "stegverse.sv-dn1.interlock-exchange/v1"
+    },
+    "exchange_id": {
+      "type": "string",
+      "pattern": "^sha256:[0-9a-f]{64}$"
+    },
+    "source_system": {
+      "const": "huggingface"
+    },
+    "source_object": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "kind",
+        "native_id",
+        "native_revision",
+        "native_ref",
+        "observed_at"
+      ],
+      "properties": {
+        "kind": {
+          "enum": [
+            "model",
+            "dataset",
+            "space",
+            "api-response",
+            "other"
+          ]
+        },
+        "native_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "native_revision": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "native_ref": {
+          "type": "string",
+          "minLength": 1
+        },
+        "observed_at": {
+          "type": "string",
+          "minLength": 1
+        }
+      }
+    },
+    "raw_evidence": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "source_sha256",
+        "preserved_native_fields",
+        "unmapped_fields"
+      ],
+      "properties": {
+        "source_sha256": {
+          "type": "string",
+          "pattern": "^sha256:[0-9a-f]{64}$"
+        },
+        "preserved_native_fields": {
+          "type": "object"
+        },
+        "unmapped_fields": {
+          "type": "object"
+        }
+      }
+    },
+    "semantic_mapping": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "profile",
+        "ruleset_hash",
+        "transformations",
+        "lossy_transformations"
+      ],
+      "properties": {
+        "profile": {
+          "const": "SV-DN-1-HF/v1"
+        },
+        "ruleset_hash": {
+          "type": "string",
+          "pattern": "^sha256:[0-9a-f]{64}$"
+        },
+        "transformations": {
+          "type": "array",
+          "items": {
+            "type": "object"
+          }
+        },
+        "lossy_transformations": {
+          "type": "array",
+          "items": {
+            "type": "object"
+          }
+        }
+      }
+    },
+    "semantic": {
+      "type": "object"
+    },
+    "far_side_receipt": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "interlock_role",
+        "transformation_hash",
+        "authority_effect"
+      ],
+      "properties": {
+        "interlock_role": {
+          "const": "SOURCE_SEMANTIC_ADAPTER"
+        },
+        "transformation_hash": {
+          "type": "string",
+          "pattern": "^sha256:[0-9a-f]{64}$"
+        },
+        "authority_effect": {
+          "const": "NONE"
+        }
+      }
+    },
+    "intr": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "transport_profile",
+        "previous_receipt_hash",
+        "authority_effect"
+      ],
+      "properties": {
+        "transport_profile": {
+          "type": "string",
+          "minLength": 1
+        },
+        "previous_receipt_hash": {
+          "type": "string",
+          "pattern": "^sha256:[0-9a-f]{64}$"
+        },
+        "authority_effect": {
+          "const": "NONE"
+        }
+      }
+    }
+  }
+}

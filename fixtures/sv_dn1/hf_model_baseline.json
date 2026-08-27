@@ -1,0 +1,27 @@
+{
+  "modelId": "stegverse-fixture/example-open-model",
+  "sha": "0123456789abcdef0123456789abcdef01234567",
+  "pipeline_tag": "text-generation",
+  "library_name": "transformers",
+  "tags": [
+    "transformers",
+    "safetensors",
+    "cpu"
+  ],
+  "cardData": {
+    "license": "mit"
+  },
+  "siblings": [
+    {
+      "rfilename": "README.md",
+      "size": 1234
+    },
+    {
+      "rfilename": "model.safetensors",
+      "size": 987654
+    }
+  ],
+  "downloads": 42,
+  "likes": 7,
+  "fixture_only": true
+}

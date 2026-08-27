@@ -1,0 +1,118 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://stegverse.org/schemas/sv-dn1-result-receipt.schema.json",
+  "title": "SV-DN-1 Result Receipt",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema_version",
+    "receipt_id",
+    "profile_id",
+    "exchange_id",
+    "sdk_intake",
+    "dimensions",
+    "summary",
+    "evidence_chain",
+    "claims",
+    "authority_effect"
+  ],
+  "properties": {
+    "schema_version": {
+      "const": "stegverse.sv-dn1.result-receipt/v1"
+    },
+    "receipt_id": {
+      "type": "string",
+      "pattern": "^sha256:[0-9a-f]{64}$"
+    },
+    "profile_id": {
+      "const": "SV-DN-1"
+    },
+    "exchange_id": {
+      "type": "string",
+      "pattern": "^sha256:[0-9a-f]{64}$"
+    },
+    "sdk_intake": {
+      "type": "object",
+      "required": [
+        "manifest_hash",
+        "intake_receipt_id",
+        "binding_state"
+      ],
+      "properties": {
+        "manifest_hash": {
+          "type": "string"
+        },
+        "intake_receipt_id": {
+          "type": "string"
+        },
+        "binding_state": {
+          "enum": [
+            "FIXTURE_BOUND",
+            "SDK_ADMITTED"
+          ]
+        }
+      }
+    },
+    "dimensions": {
+      "type": "object",
+      "additionalProperties": {
+        "type": "object",
+        "required": [
+          "state",
+          "basis"
+        ],
+        "properties": {
+          "state": {
+            "enum": [
+              "PASS",
+              "FAIL",
+              "UNKNOWN",
+              "NOT_APPLICABLE"
+            ]
+          },
+          "basis": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          }
+        }
+      }
+    },
+    "summary": {
+      "type": "object",
+      "required": [
+        "pass",
+        "fail",
+        "unknown",
+        "not_applicable"
+      ],
+      "properties": {
+        "pass": {
+          "type": "integer"
+        },
+        "fail": {
+          "type": "integer"
+        },
+        "unknown": {
+          "type": "integer"
+        },
+        "not_applicable": {
+          "type": "integer"
+        }
+      }
+    },
+    "evidence_chain": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "claims": {
+      "type": "object"
+    },
+    "authority_effect": {
+      "const": "NONE"
+    }
+  }
+}
