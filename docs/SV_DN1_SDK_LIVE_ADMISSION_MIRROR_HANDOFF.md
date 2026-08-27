@@ -172,7 +172,10 @@ SDK ingress candidate schema: IMPLEMENTED_ON_FEATURE_BRANCH
 SDK-compatible source validator: IMPLEMENTED_ON_FEATURE_BRANCH
 deterministic bridge tests: IMPLEMENTED_ON_FEATURE_BRANCH
 validation workflow integration: IMPLEMENTED_ON_FEATURE_BRANCH
-source validation: PENDING_WORKFLOW_RESULT
+source validation: PASS
+Validate SV-DN-1 run 33127803224 / job 98709998295: PASS
+Architecture Guard run 33127803215 / job 98709998382: PASS
+validated_head: f99e24ac1dd0d5aa1075d796e29cef040c1d849b
 merge: NOT MERGED
 SDK governed execution: NOT OBSERVED
 SDK live admission: NOT OBSERVED
