@@ -1,0 +1,162 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://stegverse.org/schemas/sv-dn1-sdk-ingress-candidate.schema.json",
+  "title": "SV-DN-1 SDK 0B Ingress Candidate",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema_version",
+    "resident_receipt",
+    "source_capture",
+    "exchange",
+    "manifest",
+    "claims",
+    "authority_effect"
+  ],
+  "properties": {
+    "schema_version": {
+      "const": "stegverse.sv-dn1.sdk-ingress-candidate/v1"
+    },
+    "resident_receipt": {
+      "type": "object"
+    },
+    "source_capture": {
+      "type": "object"
+    },
+    "exchange": {
+      "type": "object"
+    },
+    "manifest": {
+      "type": "object",
+      "required": [
+        "manifest_profile",
+        "manifest_profile_version",
+        "source_framework",
+        "source_output_id",
+        "created_at",
+        "payload",
+        "candidate",
+        "declared_intent",
+        "requested_consequence",
+        "hashes",
+        "extensions",
+        "return_projection",
+        "manifest_labels"
+      ],
+      "properties": {
+        "manifest_profile": {
+          "const": "stegverse.ingress-manifest.v1"
+        },
+        "manifest_profile_version": {
+          "const": "1"
+        },
+        "source_framework": {
+          "const": "StegVerse-org/stegverse-demo-suite:SV-DN-1"
+        },
+        "source_output_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "created_at": {
+          "type": "string",
+          "minLength": 1
+        },
+        "payload": {
+          "type": "object"
+        },
+        "candidate": {
+          "type": "object"
+        },
+        "declared_intent": {
+          "type": "string",
+          "minLength": 1
+        },
+        "requested_consequence": {
+          "type": "string",
+          "minLength": 1
+        },
+        "hashes": {
+          "type": "object",
+          "required": [
+            "payload_sha256",
+            "candidate_sha256"
+          ],
+          "properties": {
+            "payload_sha256": {
+              "type": "string",
+              "pattern": "^[0-9a-f]{64}$"
+            },
+            "candidate_sha256": {
+              "type": "string",
+              "pattern": "^[0-9a-f]{64}$"
+            }
+          }
+        },
+        "extensions": {
+          "type": "object",
+          "required": [
+            "stegverse_route",
+            "stegverse_governance_request"
+          ],
+          "properties": {
+            "stegverse_route": {
+              "type": "object",
+              "required": [
+                "route_id",
+                "lane_class",
+                "routing_surface",
+                "containment",
+                "sandbox_required",
+                "external_consequence_enabled"
+              ]
+            },
+            "stegverse_governance_request": {
+              "type": "object"
+            }
+          }
+        },
+        "return_projection": {
+          "type": "object"
+        },
+        "manifest_labels": {
+          "type": "object"
+        }
+      }
+    },
+    "claims": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "sdk_admitted",
+        "governed_run_executed",
+        "steggate_allow_claimed",
+        "master_records_custody_claimed",
+        "live_dashboard_published",
+        "hugging_face_endorsement_claimed"
+      ],
+      "properties": {
+        "sdk_admitted": {
+          "const": false
+        },
+        "governed_run_executed": {
+          "const": false
+        },
+        "steggate_allow_claimed": {
+          "const": false
+        },
+        "master_records_custody_claimed": {
+          "const": false
+        },
+        "live_dashboard_published": {
+          "const": false
+        },
+        "hugging_face_endorsement_claimed": {
+          "const": false
+        }
+      }
+    },
+    "authority_effect": {
+      "const": "NONE"
+    }
+  }
+}
