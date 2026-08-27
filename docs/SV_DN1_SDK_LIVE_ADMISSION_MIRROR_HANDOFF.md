@@ -1,0 +1,207 @@
+# SV-DN-1 SDK Live Admission Mirror Handoff
+
+## Scope
+
+```text
+goal_id: DEMO-SV-DN1-SDK-LIVE-ADMISSION-002
+repository: StegVerse-org/stegverse-demo-suite
+branch: feature/sv-dn1-sdk-live-admission
+parent_goal: DEMO-MODEL-DISTRIBUTION-NEUTRALITY-001
+parent_handoff: docs/SV_DN1_DOUBLE_INTERLOCK_MIRROR_HANDOFF.md
+upstream_runtime_task: StegVerse-Labs/.github/SV-DN1-RESIDENT-OBSERVER-001
+downstream_ingress_owner: StegVerse-org/StegVerse-SDK
+credential_authority: TV/TVC
+authority_effect: NONE
+```
+
+## Goal
+
+Prepare the exact source-side bridge required after the sovereign resident observer produces an authentic SV-DN-1 source capture and HF-facing semantic exchange.
+
+The bridge converts those already-produced evidence objects into a canonical `stegverse.ingress-manifest.v1` for the SDK 0B path without reimplementing SDK governance, fabricating admission, or promoting fixture evidence to live evidence.
+
+## Source of truth order
+
+1. `docs/SV_DN1_SDK_LIVE_ADMISSION_MIRROR_HANDOFF.md`
+2. `docs/SV_DN1_DOUBLE_INTERLOCK_MIRROR_HANDOFF.md`
+3. `tasks/SV-DN1-RESIDENT-OBSERVER-001.json`
+4. `StegVerse-Labs/.github/docs/SV_DN1_RESIDENT_OBSERVER_MIRROR_HANDOFF.md`
+5. `StegVerse-org/StegVerse-SDK/SDK_MIRROR_HANDOFF.md`
+6. `StegVerse-org/StegVerse-SDK/stegverse/governance_navigation.py`
+7. `StegVerse-org/StegVerse-SDK/stegverse/governance_ingress_runtime.py`
+8. `StegVerse-org/StegVerse-SDK/stegverse/route_resolution.py`
+
+Live repository/runtime evidence overrides older chat claims.
+
+## Canonical SDK route facts
+
+The SDK 0B lane is already installed. This bridge MUST target the existing published route and MUST NOT invent another evaluator or route:
+
+```text
+manifest_profile: stegverse.ingress-manifest.v1
+manifest_profile_version: "1"
+route_id: stegverse.route.canonical-governed.v1
+lane_class: PRODUCTION_VALIDATION
+routing_surface: CANONICAL_PRODUCTION
+containment: PRODUCTION_ROUTE_BOUNDED_CONSEQUENCE
+sandbox_required: false
+external_consequence_enabled: false
+```
+
+Required SDK extensions:
+
+```text
+extensions.stegverse_route
+extensions.stegverse_governance_request
+```
+
+The candidate embedded in the governance request MUST be identical to the manifest candidate under canonical hashing.
+
+## Admission boundary
+
+This repository may create an **SDK ingress candidate manifest**. It may not claim that the SDK has admitted it.
+
+Required state distinction:
+
+```text
+RESIDENT_SOURCE_CAPTURE_COMPLETE
+-> SDK_0B_MANIFEST_PREPARED
+-> SDK_0B_MANIFEST_VALIDATED
+-> SDK_0B_GOVERNED_RUN_EXECUTED
+-> SDK_ADMITTED
+-> SV_DN1_LIVE_RESULT_BOUND
+```
+
+Only the SDK/runtime owner may establish the governed-run/admission states.
+
+## Required live evidence
+
+The generator must refuse input unless all of the following are true:
+
+- resident receipt state is `COMPLETE`;
+- transition is `SV_DN1_RESIDENT_SOURCE_CAPTURE_COMPLETE`;
+- `raw_response_sha256_present=true`;
+- `semantic_exchange_valid=true`;
+- `credential_used=false`;
+- `github_token_used=false`;
+- `repository_writeback_performed=false`;
+- `sdk_admitted=false` at this pre-admission boundary;
+- source capture claims no Hugging Face endorsement;
+- exchange validates against the canonical SV-DN-1 destination validator;
+- source capture and exchange refer to the same observed source identity.
+
+Fixture-only evidence is prohibited.
+
+## Candidate semantics
+
+The candidate is a non-side-effect evaluation request:
+
+```text
+actor_class: sv_dn1_public_evaluator
+action: evaluate_model_distribution_neutrality
+target: exact Hugging Face model identity + revision
+scope: public_distribution_observation
+external_side_effect: false
+```
+
+The request must preserve:
+
+- raw source digest;
+- exchange id;
+- semantic mapping profile and ruleset hash;
+- source revision;
+- transformation receipt hash;
+- resident observer receipt identity;
+- UNKNOWN as unresolved evidence rather than a negative or positive assertion.
+
+## Governance request posture
+
+The bridge does not decide the Governance outcome. It supplies bounded state for canonical SDK/StegGate evaluation.
+
+Judgment:
+- refusal/review remains available;
+- workload is bounded;
+- no time pressure;
+- evidence references point only to exact resident capture/exchange.
+
+Signal:
+- exact admitted signal references;
+- source transformation lineage;
+- missing inputs explicitly retained;
+- reconstruction available only where the evidence chain supports it;
+- transformation provenance complete must be proven, not assumed.
+
+Execution:
+- external consequence disabled;
+- no credentialed operation;
+- current evidence/route predicates represented only from exact live receipts;
+- policy/delegation references are non-authorizing SV-DN-1 evaluation declarations.
+
+## Initial implementation files
+
+```text
+docs/SV_DN1_SDK_LIVE_ADMISSION_MIRROR_HANDOFF.md
+schemas/sv-dn1-sdk-ingress-candidate.schema.json
+scripts/build_sv_dn1_sdk_ingress_manifest.py
+scripts/validate_sv_dn1_sdk_ingress_candidate.py
+tests/test_sv_dn1_sdk_live_admission.py
+```
+
+## Non-claims
+
+This source slice does not claim:
+
+- resident observer activation unless an authentic receipt is supplied;
+- live InTr traversal;
+- SDK admission;
+- StegGate ALLOW;
+- Master Records custody;
+- live dashboard publication;
+- Hugging Face adoption or endorsement;
+- certification.
+
+## Current state
+
+```text
+parent SV-DN-1 source: MERGED
+sovereign resident observer source/registration: MERGED
+resident observer runtime receipt: NOT OBSERVED
+SDK 0B canonical path: INSTALLED BY SDK OWNER
+SV-DN-1 SDK manifest bridge: IMPLEMENTED_ON_FEATURE_BRANCH
+SDK ingress candidate schema: IMPLEMENTED_ON_FEATURE_BRANCH
+SDK-compatible source validator: IMPLEMENTED_ON_FEATURE_BRANCH
+deterministic bridge tests: IMPLEMENTED_ON_FEATURE_BRANCH
+validation workflow integration: IMPLEMENTED_ON_FEATURE_BRANCH
+source validation: PASS
+Validate SV-DN-1 run 33127803224 / job 98709998295: PASS
+Architecture Guard run 33127803215 / job 98709998382: PASS
+validated_head: f99e24ac1dd0d5aa1075d796e29cef040c1d849b
+merge: NOT MERGED
+SDK governed execution: NOT OBSERVED
+SDK live admission: NOT OBSERVED
+```
+
+## Implemented source surfaces
+
+```text
+schemas/sv-dn1-sdk-ingress-candidate.schema.json
+scripts/build_sv_dn1_sdk_ingress_manifest.py
+scripts/validate_sv_dn1_sdk_ingress_candidate.py
+tests/test_sv_dn1_sdk_live_admission.py
+.github/workflows/validate-sv-dn1.yml
+```
+
+The builder enforces the authentic resident receipt boundary before it can create an SDK 0B candidate. The local validator checks current SDK manifest/profile/hash/route semantics but explicitly does not claim that the SDK itself validated or admitted the packet.
+
+The generated governance request preserves the still-missing runtime inputs:
+
+```text
+route_specific_intr_runtime_receipt
+sdk_live_admission_receipt
+```
+
+and therefore does not manufacture a completed live path.
+
+## Archive readiness
+
+Once this scoped handoff and implementation are merged, the remaining runtime boundary is recoverable without this conversation.
