@@ -1,0 +1,19 @@
+{
+  "schema": "stegverse.sv-dn1.observation-schedule/v1",
+  "goal_id": "DEMO-MODEL-DISTRIBUTION-NEUTRALITY-001",
+  "target_refresh_hours": 12,
+  "update_policy": "TWICE_DAILY_WHEN_RESIDENT_OBSERVER_AVAILABLE_PLUS_MATERIAL_DELTA",
+  "material_delta_examples": [
+    "artifact revision changes",
+    "license or gating changes",
+    "file/export surface changes",
+    "runtime or hardware compatibility signal changes",
+    "distribution/default/recommendation surface changes",
+    "mapping profile changes"
+  ],
+  "production_observer_owner": "ADMITTED_RESIDENT_OBSERVER",
+  "github_actions_production_observer": false,
+  "github_actions_control_plane": false,
+  "credential_authority": "TV/TVC",
+  "authority_effect": "NONE"
+}
