@@ -430,11 +430,46 @@ governance mapping: NOT PERFORMED
 release: NOT READY
 ```
 
+## Live observer / dashboard-history source slice
+
+A second source slice now exists on `feature/sv-dn1-live-observer` to make the twice-daily dashboard posture implementable without granting GitHub Actions production observation authority.
+
+Added source surfaces:
+
+```text
+config/sv_dn1_observation_schedule.json
+schemas/sv-dn1-source-capture.schema.json
+scripts/observe_sv_dn1_hf_public.py
+scripts/build_sv_dn1_dashboard_history.py
+tests/test_sv_dn1_public_observer.py
+.github/workflows/validate-sv-dn1.yml (validation-only extension)
+```
+
+Observer boundary:
+
+- HTTPS Hugging Face hosts only;
+- public JSON only;
+- no Authorization header or provider credential;
+- exact raw bytes are hashed before semantic normalization;
+- requested and final URLs are both recorded;
+- redirects leaving the Hugging Face boundary fail closed;
+- response-size and content-type gates fail closed;
+- source capture itself claims no live Interlock traversal, no Hugging Face endorsement, and no authority effect.
+
+Dashboard-history boundary:
+
+- reconstructs ordered observations from receipt directories;
+- records revision changes, ruleset changes, SDK-binding changes, and per-dimension state deltas;
+- never rewrites prior receipts;
+- authority effect remains NONE.
+
+The scheduled refresh target remains 12 hours plus material-delta publication. The source observer is suitable for a future admitted resident runtime; GitHub Actions only validates the source and fixture behavior.
+
 ## Next executable goal
 
 The source implementation is merged. The next goal is a real public observation lane without changing the authority model:
 
-1. implement a resident/public-source observer that captures exact Hugging Face response bytes, content type, retrieval time, source URL, and digest;
+1. validate and merge the implemented resident/public-source observer that captures exact Hugging Face response bytes, content type, retrieval time, source URL, and digest;
 2. feed that capture into the merged HF-facing semantic Interlock;
 3. obtain route-specific InTr/Interlock evidence rather than fixture-only lineage;
 4. bind the resulting exchange through the canonical SDK intake path;
