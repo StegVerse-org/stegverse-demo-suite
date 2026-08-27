@@ -5,10 +5,10 @@
 ```text
 organization: StegVerse-org
 repository: stegverse-demo-suite
-branch: feature/sv-dn1-double-interlock
+branch: main
 goal_id: DEMO-MODEL-DISTRIBUTION-NEUTRALITY-001
 issue: #5
-claim_state: SESSION_IMPLEMENTATION_CLAIM
+claim_state: SOURCE_MERGED_LIVE_OBSERVATION_PENDING
 canonical_public_demo_owner: StegVerse-org/stegverse-demo-suite
 credential_authority: TV/TVC
 authority_effect: NONE
@@ -182,7 +182,7 @@ Minimum envelope:
 }
 ```
 
-The actual schema and field set remain to be implemented and validated.
+The exchange schema and field set are implemented and source-validated on main; live external traversal remains separately unobserved.
 
 ## Semantic reversibility requirement
 
@@ -398,28 +398,30 @@ Current implementation adds a static HTML renderer and reserves `public/sv-dn1/`
 ```text
 goal definition: COMPLETE
 issue/task surface: COMPLETE
-dedicated mirror handoff: IMPLEMENTED_ON_FEATURE_BRANCH
-architecture: DEFINED
-SV-DN-1 profile: IMPLEMENTED_ON_FEATURE_BRANCH
-HF mapping profile: IMPLEMENTED_ON_FEATURE_BRANCH
-exchange schema: IMPLEMENTED_ON_FEATURE_BRANCH
-result receipt schema: IMPLEMENTED_ON_FEATURE_BRANCH
-HF-side semantic adapter: IMPLEMENTED_ON_FEATURE_BRANCH
-StegVerse-side adapter: IMPLEMENTED_ON_FEATURE_BRANCH
-evaluator: IMPLEMENTED_ON_FEATURE_BRANCH
-fixture: IMPLEMENTED_ON_FEATURE_BRANCH
-negative/deterministic tests: IMPLEMENTED_ON_FEATURE_BRANCH
-receipt-derived markdown report renderer: IMPLEMENTED_ON_FEATURE_BRANCH
-receipt-derived public dashboard renderer: IMPLEMENTED_ON_FEATURE_BRANCH
-fixture pipeline runner: IMPLEMENTED_ON_FEATURE_BRANCH
-Validate SV-DN-1 run 33125069650 / job 98701107515: PASS
-Architecture Guard run 33125069598 / job 98701107458: PASS
+dedicated mirror handoff: MERGED
+architecture: MERGED
+SV-DN-1 profile: MERGED
+HF mapping profile: MERGED
+exchange schema: MERGED
+result receipt schema: MERGED
+HF-side semantic adapter: MERGED
+StegVerse-side adapter: MERGED
+evaluator: MERGED
+fixture: MERGED
+negative/deterministic tests: MERGED
+receipt-derived markdown report renderer: MERGED
+receipt-derived public dashboard renderer: MERGED
+fixture pipeline runner: MERGED
+validation-only workflow: MERGED
+Validate SV-DN-1 run 33125102052: PASS
+Architecture Guard run 33125102033: PASS
 deterministic double-Interlock tests: PASS
 fixture-only end-to-end pipeline: PASS
 fixture/live separation: PASS
 no-hosted-authority regression: PASS
-source validation: PASS_AT_b2166acf19eccee95d2548be4d5e64ff1616d8e3
-merge: NOT MERGED
+source validation: PASS_AT_11949fbc3ecbc07b3c7e71a44000385c8ffb6616
+merge: PR #6 MERGED
+merge_commit: 65045e5b72413a9ac0242b4e865ea4ad142a4417
 live Hugging Face observation: NOT OBSERVED
 live double-Interlock traversal: NOT OBSERVED
 SDK live admission: NOT OBSERVED
@@ -428,6 +430,21 @@ governance mapping: NOT PERFORMED
 release: NOT READY
 ```
 
+## Next executable goal
+
+The source implementation is merged. The next goal is a real public observation lane without changing the authority model:
+
+1. implement a resident/public-source observer that captures exact Hugging Face response bytes, content type, retrieval time, source URL, and digest;
+2. feed that capture into the merged HF-facing semantic Interlock;
+3. obtain route-specific InTr/Interlock evidence rather than fixture-only lineage;
+4. bind the resulting exchange through the canonical SDK intake path;
+5. evaluate it with SV-DN-1;
+6. generate the first live receipt-derived dashboard;
+7. make the public dashboard refresh target 12 hours when an admitted resident observer is available, plus immediate material-delta publication;
+8. only after live evidence, review propagation to Governance, Site, Publisher, admissibility-wiki, and stegguardian-wiki.
+
+No GitHub Actions workflow is authorized to substitute for the resident external observer.
+
 ## Archive readiness
 
-This handoff is the continuation source for the SV-DN-1 double-Interlock goal. Once merged, the originating conversation is not required to recover the architecture, boundaries, remaining files, or next action.
+This handoff is the canonical continuation source for the SV-DN-1 double-Interlock goal. PR #6 is merged and the source lane is independently recoverable. The originating conversation is not required to recover the architecture, boundaries, merged source files, validation evidence, or next executable goal.
