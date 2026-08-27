@@ -430,7 +430,7 @@ governance mapping: NOT PERFORMED
 observer/history source: MERGED
 observer/history validation: PASS
 real public Hugging Face web preflight: OBSERVED_NONADMISSIBLE_PARSED_JSON
-resident task binding: IMPLEMENTED_ON_FEATURE_BRANCH
+resident task binding: MERGED
 live observer runtime activation: NOT OBSERVED
 release: NOT READY
 ```
@@ -547,6 +547,18 @@ The source implementation is merged. The next goal is a real public observation 
 8. only after live evidence, review propagation to Governance, Site, Publisher, admissibility-wiki, and stegguardian-wiki.
 
 No GitHub Actions workflow is authorized to substitute for the resident external observer.
+
+## PR #8 merge evidence
+
+```text
+PR #8: MERGED
+merge_commit: 26e8b7df7f7edbf64a1d983d3ca11051b6e1a5b0
+validated_head: 4508eee6e9c3378193982de1b90154fcb9ff1b17
+Validate SV-DN-1 run 33127203543 / job 98708070030: PASS
+Architecture Guard run 33127203541: PASS
+```
+
+The public web preflight and machine-readable resident observation task are now merged on main. This still does not establish exact raw-byte live capture, resident runtime activation, route-specific InTr runtime evidence, SDK live admission, or live dashboard publication.
 
 ## Archive readiness
 
