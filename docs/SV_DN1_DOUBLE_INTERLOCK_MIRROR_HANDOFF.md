@@ -431,6 +431,7 @@ observer/history source: MERGED
 observer/history validation: PASS
 real public Hugging Face web preflight: OBSERVED_NONADMISSIBLE_PARSED_JSON
 resident task binding: MERGED
+sovereign resident worker binding: MERGED
 live observer runtime activation: NOT OBSERVED
 release: NOT READY
 ```
@@ -559,6 +560,38 @@ Architecture Guard run 33127203541: PASS
 ```
 
 The public web preflight and machine-readable resident observation task are now merged on main. This still does not establish exact raw-byte live capture, resident runtime activation, route-specific InTr runtime evidence, SDK live admission, or live dashboard publication.
+
+## Sovereign resident observer binding — merged
+
+The canonical organization worker/runtime surface now contains the source-valid resident observer binding:
+
+```text
+repository: StegVerse-Labs/.github
+handoff: docs/SV_DN1_RESIDENT_OBSERVER_MIRROR_HANDOFF.md
+executable handoff: handoffs/SV-DN1-RESIDENT-OBSERVER-001.json
+worker: workers/sv_dn1_resident_observer_worker.py
+worker registry: control/worker-registry.d/sv-dn1-resident-observer-001.json
+process adapter: control/process-worker-adapters.d/sv-dn1-resident-observer-001.json
+cost basis: cost-basis/worker-runtime/sv-dn1-resident-observer.json
+PR #335: MERGED
+merge_commit: d3dec277360327085ceb0266cfbf1f92e633da4e
+organization control plane run 33127505443: PASS
+heartbeat worker validation run 33127505433: PASS
+```
+
+The worker is authorized only for exact public-source capture + HF-facing semantic exchange on an admitted sovereign node. It cannot perform repository writeback, SDK live admission, publication, governance, certification, or credentialed provider access.
+
+Current live boundary therefore becomes:
+
+```text
+resident worker source/registration: MERGED
+worker claim/fence: NOT YET OBSERVED
+exact resident raw-byte capture: NOT YET OBSERVED
+HF-side live semantic exchange: NOT YET OBSERVED
+route-specific InTr traversal: NOT YET OBSERVED
+SDK live admission: NOT YET OBSERVED
+live dashboard publication: NOT YET OBSERVED
+```
 
 ## Archive readiness
 
