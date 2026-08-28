@@ -805,6 +805,38 @@ live production data published: false
 
 The hosting blocker is independent of the authentic SV-DN-1 production observation blocker. Enabling Pages does not make the first evaluation live, and obtaining live evaluation evidence does not by itself enable static hosting.
 
+## Live-result binding and first-round finalization — merged
+
+```text
+SDK live-result binder PR #16: MERGED
+SDK live-result binder merge: 309e682ff51a6d4d423878662d503cb7b0c9a5b5
+SDK binder validation 33129687133 / 98716042487: PASS
+SDK binder Architecture Guard 33129687149 / 98716042330: PASS
+
+first-round finalizer PR #19: MERGED
+first-round finalizer merge: c655d53d84fc1ae4ddf57fc5ae8ece40c2a80337
+first-round validation 33129906362 / 98716737723: PASS
+first-round Architecture Guard 33129906351 / 98716737714: PASS
+```
+
+The merged source can now take an authentic READY_FOR_SDK_0B candidate plus canonical sovereign SDK result, bind it exactly to SDK_ADMITTED, regenerate the deterministic SV-DN-1 result, require exact Master Records reconstruction with no consequence reexecution/original-record mutation, assemble the production-pipeline observation, and render the first-round report/dashboard.
+
+Current runtime truth remains:
+
+```text
+resident task: HANDOFF_READY
+resident claim_id: null
+resident worker last_seen_at: null
+resident activation_proof_ref: null
+exact resident live capture: NOT OBSERVED
+route-specific InTr runtime receipt: NOT OBSERVED
+canonical SDK governed result for SV-DN-1: NOT OBSERVED
+first authentic round analyzed: NOT OBSERVED
+live receipt-derived dashboard data: NOT PUBLISHED
+```
+
+Public static dashboard shell source is merged, but its GitHub Pages handoff currently records the repository Pages site as not enabled; public HTTPS dashboard verification remains blocked on that one-time repository administration state.
+
 ## Archive readiness
 
 This handoff is the canonical continuation source for the SV-DN-1 double-Interlock goal. PR #6 is merged and the source lane is independently recoverable. The originating conversation is not required to recover the architecture, boundaries, merged source files, validation evidence, or next executable goal.
