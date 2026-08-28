@@ -797,13 +797,32 @@ static hosting workflow: MERGED
 static hosting authority tests: PASS
 GitHub Pages repository enablement: BLOCKED_ON_REPOSITORY_ADMIN_CONFIGURATION
 tracking issue: #18
-latest deployment run: 33129707417
+latest deployment run: 33129747895
 latest deployment result: FAIL_ONLY_AT_PAGES_CONFIGURATION_LOOKUP
+redundant handoff-only deploy trigger: REMOVED / PR #20 MERGED
 expected URL after enablement: https://stegverse-org.github.io/stegverse-demo-suite/sv-dn1/
 live production data published: false
 ```
 
 The hosting blocker is independent of the authentic SV-DN-1 production observation blocker. Enabling Pages does not make the first evaluation live, and obtaining live evaluation evidence does not by itself enable static hosting.
+
+## Exact source materialization predecessor — merged
+
+The resident observer no longer relies on the source appearing manually or incidentally on the sovereign carrier. A dedicated machine-owned source-materialization predecessor is merged in `StegVerse-Labs/.github`:
+
+```text
+task: SV-DN1-SOURCE-MATERIALIZATION-001
+worker: sv-dn1-source-materialization-worker
+handoff: StegVerse-Labs/.github/docs/SV_DN1_SOURCE_MATERIALIZATION_MIRROR_HANDOFF.md
+PR #337: MERGED
+merge_commit: f5ca06543d1dd17b3095d424dc5eed578c15299d
+organization control plane run 33135530888: PASS
+heartbeat worker validation run 33135530923: PASS
+```
+
+The materializer acquires only credential-free public exact source bytes, verifies the canonical runtime manifest and every admitted Git blob identity, materializes the local source root consumed by `SV-DN1-RESIDENT-OBSERVER-001`, and stops before observation/evaluation/runtime authority.
+
+Runtime materialization receipt remains NOT OBSERVED until the sovereign WorkerCoordinator claims and executes that task.
 
 ## Live-result binding and first-round finalization — merged
 
