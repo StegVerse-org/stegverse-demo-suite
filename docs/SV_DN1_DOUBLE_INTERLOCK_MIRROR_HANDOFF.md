@@ -788,6 +788,23 @@ READY_FOR_SDK_0B
 
 The second state is reachable only with authentic route-specific InTr evidence and still does not claim SDK admission. Universal Interlock adoption/global runtime activation remain false unless separately evidenced.
 
+## Public dashboard hosting state
+
+```text
+deployment handoff: docs/SV_DN1_PUBLIC_DASHBOARD_DEPLOYMENT_MIRROR_HANDOFF.md
+public shell: MERGED
+static hosting workflow: MERGED
+static hosting authority tests: PASS
+GitHub Pages repository enablement: BLOCKED_ON_REPOSITORY_ADMIN_CONFIGURATION
+tracking issue: #18
+latest deployment run: 33129707417
+latest deployment result: FAIL_ONLY_AT_PAGES_CONFIGURATION_LOOKUP
+expected URL after enablement: https://stegverse-org.github.io/stegverse-demo-suite/sv-dn1/
+live production data published: false
+```
+
+The hosting blocker is independent of the authentic SV-DN-1 production observation blocker. Enabling Pages does not make the first evaluation live, and obtaining live evaluation evidence does not by itself enable static hosting.
+
 ## Archive readiness
 
 This handoff is the canonical continuation source for the SV-DN-1 double-Interlock goal. PR #6 is merged and the source lane is independently recoverable. The originating conversation is not required to recover the architecture, boundaries, merged source files, validation evidence, or next executable goal.
