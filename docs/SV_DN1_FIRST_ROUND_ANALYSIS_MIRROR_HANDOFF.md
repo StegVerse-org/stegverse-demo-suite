@@ -81,10 +81,10 @@ This does not prove the static artifact is publicly hosted. GitHub Pages deploym
 ## Current state
 
 ```text
-handoff: CREATED_ON_FEATURE_BRANCH
-finalizer: IMPLEMENTED_ON_FEATURE_BRANCH
-analysis schema: IMPLEMENTED_ON_FEATURE_BRANCH
-tests: IMPLEMENTED_ON_FEATURE_BRANCH
+handoff: MERGED
+finalizer: MERGED
+analysis schema: MERGED
+tests: MERGED
 authentic first round: NOT OBSERVED
 public live dashboard data: NOT PUBLISHED
 ```
@@ -100,6 +100,18 @@ tests/test_sv_dn1_first_round_analysis.py
 The finalizer deterministically revalidates the SDK ingress candidate, recomputes the canonical SDK result binding, requires the supplied `SDK_ADMITTED` object to equal that binding, regenerates the evaluator result receipt, validates exact reconstruction identity/custody/non-reexecution, optionally validates replay, assembles all nine production-lane observations, and renders the report/dashboard from the same receipt and pipeline state.
 
 Optional lane findings may only downgrade an otherwise observed lane to `FAIL`, `DEGRADED`, or `UNKNOWN` with explicit evidence and error/unknown text. They cannot silently promote a lane.
+
+## Merge evidence
+
+```text
+PR #19: MERGED
+merge_commit: c655d53d84fc1ae4ddf57fc5ae8ece40c2a80337
+validated_head: acef988ed9843e59a5ac81b07fb45322bac37272
+Validate SV-DN-1 run 33129906362 / job 98716737723: PASS
+Architecture Guard run 33129906351 / job 98716737714: PASS
+```
+
+Authentic first round remains NOT OBSERVED; the finalizer is now source-ready to analyze it immediately once the runtime receipts exist.
 
 ## Completion boundary
 
