@@ -1,0 +1,94 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://stegverse.org/schemas/sv-dn1-intr-runtime-receipt.schema.json",
+  "title": "SV-DN-1 Route-Specific InTr Runtime Receipt",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema_version",
+    "receipt_hash",
+    "route_id",
+    "exchange_id",
+    "state",
+    "observed_at",
+    "transport_profile",
+    "source_transform_hash",
+    "previous_receipt_hash",
+    "destination_validation",
+    "lineage_verified",
+    "claims",
+    "authority_effect"
+  ],
+  "properties": {
+    "schema_version": {
+      "const": "stegverse.sv-dn1.intr-runtime-receipt/v1"
+    },
+    "receipt_hash": {
+      "type": "string",
+      "pattern": "^sha256:[0-9a-f]{64}$"
+    },
+    "route_id": {
+      "const": "SV-DN-1-HF-PUBLIC"
+    },
+    "exchange_id": {
+      "type": "string",
+      "pattern": "^sha256:[0-9a-f]{64}$"
+    },
+    "state": {
+      "const": "COMPLETE"
+    },
+    "observed_at": {
+      "type": "string",
+      "minLength": 1
+    },
+    "transport_profile": {
+      "type": "string",
+      "minLength": 1
+    },
+    "source_transform_hash": {
+      "type": "string",
+      "pattern": "^sha256:[0-9a-f]{64}$"
+    },
+    "previous_receipt_hash": {
+      "type": "string",
+      "pattern": "^sha256:[0-9a-f]{64}$"
+    },
+    "destination_validation": {
+      "const": "PASS"
+    },
+    "lineage_verified": {
+      "const": true
+    },
+    "claims": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "canonical_protocol_adopted",
+        "production_interlock_runtime_activated",
+        "sdk_admitted",
+        "hugging_face_endorsement_claimed",
+        "credential_used"
+      ],
+      "properties": {
+        "canonical_protocol_adopted": {
+          "const": false
+        },
+        "production_interlock_runtime_activated": {
+          "const": false
+        },
+        "sdk_admitted": {
+          "const": false
+        },
+        "hugging_face_endorsement_claimed": {
+          "const": false
+        },
+        "credential_used": {
+          "const": false
+        }
+      }
+    },
+    "authority_effect": {
+      "const": "NONE"
+    }
+  }
+}
