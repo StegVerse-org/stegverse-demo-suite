@@ -6,7 +6,7 @@ import json
 from pathlib import Path
 
 
-def render(exchange: dict, receipt: dict) -> str:
+def render(exchange: dict, receipt: dict, pipeline: dict | None = None) -> str:
     src = exchange["source_object"]
     lines = [
         "# SV-DN-1 Evaluation Report",
@@ -56,10 +56,12 @@ def main() -> int:
     ap.add_argument("--exchange", required=True)
     ap.add_argument("--receipt", required=True)
     ap.add_argument("--output", required=True)
+    ap.add_argument("--pipeline-observation")
     args = ap.parse_args()
     exchange = json.loads(Path(args.exchange).read_text(encoding="utf-8"))
     receipt = json.loads(Path(args.receipt).read_text(encoding="utf-8"))
-    Path(args.output).write_text(render(exchange, receipt), encoding="utf-8")
+    pipeline = json.loads(Path(args.pipeline_observation).read_text(encoding="utf-8")) if args.pipeline_observation else None
+    Path(args.output).write_text(render(exchange, receipt, pipeline), encoding="utf-8")
     print(json.dumps({"state":"SV_DN1_REPORT_RENDERED","output":args.output,"receipt_id":receipt["receipt_id"]}, sort_keys=True))
     return 0
 
