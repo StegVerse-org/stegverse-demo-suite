@@ -733,6 +733,24 @@ public contract: public/sv-dn1/README.md
 
 The public surface now requires the production pipeline observation input and explicitly permits bounded FAIL / DEGRADED / UNKNOWN states when they are real, evidence-backed, and reconstructable. It forbids hiding known failures, promoting UNKNOWN, confusing fixture/live state, or treating production status as proof of correctness.
 
+## Exact runtime source pin
+
+The first authentic resident observation must not execute whichever local demo-suite files happen to be present. The exact source bytes are now pinned by:
+
+\`\`\`text
+config/sv_dn1_runtime_source_manifest.json
+scripts/validate_sv_dn1_runtime_source.py
+tests/test_sv_dn1_runtime_source_pin.py
+\`\`\`
+
+The manifest uses Git blob SHA-1 identities for the production-critical SV-DN-1 source files and records source basis commit:
+
+\`\`\`text
+ccd8a1886e8b87865cfcc541be5f32bf59f34e17
+\`\`\`
+
+A missing file or byte-level drift fails closed before resident execution. This does not authorize remote checkout, repository writeback, credential use, runtime activation, SDK admission, or publication.
+
 ## Archive readiness
 
 This handoff is the canonical continuation source for the SV-DN-1 double-Interlock goal. PR #6 is merged and the source lane is independently recoverable. The originating conversation is not required to recover the architecture, boundaries, merged source files, validation evidence, or next executable goal.
