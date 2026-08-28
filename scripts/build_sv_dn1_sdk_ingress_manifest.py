@@ -19,6 +19,9 @@ ROUTE = {
     "external_consequence_enabled": False,
 }
 
+INTR_RECEIPT_SCHEMA = "stegverse.sv-dn1.intr-runtime-receipt/v1"
+INTR_ROUTE_ID = "SV-DN-1-HF-PUBLIC"
+
 
 def canonical_json(value: Any) -> str:
     return json.dumps(value, sort_keys=True, separators=(",", ":"), ensure_ascii=False)
@@ -26,6 +29,10 @@ def canonical_json(value: Any) -> str:
 
 def sha256_hex(value: Any) -> str:
     return hashlib.sha256(canonical_json(value).encode("utf-8")).hexdigest()
+
+
+def sha256_ref(value: Any) -> str:
+    return "sha256:" + sha256_hex(value)
 
 
 def require(condition: bool, message: str) -> None:
@@ -74,6 +81,43 @@ def validate_live_inputs(
     require(exchange.get("intr", {}).get("authority_effect") == "NONE", "InTr authority drift")
 
 
+def intr_receipt_body(receipt: dict[str, Any]) -> dict[str, Any]:
+    return {k: deepcopy(v) for k, v in receipt.items() if k != "receipt_hash"}
+
+
+def validate_intr_runtime_receipt(
+    intr_receipt: dict[str, Any],
+    exchange: dict[str, Any],
+) -> None:
+    require(intr_receipt.get("schema_version") == INTR_RECEIPT_SCHEMA, "wrong InTr runtime receipt schema")
+    require(intr_receipt.get("route_id") == INTR_ROUTE_ID, "wrong SV-DN-1 InTr route")
+    require(intr_receipt.get("state") == "COMPLETE", "InTr runtime receipt must be COMPLETE")
+    require(intr_receipt.get("exchange_id") == exchange.get("exchange_id"), "InTr/exchange identity mismatch")
+    require(
+        intr_receipt.get("source_transform_hash") == exchange.get("far_side_receipt", {}).get("transformation_hash"),
+        "InTr source transformation hash mismatch",
+    )
+    require(
+        intr_receipt.get("previous_receipt_hash") == exchange.get("intr", {}).get("previous_receipt_hash"),
+        "InTr previous receipt hash mismatch",
+    )
+    require(intr_receipt.get("destination_validation") == "PASS", "InTr destination validation not PASS")
+    require(intr_receipt.get("lineage_verified") is True, "InTr lineage not verified")
+    require(isinstance(intr_receipt.get("observed_at"), str) and intr_receipt["observed_at"], "InTr observed_at missing")
+    require(isinstance(intr_receipt.get("transport_profile"), str) and intr_receipt["transport_profile"], "InTr transport profile missing")
+    claims = intr_receipt.get("claims") or {}
+    require(claims.get("canonical_protocol_adopted") is False, "InTr receipt may not claim canonical protocol adoption")
+    require(
+        claims.get("production_interlock_runtime_activated") is False,
+        "route-specific InTr receipt may not claim global production Interlock activation",
+    )
+    require(claims.get("sdk_admitted") is False, "pre-SDK InTr receipt may not claim SDK admission")
+    require(claims.get("hugging_face_endorsement_claimed") is False, "InTr receipt may not claim Hugging Face endorsement")
+    require(claims.get("credential_used") is False, "credentialed InTr traversal is not admitted")
+    require(intr_receipt.get("authority_effect") == "NONE", "InTr receipt authority drift")
+    require(intr_receipt.get("receipt_hash") == sha256_ref(intr_receipt_body(intr_receipt)), "InTr receipt hash mismatch")
+
+
 def build_candidate(exchange: dict[str, Any]) -> dict[str, Any]:
     source = exchange["source_object"]
     return {
@@ -97,6 +141,7 @@ def build_governance_request(
     resident_receipt: dict[str, Any],
     capture: dict[str, Any],
     exchange: dict[str, Any],
+    intr_receipt: dict[str, Any] | None,
 ) -> dict[str, Any]:
     evidence_refs = [
         resident_receipt["raw_response_sha256"],
@@ -104,10 +149,17 @@ def build_governance_request(
         exchange["semantic_mapping"]["ruleset_hash"],
         exchange["far_side_receipt"]["transformation_hash"],
     ]
-    missing_inputs = [
-        "route_specific_intr_runtime_receipt",
-        "sdk_live_admission_receipt",
-    ]
+    missing_inputs: list[str] = []
+    continuity: dict[str, Any] = {"required": True}
+    if intr_receipt is None:
+        missing_inputs.append("route_specific_intr_runtime_receipt")
+    else:
+        evidence_refs.append(intr_receipt["receipt_hash"])
+        continuity.update({
+            "previous_receipt_verified": True,
+            "previous_receipt_hash": intr_receipt["receipt_hash"],
+        })
+
     return {
         "candidate": deepcopy(candidate),
         "judgment": {
@@ -121,15 +173,9 @@ def build_governance_request(
         "signal": {
             "admitted_signal_refs": evidence_refs,
             "excluded_signal_refs": [],
-            "transformations": [
-                {
-                    "profile": exchange["semantic_mapping"]["profile"],
-                    "ruleset_hash": exchange["semantic_mapping"]["ruleset_hash"],
-                    "transformation_hash": exchange["far_side_receipt"]["transformation_hash"],
-                }
-            ],
+            "transformations": [exchange["far_side_receipt"]["transformation_hash"]],
             "missing_inputs": missing_inputs,
-            "uncertainty_state": "open",
+            "uncertainty_state": "bounded" if intr_receipt is not None else "material",
             "reference_state_hash": exchange["raw_evidence"]["source_sha256"].removeprefix("sha256:"),
             "expected_reference_state_hash": exchange["raw_evidence"]["source_sha256"].removeprefix("sha256:"),
             "reconstruction_available": True,
@@ -148,7 +194,7 @@ def build_governance_request(
             "evidence_refs": evidence_refs,
         },
         "capability": {"allowed": True},
-        "continuity": {"required": True},
+        "continuity": continuity,
         "approval": {"required": False},
         "permission_present": True,
         "declared_context": {
@@ -157,6 +203,12 @@ def build_governance_request(
             "raw_response_sha256": capture["raw_sha256"],
             "exchange_id": exchange["exchange_id"],
             "mapping_profile": exchange["semantic_mapping"]["profile"],
+            "semantic_transformation": {
+                "ruleset_hash": exchange["semantic_mapping"]["ruleset_hash"],
+                "transformation_hash": exchange["far_side_receipt"]["transformation_hash"],
+            },
+            "intr_runtime_receipt_id": intr_receipt.get("receipt_hash") if intr_receipt else None,
+            "intr_transport_profile": intr_receipt.get("transport_profile") if intr_receipt else None,
             "external_side_effect": False,
             "sdk_admission_claimed": False,
             "hugging_face_endorsement_claimed": False,
@@ -170,11 +222,14 @@ def build_ingress_candidate(
     capture: dict[str, Any],
     exchange: dict[str, Any],
     created_at: str,
+    intr_receipt: dict[str, Any] | None = None,
 ) -> dict[str, Any]:
     validate_live_inputs(resident_receipt, capture, exchange)
+    if intr_receipt is not None:
+        validate_intr_runtime_receipt(intr_receipt, exchange)
     candidate = build_candidate(exchange)
-    governance_request = build_governance_request(candidate, resident_receipt, capture, exchange)
-    payload = {
+    governance_request = build_governance_request(candidate, resident_receipt, capture, exchange, intr_receipt)
+    payload: dict[str, Any] = {
         "schema_version": "stegverse.sv-dn1.sdk-live-evidence/v1",
         "profile_id": "SV-DN-1",
         "source_capture": {
@@ -204,6 +259,17 @@ def build_ingress_candidate(
             "authority_effect": resident_receipt["authority_effect"],
         },
     }
+    if intr_receipt is not None:
+        payload["intr_runtime"] = {
+            "receipt_hash": intr_receipt["receipt_hash"],
+            "route_id": intr_receipt["route_id"],
+            "exchange_id": intr_receipt["exchange_id"],
+            "transport_profile": intr_receipt["transport_profile"],
+            "observed_at": intr_receipt["observed_at"],
+            "lineage_verified": intr_receipt["lineage_verified"],
+            "authority_effect": intr_receipt["authority_effect"],
+        }
+
     manifest = {
         "manifest_profile": "stegverse.ingress-manifest.v1",
         "manifest_profile_version": "1",
@@ -223,7 +289,7 @@ def build_ingress_candidate(
             capture["capture_id"],
             exchange["exchange_id"],
             resident_receipt["raw_response_sha256"],
-        ],
+        ] + ([intr_receipt["receipt_hash"]] if intr_receipt else []),
         "canonicalization_profile": "steggate.jcs.v1",
         "hashes": {
             "payload_sha256": sha256_hex(payload),
@@ -248,9 +314,11 @@ def build_ingress_candidate(
     }
     return {
         "schema_version": "stegverse.sv-dn1.sdk-ingress-candidate/v1",
+        "execution_readiness": "READY_FOR_SDK_0B" if intr_receipt is not None else "BLOCKED_ON_ROUTE_SPECIFIC_INTR",
         "resident_receipt": resident_receipt,
         "source_capture": capture,
         "exchange": exchange,
+        "intr_runtime_receipt": intr_receipt,
         "manifest": manifest,
         "claims": {
             "sdk_admitted": False,
@@ -269,14 +337,17 @@ def main() -> int:
     ap.add_argument("--resident-receipt", required=True)
     ap.add_argument("--source-capture", required=True)
     ap.add_argument("--exchange", required=True)
+    ap.add_argument("--intr-receipt")
     ap.add_argument("--created-at", required=True)
     ap.add_argument("--output", required=True)
     args = ap.parse_args()
+    intr_receipt = load_object(Path(args.intr_receipt)) if args.intr_receipt else None
     packet = build_ingress_candidate(
         load_object(Path(args.resident_receipt)),
         load_object(Path(args.source_capture)),
         load_object(Path(args.exchange)),
         args.created_at,
+        intr_receipt,
     )
     out = Path(args.output)
     out.parent.mkdir(parents=True, exist_ok=True)
@@ -284,6 +355,7 @@ def main() -> int:
     print(json.dumps({
         "state": "SV_DN1_SDK_0B_MANIFEST_PREPARED",
         "source_output_id": packet["manifest"]["source_output_id"],
+        "execution_readiness": packet["execution_readiness"],
         "sdk_admitted": False,
         "authority_effect": "NONE",
     }, sort_keys=True))
