@@ -751,6 +751,20 @@ ccd8a1886e8b87865cfcc541be5f32bf59f34e17
 
 A missing file or byte-level drift fails closed before resident execution. This does not authorize remote checkout, repository writeback, credential use, runtime activation, SDK admission, or publication.
 
+## Runtime source identity — merged and resident-enforced
+
+```text
+runtime source pin PR #12: MERGED
+runtime source pin merge_commit: 6d520d36b45a2f4ff02f5e97a4190a089a6d1fb6
+resident enforcement PR #336: MERGED
+resident enforcement merge_commit: 436431dfdbedf6614c291a59b0da2d3f62612df1
+resident handoff reconciliation: StegVerse-Labs/.github@b371c790edf541da4f772968eae6417eb67b08d5
+```
+
+The first authentic resident observation is now gated on exact executable/config source identity rather than file presence alone. The merged runtime-source manifest binds the SV-DN-1 production-critical files by Git blob SHA-1; the sovereign resident worker verifies that pin before network observation and fails closed on missing or drifted bytes.
+
+This closes a machine-execution ambiguity but does not itself establish WorkerCoordinator claim/fence, resident capture, InTr runtime traversal, SDK admission, custody, analysis, or public live dashboard publication.
+
 ## Archive readiness
 
 This handoff is the canonical continuation source for the SV-DN-1 double-Interlock goal. PR #6 is merged and the source lane is independently recoverable. The originating conversation is not required to recover the architecture, boundaries, merged source files, validation evidence, or next executable goal.
