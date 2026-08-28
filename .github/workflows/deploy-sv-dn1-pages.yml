@@ -1,0 +1,69 @@
+name: Deploy SV-DN-1 Public Dashboard
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - "public/**"
+      - ".github/workflows/deploy-sv-dn1-pages.yml"
+      - "docs/SV_DN1_PUBLIC_DASHBOARD_DEPLOYMENT_MIRROR_HANDOFF.md"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+concurrency:
+  group: sv-dn1-pages
+  cancel-in-progress: true
+
+jobs:
+  deploy:
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout static public artifacts without persisted credentials
+        uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+
+      - name: Enforce static-hosting authority boundary
+        run: |
+          python - <<'PY'
+          from pathlib import Path
+          workflow = Path(".github/workflows/deploy-sv-dn1-pages.yml").read_text()
+          page = Path("public/sv-dn1/index.html").read_text()
+          forbidden = (
+              "observe_sv_dn1_hf_public.py",
+              "run_sv_dn1.py",
+              "build_sv_dn1_sdk_ingress_manifest.py",
+              "stegverse governance",
+              "curl ",
+              "wget ",
+              "huggingface.co/api/",
+          )
+          for token in forbidden:
+              assert token not in workflow, token
+          assert "WITHHELD" in page
+          assert "NONE_YET" in page
+          assert "No fixture or parsed-web preflight is being presented as live evidence." in page
+          assert "<script" not in page.lower()
+          print("SV_DN1_STATIC_HOSTING_BOUNDARY_PASS")
+          PY
+
+      - name: Configure GitHub Pages
+        uses: actions/configure-pages@v5
+        with:
+          enablement: true
+
+      - name: Upload checked-in static public artifacts
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: public
+
+      - name: Deploy static dashboard
+        id: deployment
+        uses: actions/deploy-pages@v4
