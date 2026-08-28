@@ -94,14 +94,28 @@ This object is evidence that the exact SV-DN-1 packet traversed the canonical SD
 
 ```text
 handoff: CREATED_ON_FEATURE_BRANCH
-binder schema: PENDING
-binder implementation: PENDING
-negative tests: PENDING
-workflow validation: PENDING
+binder schema: IMPLEMENTED_ON_FEATURE_BRANCH
+binder implementation: IMPLEMENTED_ON_FEATURE_BRANCH
+negative tests: IMPLEMENTED_ON_FEATURE_BRANCH
+workflow validation: PENDING_CI
 authentic SDK result: NOT OBSERVED
 live SV-DN-1 result: NOT BOUND
 dashboard live publication: NOT PUBLISHED
 ```
+
+## Implemented source surfaces
+
+```text
+schemas/sv-dn1-sdk-admission.schema.json
+scripts/bind_sv_dn1_sdk_live_result.py
+tests/test_sv_dn1_live_sdk_result_binding.py
+```
+
+The binder reproduces the deterministic SDK 0B manifest normalization, canonical route declaration hash, governance state binding, request identity, and normalized public-request binding hash needed to prove that a returned sovereign result belongs to the exact SV-DN-1 input.
+
+It additionally verifies route non-substitution, sovereign-local execution provenance, route receipt presence/count, transaction identity continuity, exact-run Master Records custody, chain verification, absence of external side effects, and the SDK result's own binding hash.
+
+A DENY/REVIEW/FAIL_CLOSED governance result remains bindable as an observed SDK result. The binder does not rewrite it to ALLOW and does not decide public readiness.
 
 ## Completion boundary
 
