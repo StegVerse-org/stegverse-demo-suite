@@ -513,9 +513,9 @@ live Hugging Face observation: NOT OBSERVED
 live double-Interlock traversal: NOT OBSERVED
 SDK live admission: NOT OBSERVED
 public live result: NOT PUBLISHED
-production self-evaluation policy: SOURCE_VALIDATED_ON_FEATURE_BRANCH
-production pipeline observation schema/builder: SOURCE_VALIDATED_ON_FEATURE_BRANCH
-production self-evaluation dashboard/report surface: SOURCE_VALIDATED_ON_FEATURE_BRANCH
+production self-evaluation policy: MERGED
+production pipeline observation schema/builder: MERGED
+production self-evaluation dashboard/report surface: MERGED
 governance mapping: NOT PERFORMED
 observer/history source: MERGED
 observer/history validation: PASS
@@ -705,10 +705,11 @@ The bridge accepts only an authentic completed resident observation receipt and 
 ## Production self-evaluation validation evidence
 
 \`\`\`text
-PR #10: OPEN / SOURCE_VALIDATED
-validated_head: 4fceae965dd0ec341ce4c753f638b6c866d57b92
-Validate SV-DN-1 run 33128632432 / job 98712669213: PASS
-Architecture Guard run 33128632237 / job 98712667999: PASS
+PR #10: MERGED
+merge_commit: 9587ec08e3e9e199d560b7143d34b57f79dac14c
+validated_head: 548d2d35eedebf0209a05b791de6c0b4abaa4b79
+Validate SV-DN-1 run 33128668087 / job 98712781317: PASS
+Architecture Guard run 33128668089 / job 98712781180: PASS
 fixture cannot promote production lane state: PASS
 bounded LIVE DEGRADED/UNKNOWN publication path: PASS
 NOT_OBSERVED / NOT_REACHED hard-withhold path: PASS
