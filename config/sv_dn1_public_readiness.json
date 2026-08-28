@@ -1,0 +1,67 @@
+{
+  "schema": "stegverse.sv-dn1.public-readiness/v1",
+  "profile_id": "SV-DN-1",
+  "purpose": "Define the minimum bounded-confidence conditions for public SV-DN-1 publication while treating the active StegVerse production stack as an observed subject of the evaluation.",
+  "governing_principle": "PUBLIC_READINESS_REQUIRES_BOUNDED_OBSERVABLE_IMPERFECTION_NOT_PERFECTION",
+  "production_stack_is_subject_of_observation": true,
+  "production_status_does_not_imply_correctness": true,
+  "public_evaluation_may_expose_failures": true,
+  "public_evaluation_may_expose_unknowns": true,
+  "failures_must_not_be_hidden": true,
+  "unknowns_must_not_be_promoted": true,
+  "public_result_must_distinguish_external_subject_failure_from_stegverse_pipeline_failure": true,
+  "publication_states": [
+    "WITHHELD",
+    "PUBLIC_WITH_LIMITATIONS",
+    "PUBLIC_OBSERVED"
+  ],
+  "lane_states": [
+    "PASS",
+    "FAIL",
+    "DEGRADED",
+    "UNKNOWN",
+    "NOT_REACHED",
+    "NOT_OBSERVED",
+    "NOT_APPLICABLE"
+  ],
+  "required_production_lanes": [
+    "external_source_capture",
+    "hf_facing_interlock",
+    "intr",
+    "stegverse_interlock",
+    "sdk_ingress",
+    "stegcore_steggate",
+    "master_records_custody",
+    "reconstruction",
+    "public_projection"
+  ],
+  "minimum_publication_conditions": {
+    "exact_subject_identity_bound": true,
+    "evidence_lineage_reconstructable": true,
+    "pipeline_lane_states_explicit": true,
+    "known_errors_explicit": true,
+    "unknowns_explicit": true,
+    "first_unresolved_pipeline_boundary_explicit": true,
+    "fixture_state_publicly_distinguishable": true,
+    "authority_nonclaims_explicit": true,
+    "silent_loss_forbidden": true
+  },
+  "does_not_require": {
+    "all_lanes_pass": true,
+    "zero_known_defects": true,
+    "zero_unknowns": true,
+    "universal_interlock_canonical_adoption": true,
+    "certification": true
+  },
+  "hard_withhold_conditions": [
+    "source_identity_unbound",
+    "receipt_lineage_invalid",
+    "pipeline_state_ambiguous",
+    "known_failure_hidden",
+    "unknown_promoted",
+    "fixture_presented_as_live",
+    "authority_claim_exceeds_evidence"
+  ],
+  "credential_authority": "TV/TVC",
+  "authority_effect": "NONE"
+}
