@@ -1,0 +1,162 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://stegverse.org/schemas/sv-dn1-first-round-analysis.schema.json",
+  "title": "SV-DN-1 First-Round Analysis",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema_version",
+    "state",
+    "profile_id",
+    "exchange_id",
+    "manifest_receipt_id",
+    "governance_state",
+    "external_evaluation",
+    "production_pipeline",
+    "reconstruction",
+    "replay",
+    "artifacts",
+    "claims",
+    "authority_effect"
+  ],
+  "properties": {
+    "schema_version": {
+      "const": "stegverse.sv-dn1.first-round-analysis/v1"
+    },
+    "state": {
+      "enum": [
+        "ANALYZED",
+        "WITHHELD"
+      ]
+    },
+    "profile_id": {
+      "const": "SV-DN-1"
+    },
+    "exchange_id": {
+      "type": "string",
+      "pattern": "^sha256:[0-9a-f]{64}$"
+    },
+    "manifest_receipt_id": {
+      "type": "string",
+      "pattern": "^MR-[A-F0-9]{16,64}$"
+    },
+    "governance_state": {
+      "enum": [
+        "ALLOW",
+        "DENY",
+        "REVIEW",
+        "FAIL_CLOSED"
+      ]
+    },
+    "external_evaluation": {
+      "type": "object"
+    },
+    "production_pipeline": {
+      "type": "object"
+    },
+    "reconstruction": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "state",
+        "manifest_receipt_id",
+        "transaction_id",
+        "operation_transition_custody_status",
+        "consequence_reexecuted",
+        "original_record_mutated",
+        "evidence_refs"
+      ],
+      "properties": {
+        "state": {
+          "enum": [
+            "PASS",
+            "FAIL",
+            "UNKNOWN"
+          ]
+        },
+        "manifest_receipt_id": {
+          "type": "string"
+        },
+        "transaction_id": {
+          "type": "string"
+        },
+        "operation_transition_custody_status": {
+          "type": "string"
+        },
+        "consequence_reexecuted": {
+          "type": "boolean"
+        },
+        "original_record_mutated": {
+          "type": "boolean"
+        },
+        "evidence_refs": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        }
+      }
+    },
+    "replay": {
+      "type": [
+        "object",
+        "null"
+      ]
+    },
+    "artifacts": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "result_receipt",
+        "production_pipeline_observation",
+        "report",
+        "dashboard"
+      ],
+      "properties": {
+        "result_receipt": {
+          "type": "string"
+        },
+        "production_pipeline_observation": {
+          "type": "string"
+        },
+        "report": {
+          "type": "string"
+        },
+        "dashboard": {
+          "type": "string"
+        }
+      }
+    },
+    "claims": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "first_round_analyzed",
+        "dashboard_generated",
+        "dashboard_publicly_hosted",
+        "certification_claimed",
+        "production_perfection_claimed"
+      ],
+      "properties": {
+        "first_round_analyzed": {
+          "type": "boolean"
+        },
+        "dashboard_generated": {
+          "type": "boolean"
+        },
+        "dashboard_publicly_hosted": {
+          "const": false
+        },
+        "certification_claimed": {
+          "const": false
+        },
+        "production_perfection_claimed": {
+          "const": false
+        }
+      }
+    },
+    "authority_effect": {
+      "const": "NONE"
+    }
+  }
+}
