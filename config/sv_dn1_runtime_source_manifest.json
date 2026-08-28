@@ -1,9 +1,9 @@
 {
   "schema": "stegverse.sv-dn1.runtime-source-manifest/v1",
   "profile_id": "SV-DN-1",
-  "source_basis_commit": "ddd9a0abfab437201555642704df4e8465495b75",
+  "source_basis_commit": "4988d453419f43404100c69dd97dd1785d7e0a75",
   "source_repository": "StegVerse-org/stegverse-demo-suite",
-  "purpose": "Pin exact executable/configuration source bytes required by the first authentic SV-DN-1 resident observation, route-specific InTr validation, canonical SDK result binding, production evaluation, and public result rendering without remote checkout.",
+  "purpose": "Pin exact executable/configuration source bytes required by the first authentic SV-DN-1 resident observation, route-specific InTr validation, canonical SDK result binding, first-round analysis, and public result rendering without remote checkout.",
   "hash_profile": "git-blob-sha1",
   "files": {
     "scripts/observe_sv_dn1_hf_public.py": "ae963a17d74e7935f87b0453bd20ac4147498875",
@@ -18,7 +18,9 @@
     "scripts/render_sv_dn1_report.py": "f4fc31f551ccfbee97184e8e1ca699855fc64f9d",
     "schemas/sv-dn1-intr-runtime-receipt.schema.json": "a7dc0ad7f5b1fb253a869341bf34cb837a5f3f81",
     "scripts/bind_sv_dn1_sdk_live_result.py": "35e2d747319cf2b69984e0099af62710e457b545",
-    "schemas/sv-dn1-sdk-admission.schema.json": "09397fcf93608190d1625d14beb6a59d3e5b41d8"
+    "schemas/sv-dn1-sdk-admission.schema.json": "09397fcf93608190d1625d14beb6a59d3e5b41d8",
+    "scripts/finalize_sv_dn1_first_round.py": "f2c271b5cb53a0cca23608470073c555745bfce6",
+    "schemas/sv-dn1-first-round-analysis.schema.json": "e7b6c30a536828cb9ca3ad748bf958671f1d1887"
   },
   "assertions": {
     "exact_local_materialization_required": true,
