@@ -1,0 +1,30 @@
+{
+  "schema": "stegverse.sv-dn1.runtime-source-manifest/v1",
+  "profile_id": "SV-DN-1",
+  "source_basis_commit": "ccd8a1886e8b87865cfcc541be5f32bf59f34e17",
+  "source_repository": "StegVerse-org/stegverse-demo-suite",
+  "purpose": "Pin exact source bytes required by the first authentic SV-DN-1 resident observation and downstream production-evaluation preparation without requiring remote checkout.",
+  "hash_profile": "git-blob-sha1",
+  "files": {
+    "docs/SV_DN1_DOUBLE_INTERLOCK_MIRROR_HANDOFF.md": "ba12a7f3843369791ddb56a70de81ede2b0cb300",
+    "tasks/SV-DN1-RESIDENT-OBSERVER-001.json": "0dbe655a86bea3d2a0f77aa2ada57a62882f00db",
+    "scripts/observe_sv_dn1_hf_public.py": "ae963a17d74e7935f87b0453bd20ac4147498875",
+    "scripts/sv_dn1_hf_interlock.py": "a291f54c4b024fcb150821599afbd53a8b87f16f",
+    "scripts/sv_dn1_stegverse_interlock.py": "c92990c8832983099618b52030d8e0704238ee06",
+    "config/sv_dn1_hf_mapping.v1.json": "3e1d32e66e89a7340c99b6d3662d01804cb29231",
+    "config/sv_dn1_public_readiness.json": "f6a692025e16055ae79985959a39d6bac6f2904e",
+    "scripts/build_sv_dn1_production_pipeline_observation.py": "b5c6e0cbafb114494b8ed6d83c1c67bb74ae0846",
+    "scripts/build_sv_dn1_sdk_ingress_manifest.py": "5941f2aa7636ba9a25e3ea484fd14c985e8230bf",
+    "scripts/validate_sv_dn1_sdk_ingress_candidate.py": "3a9a8fe374cfd9946cd45aa6135d52f7e237e8f7",
+    "scripts/render_sv_dn1_dashboard.py": "7003f9f4c86818f9678a730977fb85cb801cd91a",
+    "scripts/render_sv_dn1_report.py": "f4fc31f551ccfbee97184e8e1ca699855fc64f9d"
+  },
+  "assertions": {
+    "exact_local_materialization_required": true,
+    "remote_checkout_required": false,
+    "fixture_promotion_allowed": false,
+    "source_drift_must_fail_closed": true,
+    "credential_authority": "TV/TVC",
+    "authority_effect": "NONE"
+  }
+}
