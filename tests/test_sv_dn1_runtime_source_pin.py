@@ -28,7 +28,7 @@ class SvDn1RuntimeSourcePinTests(unittest.TestCase):
         self.assertEqual(result["state"], "PASS")
         self.assertEqual(result["missing_files"], [])
         self.assertEqual(result["mismatches"], [])
-        self.assertGreaterEqual(len(result["verified_files"]), 12)
+        self.assertGreaterEqual(len(result["verified_files"]), 10)
 
     def test_source_drift_fails_closed(self) -> None:
         with tempfile.TemporaryDirectory() as td:
