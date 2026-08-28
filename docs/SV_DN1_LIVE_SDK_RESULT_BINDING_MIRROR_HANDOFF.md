@@ -93,11 +93,11 @@ This object is evidence that the exact SV-DN-1 packet traversed the canonical SD
 ## Current state
 
 ```text
-handoff: CREATED_ON_FEATURE_BRANCH
-binder schema: IMPLEMENTED_ON_FEATURE_BRANCH
-binder implementation: IMPLEMENTED_ON_FEATURE_BRANCH
-negative tests: IMPLEMENTED_ON_FEATURE_BRANCH
-workflow validation: PENDING_CI
+handoff: MERGED
+binder schema: MERGED
+binder implementation: MERGED
+negative tests: MERGED
+workflow validation: PASS
 authentic SDK result: NOT OBSERVED
 live SV-DN-1 result: NOT BOUND
 dashboard live publication: NOT PUBLISHED
@@ -116,6 +116,18 @@ The binder reproduces the deterministic SDK 0B manifest normalization, canonical
 It additionally verifies route non-substitution, sovereign-local execution provenance, route receipt presence/count, transaction identity continuity, exact-run Master Records custody, chain verification, absence of external side effects, and the SDK result's own binding hash.
 
 A DENY/REVIEW/FAIL_CLOSED governance result remains bindable as an observed SDK result. The binder does not rewrite it to ALLOW and does not decide public readiness.
+
+## Merge evidence
+
+```text
+PR #16: MERGED
+merge_commit: 309e682ff51a6d4d423878662d503cb7b0c9a5b5
+validated_head: b93b5d0257f8a5b1079d62ca9e1a5daecc006d1d
+Validate SV-DN-1 run 33129687133 / job 98716042487: PASS
+Architecture Guard run 33129687149 / job 98716042330: PASS
+```
+
+Authentic SDK result: still NOT OBSERVED. The merged binder is ready to consume it when the canonical runtime produces one.
 
 ## Completion boundary
 
