@@ -1,0 +1,142 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://stegverse.org/schemas/sv-dn1-production-pipeline-observation.schema.json",
+  "title": "SV-DN-1 Production Pipeline Observation",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema_version",
+    "profile_id",
+    "observation_class",
+    "publication_state",
+    "production_stack_is_subject_of_observation",
+    "lanes",
+    "known_errors",
+    "unknowns",
+    "first_unresolved_pipeline_boundary",
+    "claims",
+    "authority_effect"
+  ],
+  "properties": {
+    "schema_version": {
+      "const": "stegverse.sv-dn1.production-pipeline-observation/v1"
+    },
+    "profile_id": {
+      "const": "SV-DN-1"
+    },
+    "observation_class": {
+      "enum": [
+        "FIXTURE",
+        "LIVE"
+      ]
+    },
+    "publication_state": {
+      "enum": [
+        "WITHHELD",
+        "PUBLIC_WITH_LIMITATIONS",
+        "PUBLIC_OBSERVED"
+      ]
+    },
+    "production_stack_is_subject_of_observation": {
+      "const": true
+    },
+    "lanes": {
+      "type": "object",
+      "minProperties": 9,
+      "additionalProperties": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "state",
+          "evidence_refs",
+          "known_errors",
+          "unknowns",
+          "authority_effect"
+        ],
+        "properties": {
+          "state": {
+            "enum": [
+              "PASS",
+              "FAIL",
+              "DEGRADED",
+              "UNKNOWN",
+              "NOT_REACHED",
+              "NOT_OBSERVED",
+              "NOT_APPLICABLE"
+            ]
+          },
+          "evidence_refs": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "known_errors": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "unknowns": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "authority_effect": {
+            "const": "NONE"
+          }
+        }
+      }
+    },
+    "known_errors": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "unknowns": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "first_unresolved_pipeline_boundary": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "claims": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "all_lanes_pass",
+        "zero_known_defects",
+        "zero_unknowns",
+        "production_perfection_claimed",
+        "certification_claimed"
+      ],
+      "properties": {
+        "all_lanes_pass": {
+          "type": "boolean"
+        },
+        "zero_known_defects": {
+          "type": "boolean"
+        },
+        "zero_unknowns": {
+          "type": "boolean"
+        },
+        "production_perfection_claimed": {
+          "const": false
+        },
+        "certification_claimed": {
+          "const": false
+        }
+      }
+    },
+    "authority_effect": {
+      "const": "NONE"
+    }
+  }
+}
