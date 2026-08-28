@@ -37,6 +37,30 @@ def render(exchange: dict, receipt: dict, pipeline: dict | None = None) -> str:
         f"- FAIL: {receipt['summary']['fail']}",
         f"- UNKNOWN: {receipt['summary']['unknown']}",
         f"- NOT_APPLICABLE: {receipt['summary']['not_applicable']}",
+    ]
+    if pipeline is not None:
+        lines += [
+            "",
+            "## StegVerse production pipeline under observation",
+            "",
+            f"- Observation class: {pipeline['observation_class']}",
+            f"- Publication state: {pipeline['publication_state']}",
+            f"- First unresolved pipeline boundary: {pipeline.get('first_unresolved_pipeline_boundary')}",
+            "- Production perfection claimed: false",
+            "",
+            "| Production lane | State | Known errors | Unknowns | Evidence refs |",
+            "|---|---|---|---|---|",
+        ]
+        for name, lane in pipeline["lanes"].items():
+            errors = "<br>".join(lane.get("known_errors", [])) or "—"
+            unknowns = "<br>".join(lane.get("unknowns", [])) or "—"
+            refs = "<br>".join(lane.get("evidence_refs", [])) or "—"
+            lines.append(f"| {name} | **{lane['state']}** | {errors} | {unknowns} | {refs} |")
+        lines += [
+            "",
+            "Public readiness is bounded confidence, not perfection. Known failures and unknowns are part of the published evidence when they are explicit, bounded, and reconstructable.",
+        ]
+    lines += [
         "",
         "## Interpretation boundary",
         "",
