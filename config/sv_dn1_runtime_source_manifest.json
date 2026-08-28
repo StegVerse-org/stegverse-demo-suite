@@ -3,11 +3,9 @@
   "profile_id": "SV-DN-1",
   "source_basis_commit": "ccd8a1886e8b87865cfcc541be5f32bf59f34e17",
   "source_repository": "StegVerse-org/stegverse-demo-suite",
-  "purpose": "Pin exact source bytes required by the first authentic SV-DN-1 resident observation and downstream production-evaluation preparation without requiring remote checkout.",
+  "purpose": "Pin exact executable/configuration source bytes required by the first authentic SV-DN-1 resident observation and downstream production-evaluation preparation without requiring remote checkout. Coordination handoffs/tasks are intentionally excluded from byte pinning so status-only updates cannot invalidate executable identity.",
   "hash_profile": "git-blob-sha1",
   "files": {
-    "docs/SV_DN1_DOUBLE_INTERLOCK_MIRROR_HANDOFF.md": "ba12a7f3843369791ddb56a70de81ede2b0cb300",
-    "tasks/SV-DN1-RESIDENT-OBSERVER-001.json": "0dbe655a86bea3d2a0f77aa2ada57a62882f00db",
     "scripts/observe_sv_dn1_hf_public.py": "ae963a17d74e7935f87b0453bd20ac4147498875",
     "scripts/sv_dn1_hf_interlock.py": "a291f54c4b024fcb150821599afbd53a8b87f16f",
     "scripts/sv_dn1_stegverse_interlock.py": "c92990c8832983099618b52030d8e0704238ee06",
