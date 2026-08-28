@@ -255,6 +255,18 @@ scripts/validate_sv_dn1_sdk_ingress_candidate.py
 tests/test_sv_dn1_sdk_live_admission.py
 ```
 
+## Executable-precondition merge evidence
+
+```text
+PR #13: MERGED
+merge_commit: dc9a62134dd313a5ffea97ebe47ecccc6f5e9580
+validated_head: b209630c145305abe644da497fd48a9c9b111157
+Validate SV-DN-1 run 33129455716 / job 98715309668: PASS
+Architecture Guard run 33129455739 / job 98715309723: PASS
+```
+
+The SDK bridge is now source-valid against the current canonical StegGate request model and can become `READY_FOR_SDK_0B` when an authentic route-specific InTr receipt is supplied. This is still not an SDK governed-run or admission receipt.
+
 ## Archive readiness
 
 Once this scoped handoff and implementation are merged, the remaining runtime boundary is recoverable without this conversation.
