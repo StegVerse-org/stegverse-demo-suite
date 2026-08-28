@@ -7,6 +7,7 @@ on:
       - "schemas/sv-dn1-*.json"
       - "scripts/sv_dn1_*.py"
       - "scripts/render_sv_dn1_*.py"
+      - "scripts/build_sv_dn1_*.py"
       - "fixtures/sv_dn1/**"
       - "tests/test_sv_dn1*.py"
       - "public/sv-dn1/**"
@@ -33,7 +34,7 @@ jobs:
           python-version: "3.11"
 
       - name: Run deterministic double-Interlock tests
-        run: python -m unittest tests.test_sv_dn1_double_interlock tests.test_sv_dn1_public_observer tests.test_sv_dn1_live_preflight_task tests.test_sv_dn1_sdk_live_admission
+        run: python -m unittest tests.test_sv_dn1_double_interlock tests.test_sv_dn1_public_observer tests.test_sv_dn1_live_preflight_task tests.test_sv_dn1_sdk_live_admission tests.test_sv_dn1_production_self_evaluation
 
       - name: Run fixture-only end-to-end pipeline
         run: |
@@ -51,10 +52,16 @@ jobs:
           from pathlib import Path
           p = Path("/tmp/sv-dn1-proof")
           receipt = json.loads((p / "result-receipt.json").read_text())
+          pipeline = json.loads((p / "production-pipeline-observation.json").read_text())
           html = (p / "index.html").read_text()
           assert receipt["sdk_intake"]["binding_state"] == "FIXTURE_BOUND"
           assert receipt["claims"]["live_double_interlock_traversal_claimed"] is False
           assert receipt["claims"]["certification_claimed"] is False
+          assert pipeline["observation_class"] == "FIXTURE"
+          assert pipeline["publication_state"] == "WITHHELD"
+          assert pipeline["claims"]["production_perfection_claimed"] is False
+          assert all(x["state"] in ("NOT_OBSERVED", "NOT_APPLICABLE") for x in pipeline["lanes"].values())
+          assert "StegVerse production pipeline under observation" in html
           assert "FIXTURE / NOT LIVE-ADMITTED" in html
           assert "<script" not in html.lower()
           print("SV_DN1_VALIDATION_PASS")
@@ -73,6 +80,7 @@ jobs:
               Path("scripts/render_sv_dn1_dashboard.py"),
               Path("scripts/build_sv_dn1_sdk_ingress_manifest.py"),
               Path("scripts/validate_sv_dn1_sdk_ingress_candidate.py"),
+              Path("scripts/build_sv_dn1_production_pipeline_observation.py"),
           ]
           for path in paths:
               text = path.read_text()
