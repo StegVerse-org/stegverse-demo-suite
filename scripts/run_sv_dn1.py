@@ -31,6 +31,7 @@ def main() -> int:
     evaluator = load("sv_dn1_evaluator", "scripts/sv_dn1_evaluator.py")
     report = load("render_sv_dn1_report", "scripts/render_sv_dn1_report.py")
     dashboard = load("render_sv_dn1_dashboard", "scripts/render_sv_dn1_dashboard.py")
+    pipeline_builder = load("build_sv_dn1_production_pipeline_observation", "scripts/build_sv_dn1_production_pipeline_observation.py")
 
     native = json.loads(Path(args.input).read_text(encoding="utf-8"))
     exchange = hf.build_exchange(native, args.native_ref, args.observed_at)
@@ -39,20 +40,23 @@ def main() -> int:
         print(json.dumps(admission, sort_keys=True))
         return 2
     receipt = evaluator.evaluate(exchange, admission)
+    pipeline = pipeline_builder.build(exchange, receipt)
 
     out = Path(args.output_dir)
     out.mkdir(parents=True, exist_ok=True)
     (out / "exchange.json").write_text(json.dumps(exchange, indent=2, sort_keys=True) + "\n", encoding="utf-8")
     (out / "admission.json").write_text(json.dumps(admission, indent=2, sort_keys=True) + "\n", encoding="utf-8")
     (out / "result-receipt.json").write_text(json.dumps(receipt, indent=2, sort_keys=True) + "\n", encoding="utf-8")
-    (out / "report.md").write_text(report.render(exchange, receipt), encoding="utf-8")
-    (out / "index.html").write_text(dashboard.render(exchange, receipt, 12), encoding="utf-8")
+    (out / "production-pipeline-observation.json").write_text(json.dumps(pipeline, indent=2, sort_keys=True) + "\n", encoding="utf-8")
+    (out / "report.md").write_text(report.render(exchange, receipt, pipeline), encoding="utf-8")
+    (out / "index.html").write_text(dashboard.render(exchange, receipt, 12, pipeline), encoding="utf-8")
     print(json.dumps({
         "state": "SV_DN1_FIXTURE_PIPELINE_COMPLETE",
         "exchange_id": exchange["exchange_id"],
         "receipt_id": receipt["receipt_id"],
         "sdk_binding": receipt["sdk_intake"]["binding_state"],
         "live_external_observation": False,
+        "production_pipeline_publication_state": pipeline["publication_state"],
         "authority_effect": "NONE",
         "output_dir": str(out),
     }, sort_keys=True))
