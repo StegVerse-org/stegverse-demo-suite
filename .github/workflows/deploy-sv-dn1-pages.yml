@@ -6,7 +6,6 @@ on:
     paths:
       - "public/**"
       - ".github/workflows/deploy-sv-dn1-pages.yml"
-      - "docs/SV_DN1_PUBLIC_DASHBOARD_DEPLOYMENT_MIRROR_HANDOFF.md"
   workflow_dispatch:
 
 permissions:
