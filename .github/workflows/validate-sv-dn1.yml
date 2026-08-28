@@ -34,7 +34,7 @@ jobs:
           python-version: "3.11"
 
       - name: Run deterministic double-Interlock tests
-        run: python -m unittest tests.test_sv_dn1_double_interlock tests.test_sv_dn1_public_observer tests.test_sv_dn1_live_preflight_task tests.test_sv_dn1_sdk_live_admission tests.test_sv_dn1_production_self_evaluation tests.test_sv_dn1_runtime_source_pin
+        run: python -m unittest tests.test_sv_dn1_double_interlock tests.test_sv_dn1_public_observer tests.test_sv_dn1_live_preflight_task tests.test_sv_dn1_sdk_live_admission tests.test_sv_dn1_production_self_evaluation tests.test_sv_dn1_runtime_source_pin tests.test_sv_dn1_live_sdk_result_binding
 
       - name: Validate exact runtime source pin
         run: python scripts/validate_sv_dn1_runtime_source.py
@@ -84,6 +84,7 @@ jobs:
               Path("scripts/build_sv_dn1_sdk_ingress_manifest.py"),
               Path("scripts/validate_sv_dn1_sdk_ingress_candidate.py"),
               Path("scripts/build_sv_dn1_production_pipeline_observation.py"),
+              Path("scripts/bind_sv_dn1_sdk_live_result.py"),
           ]
           for path in paths:
               text = path.read_text()
