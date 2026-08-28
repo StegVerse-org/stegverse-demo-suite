@@ -844,6 +844,13 @@ The worker consumes only the authentic resident receipt/capture/exchange, exact 
 
 Authentic route execution remains NOT OBSERVED until the upstream resident task and this worker receive sovereign claims/fences and produce their bound-state receipts.
 
+
+## Sovereign first-round execution chain — merged
+
+PR #343 in `StegVerse-Labs/.github` merged the explicit independent-task-control dependency chain (`75fbb638a8003d42517620cc95b383070ea3b15e`). PR #348 merged the non-hosted one-shot resident chain (`a45095d2c2099b9318915410e78a4615b4dc68e6`). Validation runs `33137868295`, `33137868303`, `33138330575`, and `33138330592` passed.
+
+The runtime order is source materialization -> resident observation -> route-specific InTr -> canonical SDK first-round execution. Each child waits for its parent to be `COMPLETED`; HeartBeat remains reference-only and grants no execution authority. The resident request is intent only. Authentic runtime claim/fence and production receipts remain NOT OBSERVED.
+
 ## Live-result binding and first-round finalization — merged
 
 ```text
