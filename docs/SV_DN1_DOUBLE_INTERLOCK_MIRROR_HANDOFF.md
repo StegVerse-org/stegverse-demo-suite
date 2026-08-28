@@ -718,6 +718,21 @@ report production-lane visibility: PASS
 no hosted authority regression: PASS
 \`\`\`
 
+## Public readiness surface — merged
+
+The public dashboard contract now states the same production self-evaluation rule as the canonical handoff.
+
+\`\`\`text
+PR #11: MERGED
+merge_commit: 32171c2e47b2417693657baf48db1934217d2e18
+validated_head: 29e5e4f800bb64c599ee97b634c7020ae4c7daf7
+Validate SV-DN-1 run 33128743138 / job 98713019278: PASS
+Architecture Guard run 33128743164 / job 98713019266: PASS
+public contract: public/sv-dn1/README.md
+\`\`\`
+
+The public surface now requires the production pipeline observation input and explicitly permits bounded FAIL / DEGRADED / UNKNOWN states when they are real, evidence-backed, and reconstructable. It forbids hiding known failures, promoting UNKNOWN, confusing fixture/live state, or treating production status as proof of correctness.
+
 ## Archive readiness
 
 This handoff is the canonical continuation source for the SV-DN-1 double-Interlock goal. PR #6 is merged and the source lane is independently recoverable. The originating conversation is not required to recover the architecture, boundaries, merged source files, validation evidence, or next executable goal.
