@@ -765,6 +765,29 @@ The first authentic resident observation is now gated on exact executable/config
 
 This closes a machine-execution ambiguity but does not itself establish WorkerCoordinator claim/fence, resident capture, InTr runtime traversal, SDK admission, custody, analysis, or public live dashboard publication.
 
+## SDK executable-precondition correction
+
+Live contract comparison against current StegVerse-SDK and StegCore source found that the first merged SV-DN-1 SDK bridge was source-valid against its local validator but not yet executable against the canonical StegGate request model.
+
+Corrected on this slice:
+
+```text
+sdk_live_admission_receipt: removed from pre-execution missing_inputs because it is a result, not an input
+signal.uncertainty_state: open -> material/bounded
+signal.transformations: structured objects -> canonical string references
+route-specific InTr receipt: explicit schema + deterministic hash/lineage validation
+continuity: exact InTr receipt bound when execution_readiness=READY_FOR_SDK_0B
+```
+
+Resulting machine states:
+
+```text
+BLOCKED_ON_ROUTE_SPECIFIC_INTR
+READY_FOR_SDK_0B
+```
+
+The second state is reachable only with authentic route-specific InTr evidence and still does not claim SDK admission. Universal Interlock adoption/global runtime activation remain false unless separately evidenced.
+
 ## Archive readiness
 
 This handoff is the canonical continuation source for the SV-DN-1 double-Interlock goal. PR #6 is merged and the source lane is independently recoverable. The originating conversation is not required to recover the architecture, boundaries, merged source files, validation evidence, or next executable goal.
