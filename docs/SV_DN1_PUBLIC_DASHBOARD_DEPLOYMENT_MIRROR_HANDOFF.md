@@ -5,7 +5,7 @@
 ```text
 goal_id: DEMO-SV-DN1-PUBLIC-DASHBOARD-003
 repository: StegVerse-org/stegverse-demo-suite
-branch: feature/sv-dn1-public-pages
+branch: fix/sv-dn1-pages-enablement-boundary
 parent_goal: DEMO-MODEL-DISTRIBUTION-NEUTRALITY-001
 parent_handoff: docs/SV_DN1_DOUBLE_INTERLOCK_MIRROR_HANDOFF.md
 public_surface_root: public/
@@ -80,12 +80,41 @@ first authentic live round analyzed: separate downstream gate
 ## Current state
 
 ```text
-handoff: CREATED_ON_FEATURE_BRANCH
-public static shell: PENDING
-deployment workflow: PENDING
+handoff: MERGED_SOURCE_WITH_DEPLOYMENT_REPAIR_PENDING
+public static shell: MERGED
+deployment workflow: MERGED
+public Pages site enablement: BLOCKED_ON_REPOSITORY_ADMIN_CONFIGURATION
+first deployment run 33129503885: FAILED_SELF_REFERENTIAL_BOUNDARY_CHECK
+boundary repair PR #15: MERGED
+second deployment run 33129586037: FAILED_PAGES_SITE_NOT_ENABLED
 public URL: NOT VERIFIED
 first authentic live round: NOT OBSERVED
 ```
+
+## Pages enablement blocker
+
+The static dashboard shell and deployment source are complete, but the repository does not yet have a GitHub Pages site configured.
+
+Observed deployment evidence:
+
+```text
+run: 33129586037
+static hosting contract tests: PASS
+configure-pages GET: Not Found
+configure-pages create attempt: Resource not accessible by integration
+Pages site created: false
+```
+
+The connected GitHub integration can write repository source and merge PRs but cannot create the repository's Pages site through the GitHub Pages administration API. The workflow is therefore being narrowed to read an already-enabled Pages configuration instead of attempting to create one.
+
+Required one-time external repository administration state:
+
+```text
+Repository Settings -> Pages
+Build and deployment source -> GitHub Actions
+```
+
+Once that repository setting exists, the merged workflow can deploy checked-in `public/` without changing any observation/evaluation/governance authority.
 
 ## Remaining files
 
