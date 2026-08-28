@@ -1,0 +1,75 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>StegVerse SV-DN-1 — Public Dashboard</title>
+<style>
+:root{font-family:system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;color-scheme:light dark}
+body{max-width:1180px;margin:0 auto;padding:24px;line-height:1.45}
+header{border-bottom:1px solid #8886;padding-bottom:18px;margin-bottom:20px}
+.banner,.panel{padding:14px 16px;border:1px solid #8888;border-radius:12px;margin:14px 0}
+.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:12px;margin:18px 0}
+.metric{border:1px solid #8886;border-radius:12px;padding:16px}
+.metric strong{display:block;font-size:1.1rem}
+table{width:100%;border-collapse:collapse;margin:18px 0}
+th,td{text-align:left;border-bottom:1px solid #8885;padding:10px 8px;vertical-align:top}
+.state{font-weight:700}
+.small{opacity:.75;font-size:.92rem}
+code{overflow-wrap:anywhere}
+</style>
+</head>
+<body>
+<header>
+<h1>StegVerse SV-DN-1</h1>
+<p>Model Distribution Neutrality &amp; Portability</p>
+<div class="banner">
+<strong>Current public state: WITHHELD — awaiting the first authentic production observation.</strong>
+<p>This URL is the stable public dashboard surface. No fixture or parsed-web preflight is being presented as live evidence.</p>
+</div>
+</header>
+
+<section>
+<h2>Observation status</h2>
+<div class="grid">
+<div class="metric"><span>Observation class</span><strong>NONE_YET</strong></div>
+<div class="metric"><span>Publication state</span><strong>WITHHELD</strong></div>
+<div class="metric"><span>Live result</span><strong>NOT PUBLISHED</strong></div>
+<div class="metric"><span>First round</span><strong>NOT ANALYZED</strong></div>
+</div>
+</section>
+
+<section>
+<h2>StegVerse production pipeline under observation</h2>
+<p>Public readiness requires bounded, observable imperfection — not perfection. Once authentic evidence exists, failures, degraded states, and unknowns will be shown rather than hidden.</p>
+<table>
+<thead><tr><th>Production lane</th><th>Observed state</th><th>Current reason</th></tr></thead>
+<tbody>
+<tr><td>external_source_capture</td><td class="state">NOT_OBSERVED</td><td>Authentic resident raw-byte capture not yet published.</td></tr>
+<tr><td>hf_facing_interlock</td><td class="state">NOT_OBSERVED</td><td>Live semantic exchange not yet published.</td></tr>
+<tr><td>intr</td><td class="state">NOT_REACHED</td><td>Route-specific traversal awaits resident capture.</td></tr>
+<tr><td>stegverse_interlock</td><td class="state">NOT_REACHED</td><td>Production traversal evidence not yet available.</td></tr>
+<tr><td>sdk_ingress</td><td class="state">NOT_REACHED</td><td>Canonical live admission awaits upstream evidence.</td></tr>
+<tr><td>stegcore_steggate</td><td class="state">NOT_REACHED</td><td>No governed production run has been published.</td></tr>
+<tr><td>master_records_custody</td><td class="state">NOT_REACHED</td><td>No first-round custody receipt has been published.</td></tr>
+<tr><td>reconstruction</td><td class="state">NOT_REACHED</td><td>No first-round reconstruction receipt has been published.</td></tr>
+<tr><td>public_projection</td><td class="state">PASS</td><td>This static dashboard shell is publicly deployable; this is presentation evidence only.</td></tr>
+</tbody>
+</table>
+</section>
+
+<section class="panel">
+<h2>What will appear here after the first authentic round</h2>
+<p>The dashboard will be replaced by receipt-derived output showing the observed Hugging Face artifact and revision, per-dimension PASS / FAIL / UNKNOWN / NOT_APPLICABLE results, per-production-lane PASS / FAIL / DEGRADED / UNKNOWN / NOT_REACHED / NOT_OBSERVED states, known errors, unknowns, evidence references, receipt lineage, and change history.</p>
+</section>
+
+<section class="panel">
+<h2>Authority boundary</h2>
+<p>This site is a static public evidence surface. GitHub Pages does not observe Hugging Face, execute SV-DN-1, admit SDK manifests, make StegCore/StegGate decisions, perform Master Records custody or reconstruction, certify anything, or grant production authority.</p>
+</section>
+
+<footer class="small">
+<p>External endorsement claimed: false. Certification claimed: false. Production perfection claimed: false.</p>
+</footer>
+</body>
+</html>
