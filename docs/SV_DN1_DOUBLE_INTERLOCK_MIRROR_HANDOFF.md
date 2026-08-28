@@ -367,6 +367,93 @@ This goal is not release-ready until at minimum:
 - public report can be regenerated from receipts;
 - no false adoption/endorsement wording exists.
 
+## Production self-evaluation and public-readiness principle
+
+SV-DN-1 is not merely an evaluation of the external subject. The active StegVerse production governance stack performing that evaluation is itself an observed subject.
+
+Canonical principle:
+
+\`\`\`text
+PUBLIC_READINESS_REQUIRES_BOUNDED_OBSERVABLE_IMPERFECTION_NOT_PERFECTION
+\`\`\`
+
+Meaning:
+
+\`\`\`text
+production status != correctness
+production status != completeness
+production status != successful execution
+public evaluation may expose failures
+public evaluation may expose unknowns
+known defects must be explicit
+unknowns must remain UNKNOWN
+fixture evidence must remain visibly non-live
+external-subject failure must be distinguishable from StegVerse-pipeline failure
+\`\`\`
+
+The public threshold is therefore not "all production lanes are perfect." It is that remaining errors/unknowns are bounded, visible, evidence-backed, and reconstructable enough that the public result does not overstate what happened.
+
+The production pipeline observation surface is:
+
+\`\`\`text
+external_source_capture
+-> hf_facing_interlock
+-> intr
+-> stegverse_interlock
+-> sdk_ingress
+-> stegcore_steggate
+-> master_records_custody
+-> reconstruction
+-> public_projection
+\`\`\`
+
+Every lane has an explicit observed state:
+
+\`\`\`text
+PASS
+FAIL
+DEGRADED
+UNKNOWN
+NOT_REACHED
+NOT_OBSERVED
+NOT_APPLICABLE
+\`\`\`
+
+A lane may participate in public evidence while imperfect. FAIL/DEGRADED/UNKNOWN are valid evidence states when their basis is explicit. NOT_OBSERVED and NOT_REACHED prevent promotion to a complete live public observation.
+
+Public publication states:
+
+\`\`\`text
+WITHHELD
+PUBLIC_WITH_LIMITATIONS
+PUBLIC_OBSERVED
+\`\`\`
+
+PUBLIC_WITH_LIMITATIONS is intentional. It permits a real production observation to be public when known errors or unknowns are present but explicitly bounded and evidenced. It must not be used to bypass missing route execution, missing custody, ambiguous lineage, fixture/live confusion, hidden failures, or authority overclaim.
+
+Hard-withhold conditions include:
+
+- unbound source identity;
+- invalid receipt lineage;
+- ambiguous pipeline state;
+- hidden known failure;
+- UNKNOWN promoted to a stronger state;
+- fixture presented as live;
+- authority claim beyond evidence.
+
+Implemented source surfaces:
+
+\`\`\`text
+config/sv_dn1_public_readiness.json
+schemas/sv-dn1-production-pipeline-observation.schema.json
+scripts/build_sv_dn1_production_pipeline_observation.py
+tests/test_sv_dn1_production_self_evaluation.py
+\`\`\`
+
+The dashboard/report now have an explicit "StegVerse production pipeline under observation" section. It shows each production lane, current observed state, known errors, unknowns, evidence references, publication state, and the first unresolved pipeline boundary.
+
+This does not turn the demo suite into production governance authority. The demo suite observes and renders what the canonical production lanes actually did.
+
 ## Public dashboard posture
 
 A public-facing dashboard is part of this goal because it makes the evaluation process observable over time rather than presenting only occasional narrative reports.
@@ -426,6 +513,9 @@ live Hugging Face observation: NOT OBSERVED
 live double-Interlock traversal: NOT OBSERVED
 SDK live admission: NOT OBSERVED
 public live result: NOT PUBLISHED
+production self-evaluation policy: SOURCE_VALIDATED_ON_FEATURE_BRANCH
+production pipeline observation schema/builder: SOURCE_VALIDATED_ON_FEATURE_BRANCH
+production self-evaluation dashboard/report surface: SOURCE_VALIDATED_ON_FEATURE_BRANCH
 governance mapping: NOT PERFORMED
 observer/history source: MERGED
 observer/history validation: PASS
@@ -611,6 +701,21 @@ Architecture Guard run 33127829492 / job 98710081238: PASS
 ```
 
 The bridge accepts only an authentic completed resident observation receipt and produces a candidate for the canonical SDK 0B route. It explicitly preserves `route_specific_intr_runtime_receipt` and `sdk_live_admission_receipt` as missing until observed. It cannot claim SDK admission, StegGate ALLOW, Master Records custody, or live dashboard publication.
+
+## Production self-evaluation validation evidence
+
+\`\`\`text
+PR #10: OPEN / SOURCE_VALIDATED
+validated_head: 4fceae965dd0ec341ce4c753f638b6c866d57b92
+Validate SV-DN-1 run 33128632432 / job 98712669213: PASS
+Architecture Guard run 33128632237 / job 98712667999: PASS
+fixture cannot promote production lane state: PASS
+bounded LIVE DEGRADED/UNKNOWN publication path: PASS
+NOT_OBSERVED / NOT_REACHED hard-withhold path: PASS
+dashboard production-lane visibility: PASS
+report production-lane visibility: PASS
+no hosted authority regression: PASS
+\`\`\`
 
 ## Archive readiness
 

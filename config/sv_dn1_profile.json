@@ -1,7 +1,7 @@
 {
   "schema": "stegverse.sv-dn1.profile/v1",
   "profile_id": "SV-DN-1",
-  "purpose": "Public reproducible model-distribution neutrality and portability evaluation",
+  "purpose": "Public reproducible model-distribution neutrality and portability evaluation that simultaneously observes the active StegVerse production governance stack performing the evaluation.",
   "source_systems": [
     "huggingface"
   ],
@@ -20,7 +20,10 @@
     "architectural_concentration": "INCREASES_INDEPENDENT_EVIDENCE_BURDEN_NOT_AUTOMATIC_DISPOSITION",
     "unknown_is_not_failure": true,
     "no_silent_loss": true,
-    "evaluation_is_not_enforcement": true
+    "evaluation_is_not_enforcement": true,
+    "public_readiness": "BOUNDED_CONFIDENCE_NOT_PERFECTION",
+    "production_status_does_not_imply_correctness": true,
+    "failures_are_evidence": true
   },
   "dimensions": [
     "artifact_identity",
@@ -39,5 +42,16 @@
   ],
   "authority_effect": "NONE",
   "credential_authority": "TV/TVC",
-  "external_endorsement_claimed": false
+  "external_endorsement_claimed": false,
+  "production_self_evaluation": {
+    "enabled": true,
+    "public_readiness_profile": "stegverse.sv-dn1.public-readiness/v1",
+    "pipeline_observation_contract": "stegverse.sv-dn1.production-pipeline-observation/v1",
+    "production_stack_is_subject_of_observation": true,
+    "perfection_required_for_publication": false,
+    "bounded_confidence_required_for_publication": true,
+    "known_errors_must_be_exposed": true,
+    "unknowns_must_be_exposed": true,
+    "external_subject_failure_must_be_distinguished_from_pipeline_failure": true
+  }
 }

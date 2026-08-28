@@ -6,7 +6,7 @@ import json
 from pathlib import Path
 
 
-def render(exchange: dict, receipt: dict) -> str:
+def render(exchange: dict, receipt: dict, pipeline: dict | None = None) -> str:
     src = exchange["source_object"]
     lines = [
         "# SV-DN-1 Evaluation Report",
@@ -37,6 +37,30 @@ def render(exchange: dict, receipt: dict) -> str:
         f"- FAIL: {receipt['summary']['fail']}",
         f"- UNKNOWN: {receipt['summary']['unknown']}",
         f"- NOT_APPLICABLE: {receipt['summary']['not_applicable']}",
+    ]
+    if pipeline is not None:
+        lines += [
+            "",
+            "## StegVerse production pipeline under observation",
+            "",
+            f"- Observation class: {pipeline['observation_class']}",
+            f"- Publication state: {pipeline['publication_state']}",
+            f"- First unresolved pipeline boundary: {pipeline.get('first_unresolved_pipeline_boundary')}",
+            "- Production perfection claimed: false",
+            "",
+            "| Production lane | State | Known errors | Unknowns | Evidence refs |",
+            "|---|---|---|---|---|",
+        ]
+        for name, lane in pipeline["lanes"].items():
+            errors = "<br>".join(lane.get("known_errors", [])) or "—"
+            unknowns = "<br>".join(lane.get("unknowns", [])) or "—"
+            refs = "<br>".join(lane.get("evidence_refs", [])) or "—"
+            lines.append(f"| {name} | **{lane['state']}** | {errors} | {unknowns} | {refs} |")
+        lines += [
+            "",
+            "Public readiness is bounded confidence, not perfection. Known failures and unknowns are part of the published evidence when they are explicit, bounded, and reconstructable.",
+        ]
+    lines += [
         "",
         "## Interpretation boundary",
         "",
@@ -56,10 +80,12 @@ def main() -> int:
     ap.add_argument("--exchange", required=True)
     ap.add_argument("--receipt", required=True)
     ap.add_argument("--output", required=True)
+    ap.add_argument("--pipeline-observation")
     args = ap.parse_args()
     exchange = json.loads(Path(args.exchange).read_text(encoding="utf-8"))
     receipt = json.loads(Path(args.receipt).read_text(encoding="utf-8"))
-    Path(args.output).write_text(render(exchange, receipt), encoding="utf-8")
+    pipeline = json.loads(Path(args.pipeline_observation).read_text(encoding="utf-8")) if args.pipeline_observation else None
+    Path(args.output).write_text(render(exchange, receipt, pipeline), encoding="utf-8")
     print(json.dumps({"state":"SV_DN1_REPORT_RENDERED","output":args.output,"receipt_id":receipt["receipt_id"]}, sort_keys=True))
     return 0
 
