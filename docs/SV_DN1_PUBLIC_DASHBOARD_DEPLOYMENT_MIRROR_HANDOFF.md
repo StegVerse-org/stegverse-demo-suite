@@ -5,7 +5,7 @@
 ```text
 goal_id: DEMO-SV-DN1-PUBLIC-DASHBOARD-003
 repository: StegVerse-org/stegverse-demo-suite
-branch: fix/sv-dn1-pages-enablement-boundary
+branch: main
 parent_goal: DEMO-MODEL-DISTRIBUTION-NEUTRALITY-001
 parent_handoff: docs/SV_DN1_DOUBLE_INTERLOCK_MIRROR_HANDOFF.md
 public_surface_root: public/
@@ -80,13 +80,15 @@ first authentic live round analyzed: separate downstream gate
 ## Current state
 
 ```text
-handoff: MERGED_SOURCE_WITH_DEPLOYMENT_REPAIR_PENDING
+handoff: MERGED
 public static shell: MERGED
 deployment workflow: MERGED
-public Pages site enablement: BLOCKED_ON_REPOSITORY_ADMIN_CONFIGURATION
+public Pages site enablement: BLOCKED_ON_REPOSITORY_ADMIN_CONFIGURATION / issue #18
 first deployment run 33129503885: FAILED_SELF_REFERENTIAL_BOUNDARY_CHECK
 boundary repair PR #15: MERGED
 second deployment run 33129586037: FAILED_PAGES_SITE_NOT_ENABLED
+pre-enabled Pages boundary PR #17: MERGED / 8ff267cb7392b4a19d276a1a02512e0eac0c2dfc
+third deployment run 33129707417: FAILED_EXISTING_PAGES_CONFIGURATION_NOT_FOUND
 public URL: NOT VERIFIED
 first authentic live round: NOT OBSERVED
 ```
@@ -115,6 +117,24 @@ Build and deployment source -> GitHub Actions
 ```
 
 Once that repository setting exists, the merged workflow can deploy checked-in `public/` without changing any observation/evaluation/governance authority.
+
+## Merge / deployment evidence
+
+```text
+initial public shell PR #14: MERGED
+initial merge: f302989c5381fc9bb7f6adab4d94523ea7ad9abf
+initial validation run 33129482920: PASS
+initial Architecture Guard run 33129482892: PASS
+boundary repair PR #15: MERGED
+boundary repair merge: e86a28c3ec63aaf5a2645b4a5dcd34ccbe078642
+pre-enabled Pages boundary PR #17: MERGED
+pre-enabled Pages boundary merge: 8ff267cb7392b4a19d276a1a02512e0eac0c2dfc
+deployment run 33129707417: FAIL_ONLY_AT_PAGES_CONFIGURATION_LOOKUP
+static-hosting authority test: PASS
+tracking issue: #18
+```
+
+No remaining repository source defect has been observed in the static-hosting lane. The next transition requires the repository-level Pages setting, after which the same deployment workflow should proceed to artifact upload and static deployment.
 
 ## Remaining files
 
