@@ -206,6 +206,55 @@ sdk_live_admission_receipt
 
 and therefore does not manufacture a completed live path.
 
+## Executable-precondition correction
+
+Live comparison against the current canonical SDK/StegCore contracts exposed three source defects in the original bridge that would have prevented a real 0B governed run even after resident capture:
+
+1. `sdk_live_admission_receipt` was incorrectly represented as a pre-execution `signal.missing_inputs` item even though it is a post-execution output.
+2. `signal.uncertainty_state` used `open`, while canonical StegCore accepts only `bounded`, `material`, or `unknown`.
+3. `signal.transformations` carried structured objects, while the canonical StegGate request model accepts a list of string transformation references.
+
+The corrected bridge now distinguishes:
+
+```text
+resident capture present + no route-specific InTr receipt
+-> execution_readiness=BLOCKED_ON_ROUTE_SPECIFIC_INTR
+-> missing_inputs=[route_specific_intr_runtime_receipt]
+-> uncertainty_state=material
+-> no SDK execution claim
+
+resident capture + valid route-specific InTr receipt
+-> execution_readiness=READY_FOR_SDK_0B
+-> missing_inputs=[]
+-> uncertainty_state=bounded
+-> continuity.previous_receipt_verified=true
+-> continuity.previous_receipt_hash=<exact InTr receipt hash>
+-> still no SDK admission claim until canonical SDK runtime returns
+```
+
+The route-specific receipt contract is:
+
+```text
+schema: stegverse.sv-dn1.intr-runtime-receipt/v1
+route_id: SV-DN-1-HF-PUBLIC
+state: COMPLETE
+authority_effect: NONE
+canonical_protocol_adopted: false
+production_interlock_runtime_activated: false
+sdk_admitted: false
+```
+
+This intentionally permits authentic route-specific evaluation traversal without falsely promoting the Universal Interlock candidate to canonically adopted or globally activated status.
+
+Implemented on this slice:
+
+```text
+schemas/sv-dn1-intr-runtime-receipt.schema.json
+scripts/build_sv_dn1_sdk_ingress_manifest.py
+scripts/validate_sv_dn1_sdk_ingress_candidate.py
+tests/test_sv_dn1_sdk_live_admission.py
+```
+
 ## Archive readiness
 
 Once this scoped handoff and implementation are merged, the remaining runtime boundary is recoverable without this conversation.
