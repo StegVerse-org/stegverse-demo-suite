@@ -89,6 +89,8 @@ boundary repair PR #15: MERGED
 second deployment run 33129586037: FAILED_PAGES_SITE_NOT_ENABLED
 pre-enabled Pages boundary PR #17: MERGED / 8ff267cb7392b4a19d276a1a02512e0eac0c2dfc
 third deployment run 33129707417: FAILED_EXISTING_PAGES_CONFIGURATION_NOT_FOUND
+fourth deployment run 33129747895: FAILED_EXISTING_PAGES_CONFIGURATION_NOT_FOUND
+handoff-only deploy trigger: REMOVED_ON_FIX_BRANCH
 public URL: NOT VERIFIED
 first authentic live round: NOT OBSERVED
 ```
@@ -130,11 +132,12 @@ boundary repair merge: e86a28c3ec63aaf5a2645b4a5dcd34ccbe078642
 pre-enabled Pages boundary PR #17: MERGED
 pre-enabled Pages boundary merge: 8ff267cb7392b4a19d276a1a02512e0eac0c2dfc
 deployment run 33129707417: FAIL_ONLY_AT_PAGES_CONFIGURATION_LOOKUP
+deployment run 33129747895: FAIL_ONLY_AT_PAGES_CONFIGURATION_LOOKUP
 static-hosting authority test: PASS
 tracking issue: #18
 ```
 
-No remaining repository source defect has been observed in the static-hosting lane. The next transition requires the repository-level Pages setting, after which the same deployment workflow should proceed to artifact upload and static deployment.
+No remaining repository source defect has been observed in the static-hosting lane. Run 33129747895 reconfirmed the same repository-admin blocker: static-hosting authority tests passed, then `actions/configure-pages@v5` failed at the existing Pages-site lookup with `Not Found`; upload/deploy were never reached. The workflow trigger is narrowed so handoff-only documentation updates no longer create redundant failed deployment emails while Pages remains disabled. The next transition requires the repository-level Pages setting, after which the same deployment workflow should proceed to artifact upload and static deployment.
 
 ## Remaining files
 
