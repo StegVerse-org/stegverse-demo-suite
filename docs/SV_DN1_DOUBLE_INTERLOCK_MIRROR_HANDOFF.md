@@ -824,6 +824,26 @@ The materializer acquires only credential-free public exact source bytes, verifi
 
 Runtime materialization receipt remains NOT OBSERVED until the sovereign WorkerCoordinator claims and executes that task.
 
+## Route-specific InTr runtime worker — merged
+
+The first authentic SV-DN-1 route-specific InTr traversal now has a dedicated sovereign WorkerCoordinator owner in StegVerse-Labs/.github:
+
+\`\`\`text
+task: SV-DN1-INTR-RUNTIME-001
+worker: sv-dn1-intr-runtime-worker
+handoff: StegVerse-Labs/.github/docs/SV_DN1_INTR_RUNTIME_MIRROR_HANDOFF.md
+route_id: SV-DN-1-HF-PUBLIC
+transport_profile: stegverse.sv-dn1.intr.sovereign-bound-state/v1
+PR #339: MERGED
+merge_commit: ab6172bb1938bdb00ec7af80858547c3dcbd45ed
+organization control plane run 33135865030: PASS
+heartbeat worker validation run 33135865038: PASS
+\`\`\`
+
+The worker consumes only the authentic resident receipt/capture/exchange, exact local demo-suite source, and the canonical StegVerse-side destination validator. It emits the exact route-specific InTr receipt already required by the SDK bridge and preserves canonical_protocol_adopted=false, production_interlock_runtime_activated=false, sdk_admitted=false, credential_used=false, and authority_effect=NONE.
+
+Authentic route execution remains NOT OBSERVED until the upstream resident task and this worker receive sovereign claims/fences and produce their bound-state receipts.
+
 ## Live-result binding and first-round finalization — merged
 
 ```text
