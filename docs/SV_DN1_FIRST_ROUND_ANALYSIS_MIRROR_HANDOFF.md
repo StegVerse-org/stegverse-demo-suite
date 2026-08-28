@@ -82,12 +82,24 @@ This does not prove the static artifact is publicly hosted. GitHub Pages deploym
 
 ```text
 handoff: CREATED_ON_FEATURE_BRANCH
-finalizer: PENDING
-analysis schema: PENDING
-tests: PENDING
+finalizer: IMPLEMENTED_ON_FEATURE_BRANCH
+analysis schema: IMPLEMENTED_ON_FEATURE_BRANCH
+tests: IMPLEMENTED_ON_FEATURE_BRANCH
 authentic first round: NOT OBSERVED
 public live dashboard data: NOT PUBLISHED
 ```
+
+## Implemented source surfaces
+
+```text
+schemas/sv-dn1-first-round-analysis.schema.json
+scripts/finalize_sv_dn1_first_round.py
+tests/test_sv_dn1_first_round_analysis.py
+```
+
+The finalizer deterministically revalidates the SDK ingress candidate, recomputes the canonical SDK result binding, requires the supplied `SDK_ADMITTED` object to equal that binding, regenerates the evaluator result receipt, validates exact reconstruction identity/custody/non-reexecution, optionally validates replay, assembles all nine production-lane observations, and renders the report/dashboard from the same receipt and pipeline state.
+
+Optional lane findings may only downgrade an otherwise observed lane to `FAIL`, `DEGRADED`, or `UNKNOWN` with explicit evidence and error/unknown text. They cannot silently promote a lane.
 
 ## Completion boundary
 
