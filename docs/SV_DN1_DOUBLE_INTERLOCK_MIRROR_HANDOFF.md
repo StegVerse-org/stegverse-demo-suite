@@ -513,9 +513,9 @@ live Hugging Face observation: NOT OBSERVED
 live double-Interlock traversal: NOT OBSERVED
 SDK live admission: NOT OBSERVED
 public live result: NOT PUBLISHED
-production self-evaluation policy: IMPLEMENTED_ON_FEATURE_BRANCH
-production pipeline observation schema/builder: IMPLEMENTED_ON_FEATURE_BRANCH
-production self-evaluation dashboard/report surface: IMPLEMENTED_ON_FEATURE_BRANCH
+production self-evaluation policy: SOURCE_VALIDATED_ON_FEATURE_BRANCH
+production pipeline observation schema/builder: SOURCE_VALIDATED_ON_FEATURE_BRANCH
+production self-evaluation dashboard/report surface: SOURCE_VALIDATED_ON_FEATURE_BRANCH
 governance mapping: NOT PERFORMED
 observer/history source: MERGED
 observer/history validation: PASS
@@ -701,6 +701,21 @@ Architecture Guard run 33127829492 / job 98710081238: PASS
 ```
 
 The bridge accepts only an authentic completed resident observation receipt and produces a candidate for the canonical SDK 0B route. It explicitly preserves `route_specific_intr_runtime_receipt` and `sdk_live_admission_receipt` as missing until observed. It cannot claim SDK admission, StegGate ALLOW, Master Records custody, or live dashboard publication.
+
+## Production self-evaluation validation evidence
+
+\`\`\`text
+PR #10: OPEN / SOURCE_VALIDATED
+validated_head: 4fceae965dd0ec341ce4c753f638b6c866d57b92
+Validate SV-DN-1 run 33128632432 / job 98712669213: PASS
+Architecture Guard run 33128632237 / job 98712667999: PASS
+fixture cannot promote production lane state: PASS
+bounded LIVE DEGRADED/UNKNOWN publication path: PASS
+NOT_OBSERVED / NOT_REACHED hard-withhold path: PASS
+dashboard production-lane visibility: PASS
+report production-lane visibility: PASS
+no hosted authority regression: PASS
+\`\`\`
 
 ## Archive readiness
 
