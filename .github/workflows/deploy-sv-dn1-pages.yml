@@ -31,28 +31,7 @@ jobs:
           persist-credentials: false
 
       - name: Enforce static-hosting authority boundary
-        run: |
-          python - <<'PY'
-          from pathlib import Path
-          workflow = Path(".github/workflows/deploy-sv-dn1-pages.yml").read_text()
-          page = Path("public/sv-dn1/index.html").read_text()
-          forbidden = (
-              "observe_sv_dn1_hf_public.py",
-              "run_sv_dn1.py",
-              "build_sv_dn1_sdk_ingress_manifest.py",
-              "stegverse governance",
-              "curl ",
-              "wget ",
-              "huggingface.co/api/",
-          )
-          for token in forbidden:
-              assert token not in workflow, token
-          assert "WITHHELD" in page
-          assert "NONE_YET" in page
-          assert "No fixture or parsed-web preflight is being presented as live evidence." in page
-          assert "<script" not in page.lower()
-          print("SV_DN1_STATIC_HOSTING_BOUNDARY_PASS")
-          PY
+        run: python -m unittest tests.test_sv_dn1_public_pages_contract
 
       - name: Configure GitHub Pages
         uses: actions/configure-pages@v5
