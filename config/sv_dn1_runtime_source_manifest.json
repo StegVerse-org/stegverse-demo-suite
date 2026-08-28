@@ -1,9 +1,9 @@
 {
   "schema": "stegverse.sv-dn1.runtime-source-manifest/v1",
   "profile_id": "SV-DN-1",
-  "source_basis_commit": "ccd8a1886e8b87865cfcc541be5f32bf59f34e17",
+  "source_basis_commit": "053b919b601a93df7a5c6a232115847a881a433b",
   "source_repository": "StegVerse-org/stegverse-demo-suite",
-  "purpose": "Pin exact executable/configuration source bytes required by the first authentic SV-DN-1 resident observation and downstream production-evaluation preparation without requiring remote checkout. Coordination handoffs/tasks are intentionally excluded from byte pinning so status-only updates cannot invalidate executable identity.",
+  "purpose": "Pin exact executable/configuration source bytes required by the first authentic SV-DN-1 resident observation, route-specific InTr evidence validation, SDK 0B production-evaluation preparation, and public result rendering without requiring remote checkout.",
   "hash_profile": "git-blob-sha1",
   "files": {
     "scripts/observe_sv_dn1_hf_public.py": "ae963a17d74e7935f87b0453bd20ac4147498875",
@@ -12,10 +12,11 @@
     "config/sv_dn1_hf_mapping.v1.json": "3e1d32e66e89a7340c99b6d3662d01804cb29231",
     "config/sv_dn1_public_readiness.json": "f6a692025e16055ae79985959a39d6bac6f2904e",
     "scripts/build_sv_dn1_production_pipeline_observation.py": "b5c6e0cbafb114494b8ed6d83c1c67bb74ae0846",
-    "scripts/build_sv_dn1_sdk_ingress_manifest.py": "5941f2aa7636ba9a25e3ea484fd14c985e8230bf",
-    "scripts/validate_sv_dn1_sdk_ingress_candidate.py": "3a9a8fe374cfd9946cd45aa6135d52f7e237e8f7",
+    "scripts/build_sv_dn1_sdk_ingress_manifest.py": "809a20353429b4bc7ac6234d2f23846994bc0d4b",
+    "scripts/validate_sv_dn1_sdk_ingress_candidate.py": "a973d2cc5e4c831e3517a129c7bfb41678485a75",
     "scripts/render_sv_dn1_dashboard.py": "7003f9f4c86818f9678a730977fb85cb801cd91a",
-    "scripts/render_sv_dn1_report.py": "f4fc31f551ccfbee97184e8e1ca699855fc64f9d"
+    "scripts/render_sv_dn1_report.py": "f4fc31f551ccfbee97184e8e1ca699855fc64f9d",
+    "schemas/sv-dn1-intr-runtime-receipt.schema.json": "a7dc0ad7f5b1fb253a869341bf34cb837a5f3f81"
   },
   "assertions": {
     "exact_local_materialization_required": true,
