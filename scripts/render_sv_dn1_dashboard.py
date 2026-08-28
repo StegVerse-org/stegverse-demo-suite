@@ -11,7 +11,7 @@ def esc(value) -> str:
     return html.escape(str(value), quote=True)
 
 
-def render(exchange: dict, receipt: dict, target_refresh_hours: int = 12) -> str:
+def render(exchange: dict, receipt: dict, target_refresh_hours: int = 12, pipeline: dict | None = None) -> str:
     src = exchange["source_object"]
     summary = receipt["summary"]
     cards = "".join(
@@ -29,6 +29,33 @@ def render(exchange: dict, receipt: dict, target_refresh_hours: int = 12) -> str
     chain = "".join(f"<li><code>{esc(x)}</code></li>" for x in receipt["evidence_chain"])
     live = receipt["sdk_intake"]["binding_state"] == "SDK_ADMITTED"
     live_label = "SDK_ADMITTED" if live else "FIXTURE / NOT LIVE-ADMITTED"
+    pipeline_section = ""
+    if pipeline is not None:
+        lane_rows = "".join(
+            "<tr>"
+            f"<td>{esc(name)}</td>"
+            f"<td><span class=\\\"state {esc(lane['state'].lower())}\\\">{esc(lane['state'])}</span></td>"
+            f"<td>{'<br>'.join(esc(x) for x in lane.get('known_errors', [])) or '—'}</td>"
+            f"<td>{'<br>'.join(esc(x) for x in lane.get('unknowns', [])) or '—'}</td>"
+            f"<td>{'<br>'.join(f'<code>{esc(x)}</code>' for x in lane.get('evidence_refs', [])) or '—'}</td>"
+            "</tr>"
+            for name, lane in pipeline["lanes"].items()
+        )
+        first_unresolved = pipeline.get("first_unresolved_pipeline_boundary") or "none"
+        pipeline_section = f"""
+<section>
+<h2>StegVerse production pipeline under observation</h2>
+<div class="banner"><strong>Public-readiness principle:</strong> This is the production side being evaluated as it operates. Public readiness does not require perfection; it requires errors and unknowns to be bounded, visible, evidence-backed, and reconstructable.</div>
+<p><strong>Observation class:</strong> {esc(pipeline["observation_class"])}<br>
+<strong>Publication state:</strong> {esc(pipeline["publication_state"])}<br>
+<strong>First unresolved pipeline boundary:</strong> {esc(first_unresolved)}<br>
+<strong>Production perfection claimed:</strong> false</p>
+<table>
+<thead><tr><th>Production lane</th><th>Observed state</th><th>Known errors</th><th>Unknowns</th><th>Evidence</th></tr></thead>
+<tbody>{lane_rows}</tbody>
+</table>
+</section>
+"""
     return f"""<!doctype html>
 <html lang="en">
 <head>
@@ -47,7 +74,7 @@ header {{ border-bottom: 1px solid #8886; padding-bottom: 18px; margin-bottom: 2
 table {{ width:100%; border-collapse: collapse; margin: 18px 0; }}
 th,td {{ text-align:left; border-bottom:1px solid #8885; padding:10px 8px; vertical-align:top; }}
 .state {{ font-weight:700; }}
-.pass {{ color: #16803a; }} .fail {{ color:#b42318; }} .unknown {{ color:#9a6700; }} .not_applicable {{ opacity:.7; }}
+.pass {{ color: #16803a; }} .fail {{ color:#b42318; }} .unknown,.degraded {{ color:#9a6700; }} .not_observed,.not_reached,.not_applicable {{ opacity:.7; }}
 code {{ overflow-wrap:anywhere; }}
 .small {{ opacity:.72; font-size:.9rem; }}
 </style>
@@ -69,7 +96,7 @@ code {{ overflow-wrap:anywhere; }}
 <strong>Target refresh:</strong> up to every {target_refresh_hours} hours when an admitted resident observer is available, plus material-delta updates.</p>
 </section>
 
-<section class="grid">{cards}</section>
+<section class="grid">{cards}</section>\n\n{pipeline_section}
 
 <section>
 <h2>Evaluation dimensions</h2>
@@ -108,13 +135,15 @@ def main() -> int:
     ap.add_argument("--exchange", required=True)
     ap.add_argument("--receipt", required=True)
     ap.add_argument("--output", required=True)
+    ap.add_argument("--pipeline-observation")
     ap.add_argument("--target-refresh-hours", type=int, default=12)
     args = ap.parse_args()
     exchange = json.loads(Path(args.exchange).read_text(encoding="utf-8"))
     receipt = json.loads(Path(args.receipt).read_text(encoding="utf-8"))
+    pipeline = json.loads(Path(args.pipeline_observation).read_text(encoding="utf-8")) if args.pipeline_observation else None
     out = Path(args.output)
     out.parent.mkdir(parents=True, exist_ok=True)
-    out.write_text(render(exchange, receipt, args.target_refresh_hours), encoding="utf-8")
+    out.write_text(render(exchange, receipt, args.target_refresh_hours, pipeline), encoding="utf-8")
     print(json.dumps({"state":"SV_DN1_DASHBOARD_RENDERED","output":str(out),"receipt_id":receipt["receipt_id"],"static":True}, sort_keys=True))
     return 0
 
