@@ -16,34 +16,29 @@
     "scripts/observe_sv_dn1_hf_public.py",
     "scripts/sv_dn1_hf_interlock.py",
     "scripts/sv_dn1_stegverse_interlock.py",
-    "scripts/sv_dn1_evaluator.py",
-    "scripts/render_sv_dn1_dashboard.py",
-    "scripts/build_sv_dn1_dashboard_history.py",
-    "config/sv_dn1_profile.json",
-    "config/sv_dn1_hf_mapping.v1.json"
+    "config/sv_dn1_hf_mapping.v1.json",
+    "config/sv_dn1_runtime_source_manifest.json"
   ],
   "execution_sequence": [
+    "consume exact locally materialized pinned demo-suite source",
     "capture exact raw response bytes from admitted HTTPS Hugging Face public endpoint",
     "hash raw bytes before semantic normalization",
     "persist source-capture receipt",
     "feed parsed JSON through HF-facing SOURCE_SEMANTIC_ADAPTER",
-    "preserve route-specific InTr/Interlock evidence",
-    "bind through canonical SDK intake",
-    "run SV-DN-1 evaluator",
-    "render receipt-derived dashboard and history delta",
-    "persist evidence without rewriting prior observations"
+    "validate the semantic exchange at the StegVerse-side destination boundary",
+    "persist the bounded resident observer receipt without repository writeback"
   ],
   "success_predicates": [
     "source_capture.raw_response_sha256 is present and verifies",
     "credential_used=false",
+    "github_token_used=false",
+    "repository_writeback_performed=false",
     "Hugging Face boundary redirect policy passes",
     "far-side semantic transformation receipt verifies",
-    "route-specific InTr evidence exists",
-    "StegVerse-side admission verifies",
-    "SDK binding_state=SDK_ADMITTED",
-    "live SV-DN-1 result receipt exists",
-    "dashboard is generated from the exact live receipt",
-    "authority_effect=NONE"
+    "StegVerse-side structural validation passes",
+    "sdk_admitted=false",
+    "route_specific_intr_runtime_claimed=false",
+    "authority_effect=OBSERVATION_ONLY_NO_NEW_AUTHORITY"
   ],
   "failure_predicates": [
     "raw bytes unavailable or digest mismatch",
@@ -66,11 +61,20 @@
     "authority_effect": "NONE"
   },
   "current_blockers": [
-    "ADMITTED_RESIDENT_OBSERVER_RUNTIME_NOT_YET_BOUND",
-    "EXACT_RAW_BYTE_SOURCE_CAPTURE_NOT_YET_OBSERVED",
-    "ROUTE_SPECIFIC_INTR_RUNTIME_RECEIPT_NOT_YET_OBSERVED",
-    "SDK_LIVE_ADMISSION_NOT_YET_OBSERVED"
+    "EXACT_PINNED_LOCAL_DEMO_SUITE_SOURCE_NOT_YET_OBSERVED",
+    "CANONICAL_SCHEDULER_CLAIM_NOT_YET_BOUND",
+    "SOVEREIGN_SV_DN1_RESIDENT_SOURCE_CAPTURE_RECEIPT_NOT_YET_OBSERVED"
   ],
   "preflight_evidence_ref": "evidence/sv-dn1/preflight/2026-08-27-qwen3-8b-web-observation.json",
-  "release_condition": "First authentic public Hugging Face observation is raw-byte hash-bound, traverses the route-specific Interlock/InTr path, is SDK_ADMITTED, produces a live SV-DN-1 result receipt, and regenerates the public dashboard without authority expansion."
+  "release_condition": "A fenced sovereign resident observer receipt proves exact raw-byte public source capture and validated HF-facing semantic exchange from the pinned local demo-suite source. Route-specific InTr traversal, SDK admission, evaluation/finalization, and public dashboard publication remain successor work.",
+  "execution_scope": "RESIDENT_CAPTURE_AND_HF_SEMANTIC_EXCHANGE_ONLY",
+  "predecessor_task_id": "SV-DN1-SOURCE-MATERIALIZATION-001",
+  "successor_task_id": "SV-DN1-INTR-RUNTIME-001",
+  "downstream_not_owned": [
+    "SV-DN1-INTR-RUNTIME-001",
+    "SV-DN1-SDK-FIRST-ROUND-001",
+    "SDK live admission",
+    "SV-DN1 evaluation/finalization",
+    "public dashboard publication"
+  ]
 }

@@ -609,16 +609,25 @@ Task state:
 
 `HANDOFF_READY_MACHINE_EXECUTION_PENDING`
 
-The task owns exactly this progression:
+The resident task owns exactly this bounded progression:
 
 ```text
-resident public-source capture
+exact pinned local source prerequisite
+-> resident public-source capture
 -> exact raw-byte digest
--> HF-facing Interlock
--> route-specific InTr evidence
--> StegVerse Interlock
--> SDK_ADMITTED
--> live SV-DN-1 receipt
+-> HF-facing semantic Interlock
+-> StegVerse-side structural validation
+-> bounded resident observer receipt
+STOP
+```
+
+Downstream execution is owned by separate machine tasks and must not be folded back into the resident observer:
+
+```text
+SV-DN1-INTR-RUNTIME-001
+-> SV-DN1-SDK-FIRST-ROUND-001
+-> canonical SDK/admission result binding
+-> SV-DN-1 evaluation/finalization
 -> receipt-derived dashboard/history
 ```
 
@@ -886,3 +895,28 @@ Public static dashboard shell source is merged, but its GitHub Pages handoff cur
 ## Archive readiness
 
 This handoff is the canonical continuation source for the SV-DN-1 double-Interlock goal. PR #6 is merged and the source lane is independently recoverable. The originating conversation is not required to recover the architecture, boundaries, merged source files, validation evidence, or next executable goal.
+
+## Resident observer task-scope reconciliation — 2026-08-28
+
+The product-level `tasks/SV-DN1-RESIDENT-OBSERVER-001.json` is narrowed to the execution boundary already represented by the sovereign worker chain.
+
+Canonical task relationship:
+
+```text
+SV-DN1-SOURCE-MATERIALIZATION-001
+  -> SV-DN1-RESIDENT-OBSERVER-001
+  -> SV-DN1-INTR-RUNTIME-001
+  -> SV-DN1-SDK-FIRST-ROUND-001
+```
+
+The resident observer no longer lists route-specific InTr, SDK live admission, evaluation/finalization, or dashboard publication as its own completion predicates/blockers. Those remain successor work.
+
+Resident task blockers are now exactly:
+
+```text
+EXACT_PINNED_LOCAL_DEMO_SUITE_SOURCE_NOT_YET_OBSERVED
+CANONICAL_SCHEDULER_CLAIM_NOT_YET_BOUND
+SOVEREIGN_SV_DN1_RESIDENT_SOURCE_CAPTURE_RECEIPT_NOT_YET_OBSERVED
+```
+
+This is a source-of-truth correction only. It does not claim source materialization, resident execution, InTr traversal, SDK admission, evaluation completion, or publication.

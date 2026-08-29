@@ -42,8 +42,20 @@ class SvDn1LivePreflightTaskTests(unittest.TestCase):
         self.assertFalse(task["authority"]["governance_authority"])
         self.assertEqual(task["authority"]["credential_authority"], "TV/TVC")
         self.assertEqual(task["authority"]["authority_effect"], "NONE")
-        self.assertIn("EXACT_RAW_BYTE_SOURCE_CAPTURE_NOT_YET_OBSERVED", task["current_blockers"])
-        self.assertIn("SDK_LIVE_ADMISSION_NOT_YET_OBSERVED", task["current_blockers"])
+        self.assertEqual(task["execution_scope"], "RESIDENT_CAPTURE_AND_HF_SEMANTIC_EXCHANGE_ONLY")
+        self.assertEqual(task["predecessor_task_id"], "SV-DN1-SOURCE-MATERIALIZATION-001")
+        self.assertEqual(task["successor_task_id"], "SV-DN1-INTR-RUNTIME-001")
+        self.assertEqual(
+            task["current_blockers"],
+            [
+                "EXACT_PINNED_LOCAL_DEMO_SUITE_SOURCE_NOT_YET_OBSERVED",
+                "CANONICAL_SCHEDULER_CLAIM_NOT_YET_BOUND",
+                "SOVEREIGN_SV_DN1_RESIDENT_SOURCE_CAPTURE_RECEIPT_NOT_YET_OBSERVED",
+            ],
+        )
+        self.assertNotIn("SDK_LIVE_ADMISSION_NOT_YET_OBSERVED", task["current_blockers"])
+        self.assertNotIn("ROUTE_SPECIFIC_INTR_RUNTIME_RECEIPT_NOT_YET_OBSERVED", task["current_blockers"])
+        self.assertFalse(task["success_predicates"].count("SDK binding_state=SDK_ADMITTED"))
 
 
 if __name__ == "__main__":
