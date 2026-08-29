@@ -1,7 +1,7 @@
 {
   "schema": "stegverse.sv-dn1.runtime-source-manifest/v1",
   "profile_id": "SV-DN-1",
-  "source_basis_commit": "ee4dfba91ee0c382b07c6aa7d49ec3212aa0210f",
+  "source_basis_commit": "9483e539925cbc1b79df991d77aeb51ca46875a4",
   "source_repository": "StegVerse-org/stegverse-demo-suite",
   "purpose": "Pin exact executable/configuration source bytes required by the first authentic SV-DN-1 resident observation, canonical Universal InTr adjacent-hop validation, canonical SDK result binding, first-round analysis, and public result rendering without remote checkout.",
   "hash_profile": "git-blob-sha1",
