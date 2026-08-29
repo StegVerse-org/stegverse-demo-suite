@@ -1,9 +1,9 @@
 {
   "schema": "stegverse.sv-dn1.runtime-source-manifest/v1",
   "profile_id": "SV-DN-1",
-  "source_basis_commit": "4988d453419f43404100c69dd97dd1785d7e0a75",
+  "source_basis_commit": "ee4dfba91ee0c382b07c6aa7d49ec3212aa0210f",
   "source_repository": "StegVerse-org/stegverse-demo-suite",
-  "purpose": "Pin exact executable/configuration source bytes required by the first authentic SV-DN-1 resident observation, route-specific InTr validation, canonical SDK result binding, first-round analysis, and public result rendering without remote checkout.",
+  "purpose": "Pin exact executable/configuration source bytes required by the first authentic SV-DN-1 resident observation, canonical Universal InTr adjacent-hop validation, canonical SDK result binding, first-round analysis, and public result rendering without remote checkout.",
   "hash_profile": "git-blob-sha1",
   "files": {
     "scripts/observe_sv_dn1_hf_public.py": "ae963a17d74e7935f87b0453bd20ac4147498875",
@@ -12,11 +12,11 @@
     "config/sv_dn1_hf_mapping.v1.json": "3e1d32e66e89a7340c99b6d3662d01804cb29231",
     "config/sv_dn1_public_readiness.json": "f6a692025e16055ae79985959a39d6bac6f2904e",
     "scripts/build_sv_dn1_production_pipeline_observation.py": "b5c6e0cbafb114494b8ed6d83c1c67bb74ae0846",
-    "scripts/build_sv_dn1_sdk_ingress_manifest.py": "809a20353429b4bc7ac6234d2f23846994bc0d4b",
-    "scripts/validate_sv_dn1_sdk_ingress_candidate.py": "a973d2cc5e4c831e3517a129c7bfb41678485a75",
+    "scripts/build_sv_dn1_sdk_ingress_manifest.py": "ecf91ee5c22890ccf0674236310a80b23eedbf1a",
+    "scripts/validate_sv_dn1_sdk_ingress_candidate.py": "1f565c48fe4ee9830d69de2960927b495d1953d3",
     "scripts/render_sv_dn1_dashboard.py": "7003f9f4c86818f9678a730977fb85cb801cd91a",
     "scripts/render_sv_dn1_report.py": "f4fc31f551ccfbee97184e8e1ca699855fc64f9d",
-    "schemas/sv-dn1-intr-runtime-receipt.schema.json": "a7dc0ad7f5b1fb253a869341bf34cb837a5f3f81",
+    "schemas/sv-dn1-intr-runtime-receipt.schema.json": "bebe2daa01b9d4c9adf4256a0295e58bb30e13af",
     "scripts/bind_sv_dn1_sdk_live_result.py": "35e2d747319cf2b69984e0099af62710e457b545",
     "schemas/sv-dn1-sdk-admission.schema.json": "09397fcf93608190d1625d14beb6a59d3e5b41d8",
     "scripts/finalize_sv_dn1_first_round.py": "f2c271b5cb53a0cca23608470073c555745bfce6",
@@ -28,6 +28,8 @@
     "fixture_promotion_allowed": false,
     "source_drift_must_fail_closed": true,
     "credential_authority": "TV/TVC",
-    "authority_effect": "NONE"
+    "authority_effect": "NONE",
+    "universal_intr_policy_id": "STEGVERSE-UNIVERSAL-INTR-TRANSPORT-001",
+    "universal_intr_adjacent_hop_required": true
   }
 }
