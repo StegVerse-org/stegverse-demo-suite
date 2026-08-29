@@ -58,8 +58,20 @@ def validate_intr_receipt(receipt: dict[str, Any], exchange: dict[str, Any]) -> 
     if not isinstance(receipt.get("observed_at"), str) or not receipt.get("observed_at"):
         blockers.append("intr_observed_at_missing")
     claims = receipt.get("claims") or {}
-    if claims.get("canonical_protocol_adopted") is not False:
-        blockers.append("intr_canonical_adoption_claim_forbidden")
+    if claims.get("canonical_protocol_adopted") is not True:
+        blockers.append("intr_canonical_policy_adoption_missing")
+    if claims.get("universal_intr_policy_id") != "STEGVERSE-UNIVERSAL-INTR-TRANSPORT-001":
+        blockers.append("intr_universal_policy_mismatch")
+    if claims.get("boundary_from") != "EXTERNAL_SYSTEM":
+        blockers.append("intr_source_boundary_mismatch")
+    if claims.get("boundary_to") != "STEGOS_ECOSYSTEM":
+        blockers.append("intr_destination_boundary_mismatch")
+    if claims.get("interlock_required_per_hop") is not True:
+        blockers.append("intr_interlock_per_hop_missing")
+    if claims.get("receipt_hash_chain_required") is not True:
+        blockers.append("intr_receipt_hash_chain_missing")
+    if claims.get("runtime_activation_claimed") is not False:
+        blockers.append("intr_global_runtime_activation_claim_forbidden")
     if claims.get("production_interlock_runtime_activated") is not False:
         blockers.append("intr_global_runtime_activation_claim_forbidden")
     if claims.get("sdk_admitted") is not False:
