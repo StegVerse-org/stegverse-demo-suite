@@ -106,10 +106,16 @@ def validate_intr_runtime_receipt(
     require(isinstance(intr_receipt.get("observed_at"), str) and intr_receipt["observed_at"], "InTr observed_at missing")
     require(isinstance(intr_receipt.get("transport_profile"), str) and intr_receipt["transport_profile"], "InTr transport profile missing")
     claims = intr_receipt.get("claims") or {}
-    require(claims.get("canonical_protocol_adopted") is False, "InTr receipt may not claim canonical protocol adoption")
+    require(claims.get("canonical_protocol_adopted") is True, "canonical Universal InTr policy adoption must be acknowledged")
+    require(claims.get("universal_intr_policy_id") == "STEGVERSE-UNIVERSAL-INTR-TRANSPORT-001", "wrong Universal InTr policy")
+    require(claims.get("boundary_from") == "EXTERNAL_SYSTEM", "wrong Universal InTr source boundary")
+    require(claims.get("boundary_to") == "STEGOS_ECOSYSTEM", "wrong Universal InTr destination boundary")
+    require(claims.get("interlock_required_per_hop") is True, "Universal InTr requires Interlock per hop")
+    require(claims.get("receipt_hash_chain_required") is True, "Universal InTr requires chained hop receipts")
+    require(claims.get("runtime_activation_claimed") is False, "route receipt may not claim global Universal InTr runtime activation")
     require(
         claims.get("production_interlock_runtime_activated") is False,
-        "route-specific InTr receipt may not claim global production Interlock activation",
+        "SV-DN-1 adjacent hop may not claim global production Interlock activation",
     )
     require(claims.get("sdk_admitted") is False, "pre-SDK InTr receipt may not claim SDK admission")
     require(claims.get("hugging_face_endorsement_claimed") is False, "InTr receipt may not claim Hugging Face endorsement")
@@ -209,6 +215,9 @@ def build_governance_request(
             },
             "intr_runtime_receipt_id": intr_receipt.get("receipt_hash") if intr_receipt else None,
             "intr_transport_profile": intr_receipt.get("transport_profile") if intr_receipt else None,
+            "universal_intr_policy_id": (intr_receipt.get("claims") or {}).get("universal_intr_policy_id") if intr_receipt else None,
+            "universal_intr_boundary_from": (intr_receipt.get("claims") or {}).get("boundary_from") if intr_receipt else None,
+            "universal_intr_boundary_to": (intr_receipt.get("claims") or {}).get("boundary_to") if intr_receipt else None,
             "external_side_effect": False,
             "sdk_admission_claimed": False,
             "hugging_face_endorsement_claimed": False,
