@@ -42,8 +42,7 @@
       "minLength": 1
     },
     "transport_profile": {
-      "type": "string",
-      "minLength": 1
+      "const": "stegverse.universal-intr.adjacent-hop/v1"
     },
     "source_transform_hash": {
       "type": "string",
@@ -64,6 +63,12 @@
       "additionalProperties": false,
       "required": [
         "canonical_protocol_adopted",
+        "universal_intr_policy_id",
+        "boundary_from",
+        "boundary_to",
+        "interlock_required_per_hop",
+        "receipt_hash_chain_required",
+        "runtime_activation_claimed",
         "production_interlock_runtime_activated",
         "sdk_admitted",
         "hugging_face_endorsement_claimed",
@@ -71,7 +76,7 @@
       ],
       "properties": {
         "canonical_protocol_adopted": {
-          "const": false
+          "const": true
         },
         "production_interlock_runtime_activated": {
           "const": false
@@ -83,6 +88,24 @@
           "const": false
         },
         "credential_used": {
+          "const": false
+        },
+        "universal_intr_policy_id": {
+          "const": "STEGVERSE-UNIVERSAL-INTR-TRANSPORT-001"
+        },
+        "boundary_from": {
+          "const": "EXTERNAL_SYSTEM"
+        },
+        "boundary_to": {
+          "const": "STEGOS_ECOSYSTEM"
+        },
+        "interlock_required_per_hop": {
+          "const": true
+        },
+        "receipt_hash_chain_required": {
+          "const": true
+        },
+        "runtime_activation_claimed": {
           "const": false
         }
       }

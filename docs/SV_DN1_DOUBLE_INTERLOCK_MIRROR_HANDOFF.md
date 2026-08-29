@@ -920,3 +920,47 @@ SOVEREIGN_SV_DN1_RESIDENT_SOURCE_CAPTURE_RECEIPT_NOT_YET_OBSERVED
 ```
 
 This is a source-of-truth correction only. It does not claim source materialization, resident execution, InTr traversal, SDK admission, evaluation completion, or publication.
+
+
+## Universal InTr adoption reconciliation — 2026-08-29
+
+**This section supersedes the older pre-adoption statements in this handoff.**
+
+Organization policy `STEGVERSE-UNIVERSAL-INTR-TRANSPORT-001` is now canonically adopted by
+`StegVerse-Labs/.github` PR #407, merge
+`d0de32281c2e29258146e084e93ce4587568d683`.
+
+SV-DN-1 therefore no longer treats its HF-to-StegVerse transit as an exempt
+route-specific compatibility profile. The authentic ingress path is the
+canonical adjacent Universal InTr hop:
+
+```text
+EXTERNAL_SYSTEM
+-> HF-facing Interlock
+-> InTr
+-> STEGOS_ECOSYSTEM receiving Interlock
+-> SDK ingress preparation
+```
+
+The runtime receipt continues to preserve exact resident capture/exchange
+identity, source transformation hash, previous receipt hash, destination PASS,
+and `authority_effect=NONE`. It additionally must report:
+
+```text
+canonical_protocol_adopted: true
+universal_intr_policy_id: STEGVERSE-UNIVERSAL-INTR-TRANSPORT-001
+boundary_from: EXTERNAL_SYSTEM
+boundary_to: STEGOS_ECOSYSTEM
+interlock_required_per_hop: true
+receipt_hash_chain_required: true
+runtime_activation_claimed: false
+production_interlock_runtime_activated: false
+```
+
+Policy adoption is not runtime activation. No authentic Universal InTr hop,
+resident Hugging Face capture, SDK admission, or first-round evaluation is
+claimed until its corresponding sovereign receipts exist.
+
+The exact runtime-source manifest has been repinned on the Universal InTr
+migration branch so the sovereign materializer cannot execute stale pre-#407
+SDK bridge/schema bytes.

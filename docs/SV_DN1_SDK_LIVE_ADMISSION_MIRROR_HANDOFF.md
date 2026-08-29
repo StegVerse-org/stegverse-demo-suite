@@ -270,3 +270,31 @@ The SDK bridge is now source-valid against the current canonical StegGate reques
 ## Archive readiness
 
 Once this scoped handoff and implementation are merged, the remaining runtime boundary is recoverable without this conversation.
+
+
+## Universal InTr SDK-ingress reconciliation — 2026-08-29
+
+PR #407 in `StegVerse-Labs/.github` canonically adopted
+`STEGVERSE-UNIVERSAL-INTR-TRANSPORT-001`. The prior SDK precondition language
+requiring a pre-adoption route-specific receipt is superseded.
+
+`READY_FOR_SDK_0B` now requires an authentic SV-DN-1 InTr receipt representing
+the adjacent hop:
+
+```text
+EXTERNAL_SYSTEM -> STEGOS_ECOSYSTEM
+transport_profile: stegverse.universal-intr.adjacent-hop/v1
+canonical_protocol_adopted: true
+universal_intr_policy_id: STEGVERSE-UNIVERSAL-INTR-TRANSPORT-001
+interlock_required_per_hop: true
+receipt_hash_chain_required: true
+runtime_activation_claimed: false
+production_interlock_runtime_activated: false
+sdk_admitted: false
+authority_effect: NONE
+```
+
+The builder and validator still reject credential use, authority transfer,
+receipt/hash mismatch, premature SDK admission, global runtime-activation
+claims, and external endorsement. Canonical policy adoption is a fact reported
+by the receipt; it is not authority granted by the receipt.
