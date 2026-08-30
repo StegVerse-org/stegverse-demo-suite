@@ -1,0 +1,49 @@
+{
+  "schema": "stegverse.sv-dn1.live-public-source-observation/v1",
+  "observed_at": "2026-08-30T17:15:00Z",
+  "source": {
+    "provider": "Hugging Face",
+    "endpoint": "https://huggingface.co/api/models/Qwen/Qwen3-8B",
+    "model_id": "Qwen/Qwen3-8B",
+    "api_revision_sha": "b968826d9c46dd6066d109eabc6255188de91218"
+  },
+  "observed_metadata": {
+    "private": false,
+    "gated": false,
+    "disabled": false,
+    "pipeline_tag": "text-generation",
+    "library_name": "transformers",
+    "license": "apache-2.0",
+    "architecture": "Qwen3ForCausalLM",
+    "model_type": "qwen3",
+    "downloads": 13657580,
+    "likes": 1330,
+    "last_modified": "2025-07-26T03:49:13.000Z",
+    "parameter_dtype": "BF16",
+    "parameter_count": 8190735360,
+    "inference_state": "warm",
+    "used_storage_bytes": 45450222438,
+    "safetensor_weight_shards": 5
+  },
+  "derived_analysis": {
+    "approx_parameter_count_billions": 8.191,
+    "approx_storage_gib": 42.33,
+    "downloads_per_like": 10268.86,
+    "distribution_accessibility": "PUBLIC_NON_GATED",
+    "runtime_category": "GENERATIVE_TEXT_MODEL",
+    "portability_indicators": [
+      "Transformers metadata present",
+      "Safetensors weights present",
+      "Apache-2.0 license metadata present",
+      "Public non-gated repository metadata present"
+    ],
+    "limitations": [
+      "This observation analyzes public Hugging Face model metadata only.",
+      "It is not an SV-DN-1 SDK_ADMITTED result.",
+      "It does not establish Master Records custody, replay, reconstruction, governance disposition, certification, or production perfection.",
+      "Downloads and likes are platform counters and should not be interpreted as quality measurements."
+    ]
+  },
+  "governed_first_round_state": "WITHHELD",
+  "authority_effect": "NONE_PUBLIC_SOURCE_ANALYSIS_ONLY"
+}
