@@ -153,3 +153,24 @@ All listed hosting-lane files are implemented. No hosting scaffold/stub remains.
 ## Authority boundary
 
 Static hosting is transport/presentation only. A successful deployment does not establish that any production lane executed, that the dashboard contains live evidence, or that any evaluation/certification/release gate passed.
+
+
+## Exact public-byte successor — 2026-08-31
+
+The static deployment lane now has a dedicated downstream verifier:
+
+```text
+handoff: docs/SV_DN1_PUBLICATION_OBSERVATION_MIRROR_HANDOFF.md
+script: scripts/verify_sv_dn1_public_publication.py
+test: tests/test_sv_dn1_publication_observer.py
+terminal transition: SV_DN1_AUTHENTIC_PUBLICATION_OBSERVED
+```
+
+After an authentic governed persistence package is committed to `main`, this workflow
+already auto-triggers because it watches `public/**`. Deployment success is still not
+sufficient by itself. The successor observer must fetch all five public HTTPS artifacts
+without credentials and require exact byte/hash equality with the governed persistence
+package.
+
+This source addition does not claim that the authentic governed result has been persisted,
+deployed, or observed publicly.
