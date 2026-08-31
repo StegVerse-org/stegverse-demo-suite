@@ -127,17 +127,51 @@ Tests must prove:
 
 ## Runtime truth
 
-At handoff creation:
+Current verified source/runtime boundary:
 
 ```text
 Hugging Face resident observation: OBSERVED
-Universal InTr hop: OBSERVED
+Universal InTr EXTERNAL_SYSTEM -> STEGOS_ECOSYSTEM hop: OBSERVED
+lineage verification: PASS
 SDK first production round: NOT YET AUTHENTICALLY ANALYZED
-promotion handoff: IMPLEMENTED
-promotion script: NOT YET IMPLEMENTED
-promotion tests: NOT YET IMPLEMENTED
+promotion handoff: IMPLEMENTED / MERGED
+promotion script: IMPLEMENTED / MERGED
+promotion tests: IMPLEMENTED / MERGED
 public live result: NOT YET PUBLISHED
-Pages static hosting lane: IMPLEMENTED / PREVIOUSLY DEPLOYED
+Pages static hosting lane: IMPLEMENTED / DEPLOYED
 ```
+
+The authentic upstream observation is preserved by
+`evidence/sv-dn1/first-authentic-observation-20260829.json`. It proves the
+Hugging Face-facing observation plus canonical Universal InTr hop, but it
+explicitly records `sdk_admitted=false`; it therefore cannot satisfy the
+first-round promotion predicates by itself.
+
+### Public transition validation repair — 2026-08-30
+
+The Pages contract originally required the pre-activation placeholder tokens
+(`WITHHELD`, `NONE_YET`, `NOT ANALYZED`) unconditionally. That would cause
+validation to fail immediately after a lawful exact-byte promotion replaced the
+placeholder with the authentic generated dashboard.
+
+The contract is now defined as an exclusive two-state projection:
+
+```text
+PRE-ACTIVATION
+  explicit WITHHELD / NONE_YET / NOT ANALYZED placeholder
+
+OR
+
+ACTIVATED
+  SDK_ADMITTED
+  observation_class LIVE
+  publication_state PUBLIC_OBSERVED or PUBLIC_WITH_LIMITATIONS
+  receipt chain visible
+  production-pipeline evidence visible
+```
+
+The static hosting workflow remains forbidden from executing evaluation,
+fetching Hugging Face data, admitting SDK requests, or deciding publication
+semantics.
 
 Newer authentic runtime evidence overrides this handoff.
