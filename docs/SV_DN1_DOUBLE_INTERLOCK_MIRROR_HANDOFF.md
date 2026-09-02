@@ -964,3 +964,16 @@ claimed until its corresponding sovereign receipts exist.
 The exact runtime-source manifest has been repinned on the Universal InTr
 migration branch so the sovereign materializer cannot execute stale pre-#407
 SDK bridge/schema bytes.
+
+
+## Acquisition-drift longitudinal analysis — 2026-09-02
+
+A distinct public-facing longitudinal analysis now consumes SV-DN-1 observations without changing the SV-DN-1 transport/evidence role.
+
+Canonical handoff:
+`docs/HF_ACQUISITION_DRIFT_MIRROR_HANDOFF.md`
+
+Machine-readable profile:
+`config/hf_acquisition_drift_profile.json`
+
+Primary question: whether observable Hugging Face platform/business-model behavior drifts away from the open-source/open-weight community after acquisition by Nvidia. Security/adversarial incidents are a secondary evidence dimension and must not independently imply business-model drift.
