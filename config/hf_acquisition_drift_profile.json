@@ -1,0 +1,39 @@
+{
+  "schema": "stegverse.hf-acquisition-drift-profile/v1",
+  "goal_id": "HF-ACQUISITION-DRIFT-001",
+  "subject": "Hugging Face",
+  "acquisition_counterparty": "Nvidia",
+  "primary_question": "Does observable platform or business-model behavior drift away from the open-source/open-weight community after acquisition?",
+  "evidence_substrate": "SV-DN-1",
+  "dimensions": [
+    "COMMUNITY_ACCESS",
+    "COMMERCIAL_MODEL",
+    "ECOSYSTEM_NEUTRALITY",
+    "OPEN_SOURCE_ORIENTATION",
+    "GOVERNANCE_TRANSPARENCY",
+    "SECURITY_ADVERSARIAL_EVENTS"
+  ],
+  "evidence_classes": [
+    "DIRECT_PUBLIC_OBSERVATION",
+    "RECEIPT_BOUND_SV_DN1_OBSERVATION",
+    "OFFICIAL_ANNOUNCEMENT",
+    "THIRD_PARTY_REPORT",
+    "INFERENCE",
+    "UNKNOWN"
+  ],
+  "finding_states": [
+    "NO_MATERIAL_DRIFT_OBSERVED",
+    "MIXED_DRIFT",
+    "COMMUNITY_NEGATIVE_DRIFT",
+    "COMMUNITY_POSITIVE_DRIFT",
+    "INSUFFICIENT_EVIDENCE"
+  ],
+  "invariants": {
+    "acquisition_does_not_imply_drift": true,
+    "security_event_alone_does_not_imply_business_model_drift": true,
+    "inference_must_not_be_promoted_to_observation": true,
+    "contradictory_evidence_must_be_preserved": true,
+    "prior_observations_are_immutable": true
+  },
+  "authority_effect": "NONE"
+}
