@@ -98,3 +98,7 @@ Public demonstration does not imply general deployment authority, external endor
 
 - Repository: https://github.com/StegVerse-org/stegverse-demo-suite
 - Issues: https://github.com/StegVerse-org/stegverse-demo-suite/issues
+
+## SV-DN-1 public observation and runtime boundary
+
+SV-DN-1 uses existing authorized manifest-bound, state-transition-dependent task execution. Its public dashboard refresh target is 12 hours **for evidence freshness only**, not a timer that grants execution authority or a prerequisite to discover a resident machine. The existing independent source-preparation task may receive its own fresh WorkerCoordinator claim/fence; downstream InTr, SDK evaluation, organization receipt recording, and Master Records reconstruction retain their exact manifest-defined admission and evidence predicates. All attempted transitions must preserve the original ALLOW, DENY or FAIL_CLOSED disposition and applicable failing predicate; inaccessible original evidence remains UNKNOWN_NOT_AUTHENTICALLY_OBSERVED. No external machine, connected device, idle resident process, replacement runtime, GitHub Actions execution authority, or passive waiting is required. Static hosting and fixture tests cannot establish LIVE execution. See `docs/SV_DN1_DOUBLE_INTERLOCK_MIRROR_HANDOFF.md` and `config/sv_dn1_observation_schedule.json`.
