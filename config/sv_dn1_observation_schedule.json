@@ -2,7 +2,7 @@
   "schema": "stegverse.sv-dn1.observation-schedule/v1",
   "goal_id": "DEMO-MODEL-DISTRIBUTION-NEUTRALITY-001",
   "target_refresh_hours": 12,
-  "update_policy": "TWICE_DAILY_WHEN_RESIDENT_OBSERVER_AVAILABLE_PLUS_MATERIAL_DELTA",
+  "update_policy": "ADMITTED_MANIFEST_BOUND_TRANSITION_PLUS_MATERIAL_DELTA",
   "material_delta_examples": [
     "artifact revision changes",
     "license or gating changes",
@@ -11,9 +11,20 @@
     "distribution/default/recommendation surface changes",
     "mapping profile changes"
   ],
-  "production_observer_owner": "ADMITTED_RESIDENT_OBSERVER",
+  "production_observer_owner": "EXISTING_MANIFEST_SELECTED_RESIDENT_OBSERVER",
   "github_actions_production_observer": false,
   "github_actions_control_plane": false,
   "credential_authority": "TV/TVC",
-  "authority_effect": "NONE"
+  "authority_effect": "NONE",
+  "refresh_semantics": {
+    "target_refresh_hours_is_public_freshness_objective_only": true,
+    "clock_tick_grants_execution_authority": false,
+    "trigger": "existing authorized manifest-bound task state transition",
+    "on_admission": "retrieve original WorkerCoordinator claim/fence and original observer/InTr/SDK receipts; publish only after required custody and reconstruction",
+    "on_non_allow": "retain original DENY or FAIL_CLOSED and failing predicate with evidence references",
+    "on_inaccessible_evidence": "UNKNOWN_NOT_AUTHENTICALLY_OBSERVED; no inference of missing device or runtime",
+    "external_machine_prerequisite": false,
+    "connected_device_discovery_required": false,
+    "passive_wait_for_idle_runtime": false
+  }
 }
