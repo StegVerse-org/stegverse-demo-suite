@@ -461,8 +461,9 @@ A public-facing dashboard is part of this goal because it makes the evaluation p
 The dashboard MUST be receipt-derived and static-viewable. Target observation cadence:
 
 ```text
-TWICE_DAILY_WHEN_RESIDENT_OBSERVER_AVAILABLE
+ADMITTED_MANIFEST_BOUND_TRANSITION
 PLUS_MATERIAL_DELTA
+12_HOUR_PUBLIC_FRESHNESS_TARGET_NON_AUTHORIZING
 target_refresh_hours: 12
 ```
 
@@ -977,3 +978,12 @@ Machine-readable profile:
 `config/hf_acquisition_drift_profile.json`
 
 Primary question: whether observable Hugging Face platform/business-model behavior drifts away from the open-source/open-weight community after acquisition by Nvidia. Security/adversarial incidents are a secondary evidence dimension and must not independently imply business-model drift.
+
+
+## State-transition-dependent observation conformance — 2026-09-27
+
+The canonical execution model is **state-transition dependent for every SV-DN-1 task**. The existing authorized manifest selects the operation; admission through the existing ingress and WorkerCoordinator claim/fence precedes any event-ephemeral execution. There is no connected-device inventory, external machine, continuously reachable resident process, hosted service, second runtime, or idle-runtime availability prerequisite. A source-root or content-addressed package requirement is an exact input predicate, not a machine-availability predicate. The independent production-source-preparation task has `dependencies=[]`, `execution_admission_mode=INDEPENDENT_TASK_CONTROL`, and `runtime_predecessor_reconstruction_required=false`; its lineage parent is provenance only. The SDK first round separately retains its own exact InTr and source-preparation requirements.
+
+The 12-hour dashboard refresh interval is a **public evidence freshness objective**, never an execution schedule, admission condition, device-presence test, or authority grant. New observation is initiated by an admitted manifest-bound transition or material source delta under existing task control. The existing observer records the original `ALLOW`, `DENY`, or `FAIL_CLOSED` disposition and failing predicate/evidence refs for non-ALLOW; accessible original WorkerCoordinator, InTr, SDK, organization and Master Records evidence must be reconstructed by exact subject and execution binding. If an authenticated interface is inaccessible to a particular caller, report `UNKNOWN_NOT_AUTHENTICALLY_OBSERVED` for that caller without inferring a missing runtime, waiting for a machine, or inventing an original runtime disposition. Do not promote source tests, CI, heartbeat, deployment, or fixture results to LIVE.
+
+The previous `TWICE_DAILY_WHEN_RESIDENT_OBSERVER_AVAILABLE` wording is superseded; `config/sv_dn1_observation_schedule.json` declares the corrected policy. An actual contract that cannot conform must seek a separately authorized, scoped exemption before imposing a non-transition-dependent gate; none is requested for this dashboard-cadence correction. Existing static Pages hosting remains passive and non-authorizing. Original runtime invocation and authentic receipt readback are not claimed by this source change.
