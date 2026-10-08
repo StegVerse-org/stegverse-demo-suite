@@ -333,7 +333,7 @@ def build_ingress_candidate(
             "sdk_admitted": False,
             "governed_run_executed": False,
             "steggate_allow_claimed": False,
-            "master_records_custody_claimed": False,
+            "master_records_organization_record_claimed": False,
             "live_dashboard_published": False,
             "hugging_face_endorsement_claimed": False,
         },

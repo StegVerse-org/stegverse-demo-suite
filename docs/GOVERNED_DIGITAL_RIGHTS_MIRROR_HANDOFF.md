@@ -194,7 +194,7 @@ Coordination states preserved: `COMPLETE`, `BLOCKED`, `RETRY`, `REVIEW_REQUIRED`
 | `GCAT-BCAT-Engine/Publisher` | `PUBLISHER_MIRROR_HANDOFF.md` | `NOT A DIRECT DESTINATION`. Publisher consumes hash-bound Site activation or projection packets. Release requires an explicit Site packet naming Publisher and the GDRC projection. |
 | `StegVerse-Labs/admissibility-wiki` | `ADMISSIBILITY_WIKI_MIRROR_HANDOFF.md` | `DEPENDENCY_BLOCKED`. A bounded interpretation may follow canonical Publisher evidence or a separately admitted goal; no duplicate evaluator is authorized. |
 | `StegVerse-002/stegguardian-wiki` | `STEGGUARDIAN_WIKI_MIRROR_HANDOFF.md` | `DEPENDENCY_BLOCKED`. Guardian interpretation follows verified admissibility evidence and cannot arise from demo visibility. |
-| `master-records/orchestration` | `ORCHESTRATION_MIRROR_HANDOFF.md` | `NOT REQUIRED FOR THE FICTIONAL FIXTURE`. Future formal SDK-ingested or live usage evidence requires authenticated custody and reconstruction through this owner. |
+| `master-records/orchestration` | `ORCHESTRATION_MIRROR_HANDOFF.md` | `NOT REQUIRED FOR THE FICTIONAL FIXTURE`. Future formal SDK-ingested or live usage evidence requires authenticated organization records and reconstruction through this owner. |
 
 Direct copying would violate canonical sequencing. Future product adoption is a new goal with existing repository-native admission conditions, not unfinished work from this session.
 
@@ -227,7 +227,7 @@ SITE ENTRY: StegVerse-Labs/Site/docs/SITE_MIRROR_HANDOFF.md
 PUBLISHER ENTRY: GCAT-BCAT-Engine/Publisher/PUBLISHER_MIRROR_HANDOFF.md
 ADMISSIBILITY ENTRY: StegVerse-Labs/admissibility-wiki/ADMISSIBILITY_WIKI_MIRROR_HANDOFF.md
 GUARDIAN ENTRY: StegVerse-002/stegguardian-wiki/STEGGUARDIAN_WIKI_MIRROR_HANDOFF.md
-FORMAL OR LIVE CUSTODY ENTRY: master-records/orchestration/ORCHESTRATION_MIRROR_HANDOFF.md
+FORMAL OR LIVE ORGANIZATION RECORDS ENTRY: master-records/orchestration/ORCHESTRATION_MIRROR_HANDOFF.md
 ```
 
 ## Archival proof

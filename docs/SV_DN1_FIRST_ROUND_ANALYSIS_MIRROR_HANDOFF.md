@@ -43,7 +43,7 @@ A round is ANALYZED only when:
 3. route-specific InTr lineage is verified;
 4. SDK 0B result is bound to the exact ingress candidate;
 5. StegCore/StegGate observed a canonical governance disposition;
-6. Master Records exact-run custody is RECORDED;
+6. the Master Records exact-run organization record is RECORDED;
 7. reconstruction is performed from the exact manifest receipt without consequence reexecution or mutation of the original;
 8. the evaluator receipt is generated from the SDK_ADMITTED binding;
 9. the production-pipeline observation is generated from those same evidence objects;

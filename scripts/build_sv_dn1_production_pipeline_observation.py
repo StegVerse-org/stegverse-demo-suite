@@ -10,6 +10,10 @@ ROOT = Path(__file__).resolve().parents[1]
 POLICY = json.loads((ROOT / "config" / "sv_dn1_public_readiness.json").read_text(encoding="utf-8"))
 ALLOWED_STATES = set(POLICY["lane_states"])
 REQUIRED_LANES = tuple(POLICY["required_production_lanes"])
+ORGANIZATION_RECORD_LANE = "master_records_organization_record"
+# Pre-migration lane name, still accepted from explicit lane evidence produced before
+# the Master Records boundary remediation (MASTER-RECORDS-BULK-SEMANTIC-REMEDIATION-002).
+LEGACY_ORGANIZATION_RECORD_LANE = "master_records_custody"
 
 
 def require(condition: bool, message: str) -> None:
@@ -51,7 +55,9 @@ def build(
     receipt: Mapping[str, Any],
     explicit_lane_evidence: Mapping[str, Any] | None = None,
 ) -> dict[str, Any]:
-    explicit_lane_evidence = explicit_lane_evidence or {}
+    explicit_lane_evidence = dict(explicit_lane_evidence or {})
+    if LEGACY_ORGANIZATION_RECORD_LANE in explicit_lane_evidence and ORGANIZATION_RECORD_LANE not in explicit_lane_evidence:
+        explicit_lane_evidence[ORGANIZATION_RECORD_LANE] = explicit_lane_evidence.pop(LEGACY_ORGANIZATION_RECORD_LANE)
     unknown_keys = sorted(set(explicit_lane_evidence) - set(REQUIRED_LANES))
     require(not unknown_keys, "unknown production lanes: " + ",".join(unknown_keys))
 

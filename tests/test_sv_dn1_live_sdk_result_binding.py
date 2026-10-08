@@ -152,8 +152,11 @@ class SvDn1LiveSdkResultBindingTests(unittest.TestCase):
         self.assertEqual(admission["sdk_intake"]["binding_state"], "SDK_ADMITTED")
         self.assertEqual(admission["sdk_intake"]["intake_receipt_id"], self.sdk_result["manifest_receipt_id"])
         self.assertEqual(admission["governance_state"], "ALLOW")
-        self.assertTrue(admission["custody"]["chain_verified"])
-        self.assertEqual(admission["custody"]["master_records_custody_status"], "RECORDED")
+        self.assertTrue(admission["organization_record"]["chain_verified"])
+        self.assertEqual(admission["organization_record"]["master_records_organization_record_status"], "RECORDED")
+        self.assertTrue(admission["claims"]["master_records_organization_record_observed"])
+        self.assertNotIn("custody", admission)
+        self.assertNotIn("master_records_custody_observed", admission["claims"])
         self.assertFalse(admission["claims"]["certification_claimed"])
         self.assertFalse(admission["claims"]["canonical_interlock_adoption_claimed"])
 
@@ -176,12 +179,33 @@ class SvDn1LiveSdkResultBindingTests(unittest.TestCase):
         with self.assertRaises(ValueError):
             BIND.bind(self.packet, bad)
 
-    def test_missing_custody_fails_closed(self) -> None:
+    def _rehash(self, value: dict) -> dict:
+        value["result_binding_hash"] = BIND.sha256_ref({k: v for k, v in value.items() if k != "result_binding_hash"})
+        return value
+
+    def test_new_organization_record_status_name_is_accepted(self) -> None:
+        sdk = copy.deepcopy(self.sdk_result)
+        sdk[BIND.ORGANIZATION_RECORD_STATUS] = sdk.pop(BIND.LEGACY_ORGANIZATION_RECORD_STATUS)
+        admission = BIND.bind(self.packet, self._rehash(sdk))
+        self.assertEqual(admission["organization_record"][BIND.ORGANIZATION_RECORD_STATUS], "RECORDED")
+
+    def test_legacy_organization_record_status_name_is_accepted(self) -> None:
+        self.assertIn(BIND.LEGACY_ORGANIZATION_RECORD_STATUS, self.sdk_result)
+        admission = BIND.bind(self.packet, self.sdk_result)
+        self.assertEqual(admission["organization_record"][BIND.ORGANIZATION_RECORD_STATUS], "RECORDED")
+
+    def test_missing_organization_record_fails_closed(self) -> None:
         bad = copy.deepcopy(self.sdk_result)
-        bad["master_records_custody_status"] = "NOT_RECORDED"
-        bad["result_binding_hash"] = BIND.sha256_ref({k: v for k, v in bad.items() if k != "result_binding_hash"})
+        bad[BIND.LEGACY_ORGANIZATION_RECORD_STATUS] = "NOT_RECORDED"
         with self.assertRaises(ValueError):
-            BIND.bind(self.packet, bad)
+            BIND.bind(self.packet, self._rehash(bad))
+
+    def test_missing_organization_record_new_name_fails_closed(self) -> None:
+        bad = copy.deepcopy(self.sdk_result)
+        bad.pop(BIND.LEGACY_ORGANIZATION_RECORD_STATUS)
+        bad[BIND.ORGANIZATION_RECORD_STATUS] = "NOT_RECORDED"
+        with self.assertRaises(ValueError):
+            BIND.bind(self.packet, self._rehash(bad))
 
     def test_route_substitution_fails_closed(self) -> None:
         bad = copy.deepcopy(self.sdk_result)
