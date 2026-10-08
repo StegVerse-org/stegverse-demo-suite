@@ -17,7 +17,7 @@ authority_effect: NONE
 
 ## Goal
 
-Bind an authentic canonical SDK 0B sovereign-production result back to the exact SV-DN-1 ingress candidate and expose a deterministic `SDK_ADMITTED` evaluator-admission object without inventing SDK execution, StegGate outcome, Master Records custody, or dashboard publication.
+Bind an authentic canonical SDK 0B sovereign-production result back to the exact SV-DN-1 ingress candidate and expose a deterministic `SDK_ADMITTED` evaluator-admission object without inventing SDK execution, StegGate outcome, Master Records organization record, or dashboard publication.
 
 The binder is downstream of a real SDK run. It is not an SDK runner and has no admission authority of its own.
 
@@ -113,7 +113,7 @@ tests/test_sv_dn1_live_sdk_result_binding.py
 
 The binder reproduces the deterministic SDK 0B manifest normalization, canonical route declaration hash, governance state binding, request identity, and normalized public-request binding hash needed to prove that a returned sovereign result belongs to the exact SV-DN-1 input.
 
-It additionally verifies route non-substitution, sovereign-local execution provenance, route receipt presence/count, transaction identity continuity, exact-run Master Records custody, chain verification, absence of external side effects, and the SDK result's own binding hash.
+It additionally verifies route non-substitution, sovereign-local execution provenance, route receipt presence/count, transaction identity continuity, exact-run Master Records organization record, chain verification, absence of external side effects, and the SDK result's own binding hash.
 
 A DENY/REVIEW/FAIL_CLOSED governance result remains bindable as an observed SDK result. The binder does not rewrite it to ALLOW and does not decide public readiness.
 

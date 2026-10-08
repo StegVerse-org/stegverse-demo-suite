@@ -155,7 +155,7 @@ This source slice does not claim:
 - live InTr traversal;
 - SDK admission;
 - StegGate ALLOW;
-- Master Records custody;
+- Master Records organization record;
 - live dashboard publication;
 - Hugging Face adoption or endorsement;
 - certification.
