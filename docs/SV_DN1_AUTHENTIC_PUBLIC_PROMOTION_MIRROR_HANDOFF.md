@@ -40,7 +40,7 @@ The promoter MUST NOT:
 - execute the evaluator or SDK;
 - perform SDK admission;
 - alter governance disposition;
-- perform Master Records custody/replay/reconstruction;
+- perform Master Records organization records and reconstruction;
 - synthesize result fields;
 - rewrite the dashboard/report/result semantics;
 - decide a new publication state;

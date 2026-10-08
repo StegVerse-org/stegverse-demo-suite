@@ -16,7 +16,7 @@ authority_effect: NONE
 
 Turn one authentic, receipt-bound SV-DN-1 production traversal into the first complete analysis package that can drive the receipt-derived dashboard without hiding errors or unknowns.
 
-This lane does not create the observation, InTr traversal, SDK result, Master Records custody, replay, or reconstruction. It only validates and composes already-observed evidence.
+This lane does not create the observation, InTr traversal, SDK result, Master Records organization record, replay, or reconstruction. It only validates and composes already-observed evidence.
 
 ## Required inputs
 

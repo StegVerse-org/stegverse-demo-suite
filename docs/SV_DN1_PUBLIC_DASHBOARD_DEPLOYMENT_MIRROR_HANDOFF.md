@@ -37,7 +37,7 @@ GitHub Actions MUST NOT:
 - promote fixture data to live;
 - perform SDK admission;
 - perform StegCore/StegGate governance;
-- perform Master Records custody/reconstruction;
+- perform Master Records organization records and reconstruction;
 - decide PUBLIC_WITH_LIMITATIONS / PUBLIC_OBSERVED;
 - mutate public result semantics.
 
