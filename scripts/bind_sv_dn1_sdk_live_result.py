@@ -54,6 +54,20 @@ def load_object(path: Path) -> dict[str, Any]:
     return value
 
 
+ORGANIZATION_RECORD_STATUS = "master_records_organization_record_status"
+# The canonical SDK sovereign result still emits the pre-migration field name; it is
+# accepted here until the SDK migrates (Master Records boundary remediation,
+# MASTER-RECORDS-BULK-SEMANTIC-REMEDIATION-002). Writers in this repository emit
+# ORGANIZATION_RECORD_STATUS only.
+LEGACY_ORGANIZATION_RECORD_STATUS = "master_records_custody_status"
+
+
+def organization_record_status(sdk_result: Mapping[str, Any]) -> Any:
+    if ORGANIZATION_RECORD_STATUS in sdk_result:
+        return sdk_result.get(ORGANIZATION_RECORD_STATUS)
+    return sdk_result.get(LEGACY_ORGANIZATION_RECORD_STATUS)
+
+
 def normalize_return_projection(value: Mapping[str, Any]) -> dict[str, Any]:
     mode = str(value.get("mode") or "ALL").strip().upper()
     selected = list(value.get("transition_classes") or [])
@@ -247,7 +261,7 @@ def validate_result(candidate_packet: dict[str, Any], sdk_result: dict[str, Any]
     require(sdk_result.get("configuration_not_augmentation") is True, "SDK configuration boundary not preserved")
     require(sdk_result.get("chain_verified") is True, "SDK result chain is not verified")
     require(sdk_result.get("transaction_identity_continuous") is True, "transaction identity continuity failed")
-    require(sdk_result.get("master_records_custody_status") == "RECORDED", "Master Records exact-run custody not recorded")
+    require(organization_record_status(sdk_result) == "RECORDED", "Master Records exact-run organization record not recorded")
     require(sdk_result.get("external_side_effect") is False, "SV-DN-1 evaluation produced external side effect")
     require(sdk_result.get("third_party_host_required") is False, "SDK result requires third-party host")
     require(isinstance(sdk_result.get("transaction_id"), str) and sdk_result["transaction_id"], "transaction_id missing")
@@ -300,13 +314,13 @@ def bind(candidate_packet: dict[str, Any], sdk_result: dict[str, Any]) -> dict[s
             "transaction_id": sdk_result["transaction_id"],
             "transaction_identity_continuous": True,
         },
-        "custody": {
-            "master_records_custody_status": "RECORDED",
+        "organization_record": {
+            ORGANIZATION_RECORD_STATUS: "RECORDED",
             "chain_verified": True,
         },
         "claims": {
             "sdk_governed_run_observed": True,
-            "master_records_custody_observed": True,
+            "master_records_organization_record_observed": True,
             "certification_claimed": False,
             "hugging_face_endorsement_claimed": False,
             "canonical_interlock_adoption_claimed": False,

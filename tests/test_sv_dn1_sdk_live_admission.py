@@ -215,6 +215,24 @@ class SvDn1SdkLiveAdmissionBridgeTests(unittest.TestCase):
         packet["claims"]["sdk_admitted"] = True
         self.assertIn("premature_claim:sdk_admitted", VALIDATE.validate(packet))
 
+    def test_organization_record_claim_new_and_legacy_names(self) -> None:
+        packet = BUILD.build_ingress_candidate(
+            self.resident, self.capture, self.exchange, "2026-08-27T23:51:00Z"
+        )
+        self.assertIs(packet["claims"][VALIDATE.ORGANIZATION_RECORD_CLAIM], False)
+        self.assertNotIn(VALIDATE.LEGACY_ORGANIZATION_RECORD_CLAIM, packet["claims"])
+        self.assertEqual(VALIDATE.validate(packet), [])
+        packet["claims"][VALIDATE.ORGANIZATION_RECORD_CLAIM] = True
+        self.assertIn(f"premature_claim:{VALIDATE.ORGANIZATION_RECORD_CLAIM}", VALIDATE.validate(packet))
+
+        legacy = BUILD.build_ingress_candidate(
+            self.resident, self.capture, self.exchange, "2026-08-27T23:51:00Z"
+        )
+        legacy["claims"][VALIDATE.LEGACY_ORGANIZATION_RECORD_CLAIM] = legacy["claims"].pop(VALIDATE.ORGANIZATION_RECORD_CLAIM)
+        self.assertEqual(VALIDATE.validate(legacy), [])
+        legacy["claims"][VALIDATE.LEGACY_ORGANIZATION_RECORD_CLAIM] = True
+        self.assertIn(f"premature_claim:{VALIDATE.ORGANIZATION_RECORD_CLAIM}", VALIDATE.validate(legacy))
+
     def test_validator_rejects_post_execution_receipt_as_input(self) -> None:
         packet = BUILD.build_ingress_candidate(
             self.resident, self.capture, self.exchange, "2026-08-27T23:51:00Z"

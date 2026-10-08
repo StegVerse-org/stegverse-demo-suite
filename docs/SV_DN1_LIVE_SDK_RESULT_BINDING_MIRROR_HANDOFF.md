@@ -65,7 +65,7 @@ At minimum:
 - exact route receipt chain exists;
 - `manifest_receipt_id` exists;
 - `chain_verified=true`;
-- `master_records_custody_status=RECORDED`;
+- `master_records_organization_record_status=RECORDED` (the SDK's pre-migration status field name is still accepted);
 - `external_side_effect=false`;
 - `third_party_host_required=false`;
 - result binding hash verifies.
@@ -83,7 +83,7 @@ sdk_intake.binding_state: SDK_ADMITTED
 sdk_intake.manifest_hash: <exact canonical manifest hash>
 sdk_intake.intake_receipt_id: <canonical SDK manifest receipt id>
 governance_state: <ALLOW|DENY|REVIEW|FAIL_CLOSED>
-master_records_custody_status: RECORDED
+organization_record.master_records_organization_record_status: RECORDED
 chain_verified: true
 authority_effect: NONE
 ```

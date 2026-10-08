@@ -151,7 +151,7 @@ def base_lane_evidence(
             "unknowns": [],
             "authority_effect": "NONE",
         },
-        "master_records_custody": {
+        "master_records_organization_record": {
             "state": "PASS",
             "evidence_refs": [admission["sdk_intake"]["intake_receipt_id"]],
             "known_errors": [],

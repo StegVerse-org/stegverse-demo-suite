@@ -130,7 +130,6 @@
         "sdk_admitted",
         "governed_run_executed",
         "steggate_allow_claimed",
-        "master_records_custody_claimed",
         "live_dashboard_published",
         "hugging_face_endorsement_claimed"
       ],
@@ -144,7 +143,11 @@
         "steggate_allow_claimed": {
           "const": false
         },
+        "master_records_organization_record_claimed": {
+          "const": false
+        },
         "master_records_custody_claimed": {
+          "$comment": "LEGACY: pre-migration name of master_records_organization_record_claimed (MASTER-RECORDS-BULK-SEMANTIC-REMEDIATION-002); accepted from already-produced candidates.",
           "const": false
         },
         "live_dashboard_published": {
@@ -153,7 +156,19 @@
         "hugging_face_endorsement_claimed": {
           "const": false
         }
-      }
+      },
+      "anyOf": [
+        {
+          "required": [
+            "master_records_organization_record_claimed"
+          ]
+        },
+        {
+          "required": [
+            "master_records_custody_claimed"
+          ]
+        }
+      ]
     },
     "authority_effect": {
       "const": "NONE"

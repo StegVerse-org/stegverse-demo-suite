@@ -87,6 +87,12 @@ def validate_intr_receipt(receipt: dict[str, Any], exchange: dict[str, Any]) -> 
     return blockers
 
 
+ORGANIZATION_RECORD_CLAIM = "master_records_organization_record_claimed"
+# Pre-migration claim name, still accepted from already-produced candidates
+# (Master Records boundary remediation, MASTER-RECORDS-BULK-SEMANTIC-REMEDIATION-002).
+LEGACY_ORGANIZATION_RECORD_CLAIM = "master_records_custody_claimed"
+
+
 def validate(packet: dict[str, Any]) -> list[str]:
     blockers: list[str] = []
     if packet.get("schema_version") != "stegverse.sv-dn1.sdk-ingress-candidate/v1":
@@ -97,12 +103,14 @@ def validate(packet: dict[str, Any]) -> list[str]:
     if readiness not in ("BLOCKED_ON_ROUTE_SPECIFIC_INTR", "READY_FOR_SDK_0B"):
         blockers.append("execution_readiness_invalid")
 
-    claims = packet.get("claims") or {}
+    claims = dict(packet.get("claims") or {})
+    if ORGANIZATION_RECORD_CLAIM not in claims and LEGACY_ORGANIZATION_RECORD_CLAIM in claims:
+        claims[ORGANIZATION_RECORD_CLAIM] = claims[LEGACY_ORGANIZATION_RECORD_CLAIM]
     for key in (
         "sdk_admitted",
         "governed_run_executed",
         "steggate_allow_claimed",
-        "master_records_custody_claimed",
+        ORGANIZATION_RECORD_CLAIM,
         "live_dashboard_published",
         "hugging_face_endorsement_claimed",
     ):

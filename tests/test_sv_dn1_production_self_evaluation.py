@@ -141,16 +141,33 @@ class SvDn1ProductionSelfEvaluationTests(unittest.TestCase):
             }
             for lane in PIPE.REQUIRED_LANES
         }
-        evidence["master_records_custody"] = {
+        evidence["master_records_organization_record"] = {
             "state": "NOT_REACHED",
             "evidence_refs": [],
             "known_errors": [],
-            "unknowns": ["upstream execution stopped before custody"],
+            "unknowns": ["upstream execution stopped before the organization record"],
             "authority_effect": "NONE",
         }
         pipeline = PIPE.build(self.exchange, live, evidence)
         self.assertEqual(pipeline["publication_state"], "WITHHELD")
-        self.assertEqual(pipeline["first_unresolved_pipeline_boundary"], "master_records_custody")
+        self.assertEqual(pipeline["first_unresolved_pipeline_boundary"], "master_records_organization_record")
+
+    def test_legacy_organization_record_lane_name_is_accepted(self) -> None:
+        live = copy.deepcopy(self.receipt)
+        live["sdk_intake"]["binding_state"] = "SDK_ADMITTED"
+        evidence = {
+            PIPE.LEGACY_ORGANIZATION_RECORD_LANE: {
+                "state": "NOT_REACHED",
+                "evidence_refs": [],
+                "known_errors": [],
+                "unknowns": ["upstream execution stopped before the organization record"],
+                "authority_effect": "NONE",
+            }
+        }
+        pipeline = PIPE.build(self.exchange, live, evidence)
+        self.assertNotIn(PIPE.LEGACY_ORGANIZATION_RECORD_LANE, pipeline["lanes"])
+        self.assertEqual(pipeline["lanes"][PIPE.ORGANIZATION_RECORD_LANE]["state"], "NOT_REACHED")
+        self.assertIn(PIPE.ORGANIZATION_RECORD_LANE, PIPE.REQUIRED_LANES)
 
     def test_dashboard_and_report_make_production_self_evaluation_prominent(self) -> None:
         pipeline = PIPE.build(self.exchange, self.receipt)

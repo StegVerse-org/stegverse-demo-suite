@@ -42,7 +42,7 @@ The public surface MUST expose the production path actually used:
     -> stegverse_interlock
     -> sdk_ingress
     -> stegcore_steggate
-    -> master_records_custody
+    -> master_records_organization_record
     -> reconstruction
     -> public_projection
 

@@ -13,7 +13,6 @@
     "sdk_intake",
     "governance_state",
     "route",
-    "custody",
     "claims",
     "authority_effect"
   ],
@@ -117,15 +116,15 @@
         }
       }
     },
-    "custody": {
+    "organization_record": {
       "type": "object",
       "additionalProperties": false,
       "required": [
-        "master_records_custody_status",
+        "master_records_organization_record_status",
         "chain_verified"
       ],
       "properties": {
-        "master_records_custody_status": {
+        "master_records_organization_record_status": {
           "const": "RECORDED"
         },
         "chain_verified": {
@@ -133,12 +132,15 @@
         }
       }
     },
+    "custody": {
+      "$comment": "LEGACY: pre-migration name of organization_record (Master Records boundary remediation, MASTER-RECORDS-BULK-SEMANTIC-REMEDIATION-002). Accepted from already-produced bindings; writers emit organization_record.",
+      "$ref": "#/$defs/legacy_custody"
+    },
     "claims": {
       "type": "object",
       "additionalProperties": false,
       "required": [
         "sdk_governed_run_observed",
-        "master_records_custody_observed",
         "certification_claimed",
         "hugging_face_endorsement_claimed",
         "canonical_interlock_adoption_claimed",
@@ -148,7 +150,11 @@
         "sdk_governed_run_observed": {
           "const": true
         },
+        "master_records_organization_record_observed": {
+          "const": true
+        },
         "master_records_custody_observed": {
+          "$comment": "LEGACY: pre-migration name of master_records_organization_record_observed; accepted from already-produced bindings.",
           "const": true
         },
         "certification_claimed": {
@@ -163,10 +169,52 @@
         "production_interlock_runtime_activation_claimed": {
           "const": false
         }
-      }
+      },
+      "anyOf": [
+        {
+          "required": [
+            "master_records_organization_record_observed"
+          ]
+        },
+        {
+          "required": [
+            "master_records_custody_observed"
+          ]
+        }
+      ]
     },
     "authority_effect": {
       "const": "NONE"
+    }
+  },
+  "anyOf": [
+    {
+      "required": [
+        "organization_record"
+      ]
+    },
+    {
+      "required": [
+        "custody"
+      ]
+    }
+  ],
+  "$defs": {
+    "legacy_custody": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "master_records_custody_status",
+        "chain_verified"
+      ],
+      "properties": {
+        "master_records_custody_status": {
+          "const": "RECORDED"
+        },
+        "chain_verified": {
+          "const": true
+        }
+      }
     }
   }
 }

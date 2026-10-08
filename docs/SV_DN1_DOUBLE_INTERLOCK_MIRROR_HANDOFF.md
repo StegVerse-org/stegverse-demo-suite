@@ -402,7 +402,7 @@ external_source_capture
 -> stegverse_interlock
 -> sdk_ingress
 -> stegcore_steggate
--> master_records_custody
+-> master_records_organization_record
 -> reconstruction
 -> public_projection
 \`\`\`
@@ -710,7 +710,7 @@ Validate SV-DN-1 run 33127829478 / job 98710081154: PASS
 Architecture Guard run 33127829492 / job 98710081238: PASS
 ```
 
-The bridge accepts only an authentic completed resident observation receipt and produces a candidate for the canonical SDK 0B route. It explicitly preserves `route_specific_intr_runtime_receipt` and `sdk_live_admission_receipt` as missing until observed. It cannot claim SDK admission, StegGate ALLOW, Master Records custody, or live dashboard publication.
+The bridge accepts only an authentic completed resident observation receipt and produces a candidate for the canonical SDK 0B route. It explicitly preserves `route_specific_intr_runtime_receipt` and `sdk_live_admission_receipt` as missing until observed. It cannot claim SDK admission, StegGate ALLOW, live dashboard publication, or a Master Records organization record.
 
 ## Production self-evaluation validation evidence
 
