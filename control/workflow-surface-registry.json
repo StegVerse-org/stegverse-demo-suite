@@ -1,0 +1,117 @@
+{
+ "schema": "stegverse.workflow-surface-registry/v1",
+ "goal_id": "G17-WORKFLOW-SURFACE-MINIMIZATION",
+ "repository": "StegVerse-org/stegverse-demo-suite",
+ "policy_issue": "StegVerse-Labs/.github#167, #168; StegVerse-org/.github#166",
+ "preferred_repository_workflow_count_max": 2,
+ "exception_repository_workflow_count_max": 3,
+ "credential_authority": "the SKAP Vault inside KV is the only PII and credential store for every user, including the StegVerse ecosystem's own; no secret or token is referenced, introduced or moved by this fold",
+ "invariants": [
+  "Every workflow file is registered in surfaces[]; an unregistered or changed one fails closed (tests/test_workflow_surface_registry.py).",
+  "A new check is a group in tools/tasks/task_catalog.json, never a new workflow file.",
+  "The stable dispatcher carries no workflow_dispatch, schedule, repository_dispatch, issues or workflow_run trigger; a kept surface is pinned by sha256 and unchanged by the fold."
+ ],
+ "unregistered_workflow_outcome": {
+  "disposition": "FAIL_CLOSED",
+  "failure_code": "UNREGISTERED_WORKFLOW_SURFACE",
+  "failed_predicate": "EVERY_WORKFLOW_FILE_IS_REGISTERED",
+  "required_evidence_or_repair": "register the file in control/workflow-surface-registry.json surfaces[] or fold it into tools/tasks/task_catalog.json",
+  "retry_entrypoint": "tests/test_workflow_surface_registry.py",
+  "owning_existing_goal": "G17-WORKFLOW-SURFACE-MINIMIZATION (StegVerse-Labs/.github#167/#168); StegVerse-org/.github#166",
+  "next_attempt": "the next pull request touching .github/workflows/"
+ },
+ "surfaces": [
+  {
+   "path": ".github/workflows/validation-dispatcher.yml",
+   "classification": "KEEP_STABLE_DISPATCHER",
+   "triggers": [
+    "pull_request",
+    "push"
+   ],
+   "permissions": {
+    "contents": "read"
+   }
+  },
+  {
+   "path": ".github/workflows/deploy-sv-dn1-pages.yml",
+   "classification": "KEEP_EXISTING_SURFACE_UNCHANGED",
+   "triggers": [
+    "push",
+    "workflow_dispatch"
+   ],
+   "permissions": {
+    "contents": "read",
+    "pages": "write",
+    "id-token": "write"
+   },
+   "reason": "KEEP_STANDALONE_EXCEPTION: GitHub Pages deployment surface; needs pages: write and id-token: write and the github-pages environment, which a contents: read validator dispatcher must not carry. Unchanged by this fold (tests/test_sv_dn1_public_pages_contract.py reads it); pinned by sha256. Owning goal: StegVerse-org/.github#166.",
+   "verbatim_sha256": "c81a54fe6b19424f5da862fdf256b33cb123ed3f72d2cb095591d6459537e562"
+  }
+ ],
+ "folded": [
+  {
+   "workflow": ".github/workflows/architecture-guard.yml",
+   "name": "Architecture Guard",
+   "triggers_before": [
+    "push",
+    "pull_request",
+    "schedule",
+    "workflow_dispatch"
+   ],
+   "classification": "CONSOLIDATE_INTO_STABLE_DISPATCHER",
+   "status": "DONE",
+   "catalog_groups": [
+    "architecture-guard.validate-structure"
+   ],
+   "verbatim_record": "tools/tasks/folded/architecture-guard.yml",
+   "verbatim_sha256": "ebb771e57ac7fe5300ad45adc995711c199fc01f4a8ab126c0bd3858393e06c2"
+  },
+  {
+   "workflow": ".github/workflows/governed-digital-rights-demo.yml",
+   "name": "Governed Digital Rights Demo",
+   "triggers_before": [
+    "workflow_dispatch",
+    "push",
+    "pull_request"
+   ],
+   "classification": "CONSOLIDATE_INTO_STABLE_DISPATCHER",
+   "status": "DONE",
+   "catalog_groups": [
+    "governed-digital-rights-demo.validate"
+   ],
+   "verbatim_record": "tools/tasks/folded/governed-digital-rights-demo.yml",
+   "verbatim_sha256": "6b7e806255a94ad3d3cc20187cc0f3591c2dd59dd9c5864d6d22eb1e68b60618"
+  },
+  {
+   "workflow": ".github/workflows/testing-data-loop-contract-validate.yml",
+   "name": "Testing Data Loop Contract Validation",
+   "triggers_before": [
+    "push",
+    "pull_request",
+    "workflow_dispatch"
+   ],
+   "classification": "CONSOLIDATE_INTO_STABLE_DISPATCHER",
+   "status": "DONE",
+   "catalog_groups": [
+    "testing-data-loop-contract-validate.validate-contract"
+   ],
+   "verbatim_record": "tools/tasks/folded/testing-data-loop-contract-validate.yml",
+   "verbatim_sha256": "8c877e454be90c6bd986fd71fdc68a368828be5c8b9d4d4b20dece66a7d6ec4a"
+  },
+  {
+   "workflow": ".github/workflows/validate-sv-dn1.yml",
+   "name": "Validate SV-DN-1",
+   "triggers_before": [
+    "pull_request",
+    "workflow_dispatch"
+   ],
+   "classification": "CONSOLIDATE_INTO_STABLE_DISPATCHER",
+   "status": "DONE",
+   "catalog_groups": [
+    "validate-sv-dn1.validate"
+   ],
+   "verbatim_record": "tools/tasks/folded/validate-sv-dn1.yml",
+   "verbatim_sha256": "9cec92763c942ea673d2cee4c29d3449fc4d2ba75d7c4ee5ac4192b573a748b3"
+  }
+ ]
+}

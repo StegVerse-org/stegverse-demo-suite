@@ -1,0 +1,247 @@
+{
+ "schema": "stegverse.task-catalog/v1",
+ "repository": "StegVerse-org/stegverse-demo-suite",
+ "goal_id": "G17-WORKFLOW-SURFACE-MINIMIZATION",
+ "authority": "Rigel 2026-10-24 retroactive G17 enforcement (StegVerse-org/.github#166); pattern StegVerse-Labs/StegDB#60 (eab2e773)",
+ "dispatcher": ".github/workflows/validation-dispatcher.yml",
+ "runner": "tools/tasks/run_catalog.py",
+ "runner_source": "StegVerse-Labs/StegDB tools/tasks/run_catalog.py @ eab2e773271f3e63466a710f1b4555f677882848 (sha256 f741f30557888fd8e4852a52adfc65736a08898d49ade7519f6bcc2672921e9b), copied unmodified",
+ "rule": "Every check a folded workflow job ran is one group here; its step bodies are the original run blocks byte for byte, pinned by sha256, except the repairs listed. A new check is a new group (or a step in one), never a new workflow file.",
+ "path_filters": "Dropped: every group runs on every pull_request and push to main (a superset of the original path-filtered runs). workflow_dispatch/schedule triggers are not carried (no manual dispatch, no cron).",
+ "repairs": [
+  "None of the folded run blocks is changed. Dropped triggers: architecture-guard's weekly schedule (no cron) and every workflow_dispatch (no manual dispatch); path filters dropped, so every group runs on every pull_request and push (a superset). validate-sv-dn1 ran only on path-filtered pull requests; it now also runs on push.",
+  "governed-digital-rights-demo upload-artifact retention-days: 90 is not carried (the dispatcher's upload uses the repository default retention)."
+ ],
+ "folded_from_commit": "6a2e37da2257b76379184b0a21a6c6321194a1e5",
+ "groups": [
+  {
+   "id": "architecture-guard.validate-structure",
+   "source": {
+    "workflow": ".github/workflows/architecture-guard.yml",
+    "workflow_name": "Architecture Guard",
+    "job": "validate-structure",
+    "job_name": null,
+    "commit": "6a2e37d",
+    "triggers_before": [
+     "push",
+     "pull_request",
+     "schedule",
+     "workflow_dispatch"
+    ],
+    "permissions_before": null
+   },
+   "events": [
+    "pull_request",
+    "push"
+   ],
+   "env": {},
+   "steps": [
+    {
+     "name": "Install dependencies",
+     "run_file": "tools/tasks/steps/architecture-guard.validate-structure/01-install-dependencies.sh",
+     "run_sha256": "9bfe045a35cd4049a98ae2606bac240f3f5581f22631fa4d499fcd408a2021db"
+    },
+    {
+     "name": "Download canonical validator from StegDB",
+     "run_file": "tools/tasks/steps/architecture-guard.validate-structure/02-download-canonical-validator-from-stegdb.sh",
+     "run_sha256": "ca571f5e11dd21808ec1ace3c73c0459f76713acffa679c66acd016f11b83b2f"
+    },
+    {
+     "name": "Validate repository structure against manifest",
+     "run_file": "tools/tasks/steps/architecture-guard.validate-structure/03-validate-repository-structure-against-manifest.sh",
+     "run_sha256": "1994e706a17b89726978181512e7b1fc3291ad286eb32eea260e99b1efeed1e9"
+    }
+   ],
+   "artifacts": [
+    {
+     "name": "architecture-report",
+     "path": "stegverse.architecture.json\n*.log\n",
+     "if_no_files_found": "warn",
+     "if": "always()"
+    }
+   ],
+   "runner": {
+    "fetch_depth": "1",
+    "persist_credentials": "true",
+    "timeout_minutes": 30,
+    "python_version": "3.11",
+    "artifact_name": "architecture-report",
+    "artifact_if_no_files_found": "warn"
+   }
+  },
+  {
+   "id": "governed-digital-rights-demo.validate",
+   "source": {
+    "workflow": ".github/workflows/governed-digital-rights-demo.yml",
+    "workflow_name": "Governed Digital Rights Demo",
+    "job": "validate",
+    "job_name": null,
+    "commit": "6a2e37d",
+    "triggers_before": [
+     "workflow_dispatch",
+     "push",
+     "pull_request"
+    ],
+    "permissions_before": {
+     "contents": "read"
+    }
+   },
+   "events": [
+    "pull_request",
+    "push"
+   ],
+   "env": {},
+   "steps": [
+    {
+     "name": "Run conformance tests",
+     "run_file": "tools/tasks/steps/governed-digital-rights-demo.validate/01-run-conformance-tests.sh",
+     "run_sha256": "0a8356e38320d853f00b3ac07373d15e4d39d4773df2857c06155f927df3b3cb"
+    },
+    {
+     "name": "Generate deterministic receipt",
+     "run_file": "tools/tasks/steps/governed-digital-rights-demo.validate/02-generate-deterministic-receipt.sh",
+     "run_sha256": "cce640d8e577ec216682b1fac62c351a0299ab347d090f70346a89362307b2c9"
+    },
+    {
+     "name": "Verify receipt status and hash",
+     "run_file": "tools/tasks/steps/governed-digital-rights-demo.validate/03-verify-receipt-status-and-hash.sh",
+     "run_sha256": "6b54acdc6265840536ae90ab9ad94f9d7c3bef72dd92d1cfcd62377eb57d659e"
+    }
+   ],
+   "artifacts": [
+    {
+     "name": "governed-digital-rights-demo-receipt",
+     "path": "build/governed-digital-rights/receipt.json",
+     "if_no_files_found": "error",
+     "if": "success()"
+    }
+   ],
+   "runner": {
+    "fetch_depth": "1",
+    "persist_credentials": "true",
+    "timeout_minutes": 5,
+    "python_version": "3.11",
+    "artifact_name": "governed-digital-rights-demo-receipt",
+    "artifact_if_no_files_found": "error"
+   }
+  },
+  {
+   "id": "testing-data-loop-contract-validate.validate-contract",
+   "source": {
+    "workflow": ".github/workflows/testing-data-loop-contract-validate.yml",
+    "workflow_name": "Testing Data Loop Contract Validation",
+    "job": "validate-contract",
+    "job_name": null,
+    "commit": "6a2e37d",
+    "triggers_before": [
+     "push",
+     "pull_request",
+     "workflow_dispatch"
+    ],
+    "permissions_before": null
+   },
+   "events": [
+    "pull_request",
+    "push"
+   ],
+   "env": {},
+   "steps": [
+    {
+     "name": "Check upstream loop terms",
+     "run_file": "tools/tasks/steps/testing-data-loop-contract-validate.validate-contract/01-check-upstream-loop-terms.sh",
+     "run_sha256": "76e8455ada03a97a869b57d9e60a7aaee5b7ef52b3ff94128aa89acf53731bf5"
+    },
+    {
+     "name": "Check SDK contract references",
+     "run_file": "tools/tasks/steps/testing-data-loop-contract-validate.validate-contract/02-check-sdk-contract-references.sh",
+     "run_sha256": "ee65a03fba912dda542c3f74695b56231e6ded5cf8af71992128904c210e4899"
+    }
+   ],
+   "artifacts": [],
+   "runner": {
+    "fetch_depth": "1",
+    "persist_credentials": "true",
+    "timeout_minutes": 30
+   }
+  },
+  {
+   "id": "validate-sv-dn1.validate",
+   "source": {
+    "workflow": ".github/workflows/validate-sv-dn1.yml",
+    "workflow_name": "Validate SV-DN-1",
+    "job": "validate",
+    "job_name": null,
+    "commit": "6a2e37d",
+    "triggers_before": [
+     "pull_request",
+     "workflow_dispatch"
+    ],
+    "permissions_before": {
+     "contents": "read"
+    }
+   },
+   "events": [
+    "pull_request",
+    "push"
+   ],
+   "env": {},
+   "steps": [
+    {
+     "name": "Run deterministic double-Interlock tests",
+     "run_file": "tools/tasks/steps/validate-sv-dn1.validate/01-run-deterministic-double-interlock-tests.sh",
+     "run_sha256": "4683e307d98fe1260509391db19d33f605f44b7a262fca4298b4255a1a52d5fa"
+    },
+    {
+     "name": "Validate exact runtime source pin",
+     "run_file": "tools/tasks/steps/validate-sv-dn1.validate/02-validate-exact-runtime-source-pin.sh",
+     "run_sha256": "cbafa15296111a91dcdf6351b77c268ffaa7edd8e053499b30ad42702efe42cf"
+    },
+    {
+     "name": "Run fixture-only end-to-end pipeline",
+     "run_file": "tools/tasks/steps/validate-sv-dn1.validate/03-run-fixture-only-end-to-end-pipeline.sh",
+     "run_sha256": "849a1da72743e6d58cabe430230d22762d2bd8f8518957d324a4346121a0c7ae"
+    },
+    {
+     "name": "Enforce fixture/live separation",
+     "run_file": "tools/tasks/steps/validate-sv-dn1.validate/04-enforce-fixture-live-separation.sh",
+     "run_sha256": "3b3f31ee8500e8dd0802576769d6efb1f91a94eb30183070ec2cc5a43e7aa90c"
+    },
+    {
+     "name": "Prove no hosted authority claim",
+     "run_file": "tools/tasks/steps/validate-sv-dn1.validate/05-prove-no-hosted-authority-claim.sh",
+     "run_sha256": "daf33d6cd0517bfbdef8f2b4ae0a1be8669454e520ad5238fe498183d7434ca6"
+    }
+   ],
+   "artifacts": [],
+   "runner": {
+    "fetch_depth": "1",
+    "persist_credentials": "false",
+    "timeout_minutes": 30,
+    "python_version": "3.11"
+   }
+  },
+  {
+   "id": "workflow-surface-registry.validate",
+   "catalog_addition": "G17 registry gate (no folded source workflow)",
+   "events": [
+    "pull_request",
+    "push"
+   ],
+   "env": {},
+   "steps": [
+    {
+     "name": "Workflow files equal the registered surfaces; catalog verifies ALLOW",
+     "run_file": "tools/tasks/steps/workflow-surface-registry.validate/01-registry.sh",
+     "run_sha256": "811824e88664923006be2eeb35632d710f5504145967f61632ad9e8fbdcb35ca"
+    }
+   ],
+   "artifacts": [],
+   "runner": {
+    "fetch_depth": "1",
+    "persist_credentials": "false",
+    "timeout_minutes": 10,
+    "python_version": "3.11"
+   }
+  }
+ ]
+}

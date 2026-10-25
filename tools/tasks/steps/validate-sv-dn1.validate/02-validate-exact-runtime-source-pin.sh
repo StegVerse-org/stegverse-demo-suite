@@ -1,0 +1,1 @@
+python scripts/validate_sv_dn1_runtime_source.py
